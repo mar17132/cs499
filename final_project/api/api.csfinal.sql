@@ -17,7 +17,9 @@ CREATE TABLE IF NOT EXISTS 'survey_users'(
     PRIMARY KEY(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+/*
+This table is the population or people that can be interviewed.
+*/
 CREATE TABLE IF NOT EXISTS 'survey_population'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     fname VARCHAR(254) NOT NULL,
@@ -31,14 +33,19 @@ CREATE TABLE IF NOT EXISTS 'survey_population'(
     PRIMARY KEY(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+/*
+This table is the sample group or the portion of the population that will be
+surveyed
+*/
 CREATE TABLE IF NOT EXISTS 'sample_group'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     sample_name VARCHAR(254) NOT NULL,
     PRIMARY KEY(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+/*
+This table is to connect the people in the population to the sample group
+*/
 CREATE TABLE IF NOT EXISTS 'surveyp_to_sampleg'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     survey_population_id INT NOT NULL,
@@ -58,14 +65,18 @@ CREATE TABLE IF NOT EXISTS 'surveyp_to_sampleg'(
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+/*
+This table is to keep a unquie list of types for all tables
+*/
 CREATE TABLE IF NOT EXISTS 'type'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     type VARCHAR(100) NOT NULL,
     PRIMARY KEY(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+/*
+This table is to create studys for the surveys
+*/
 CREATE TABLE IF NOT EXISTS 'study'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
