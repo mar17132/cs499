@@ -1,8 +1,8 @@
 /*
 * Created By: Matthew Martin
 * Created On: 10/28/2019
-* Modified By:
-* Modified On:
+* Modified By: Matthew Martin
+* Modified On: 1/1/2020
 * Description: This script will create the tables needed for csfinal database.
 */
 
@@ -78,14 +78,18 @@ CREATE TABLE IF NOT EXISTS 'type'(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*
-This table is to create studys for the surveys
+This table is to create studys for the surveys. try_amount is the amount of times
+the people of the population will be contacted for the survey until the interview
+is completed or declaried completed. order_questions is if the questions are 
+displayed in a certain order defined by the user
 */
 CREATE TABLE IF NOT EXISTS 'study'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
     type_id INT NOT NULL,
-    start_date DATE NOT NULL,
-    end_date DATE NOT NULL,
+    order_questions BOOLEAN NOT NULL DEFAULT 0,
+    start_date TIMESTAMP NOT NULL,
+    end_date TIMESTAMP NOT NULL,
     try_amount INT NOT NULL DEFAULT 1,
     PRIMARY KEY(id),
     /*type foreign key*/
@@ -132,19 +136,15 @@ CREATE TABLE IF NOT EXISTS 'study_to_survey_pop'(
 
 /*
 This table keeps track of which users is connducting the interview.
+It has the start and end timestamps and status of the interview.
 */
 CREATE TABLE IF NOT EXISTS 'survey_interview'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     study_to_survey_pop_id INT NOT NULL,
     survey_users_id INT NOT NULL,
-    /*
-    Need start and end time of the survey. 
-    Need type that can be a status of survey.
-    complete
-    No anwser
-    denied
-    Call again
-    */
+    interview_start TIMESTAMP NOT NULL,
+    interview_end TIMESTAMP NULL DEFAULT NULL,
+    type_id INT NOT NULL DEFAULT ,/*TODO############ get an ID for default*/ 
     PRIMARY KEY(id),
     /*study_to_survey_pop foreign key*/
     CONSTRAINT study_to_survey_pop_to_survey_interview_fk_con
@@ -157,6 +157,12 @@ CREATE TABLE IF NOT EXISTS 'survey_interview'(
     FOREIGN KEY survey_users_to_survey_interview_fk(survey_users_id) 
     REFERENCES survey_users(id) 
     ON DELETE RESTRICT
+    ON UPDATE CASCADE,
+    /*type foreign key*/
+    CONSTRAINT type_to_survey_interview_fk_con
+    FOREIGN KEY type_to_survey_interview_fk(type_id) 
+    REFERENCES type(id) 
+    ON DELETE RESTRICT
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -165,9 +171,17 @@ CREATE TABLE IF NOT EXISTS 'survey_interview'(
 /*
 ###################QUESTIONS TABLES###################
 */
+
+/*
+This table is for creating the questions and what type of question. Order_Anwsers
+is to tell if the anwsers will be displayed in a certain order defined by user.
+order is where the question will be displayed. if order is -1 the order is off
+*/
 CREATE TABLE IF NOT EXISTS 'question'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     quesiton VARCHAR(254) NOT NULL,
+    order_Anwsers BOOLEAN NOT NULL DEFAULT 0,
+    order INT NOT NULL DEFAULT -1,
     type_id INT NOT NULL,
     PRIMARY KEY(id),
     /*type foreign key*/
@@ -178,7 +192,9 @@ CREATE TABLE IF NOT EXISTS 'question'(
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+/*
+This table connects the questions to the study.
+*/
 CREATE TABLE IF NOT EXISTS 'study_to_question'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     quesiton_id INT NOT NULL,
@@ -198,7 +214,11 @@ CREATE TABLE IF NOT EXISTS 'study_to_question'(
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+/*
+This table is for the multi choces question anwsers. It linkes the anwers to 
+the question and keeps track of the order the question will appear.
+If the order is -1 then order is off and 
+*/
 CREATE TABLE IF NOT EXISTS 'anwsers_multi_choices'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     quesiton_id INT NOT NULL,
@@ -213,7 +233,10 @@ CREATE TABLE IF NOT EXISTS 'anwsers_multi_choices'(
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+/*
+This table is to connect questions to fill in the blank. The table is for 
+a pretext that is in the textbox before writing has started.
+*/
 CREATE TABLE IF NOT EXISTS 'anwsers_fill_in_blank'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     quesiton_id INT NOT NULL,
@@ -227,7 +250,10 @@ CREATE TABLE IF NOT EXISTS 'anwsers_fill_in_blank'(
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
+/*
+This table is to connect questions to checkbox anwsers. It also tracks the 
+order of the anwser. If order is -1 then order is off.
+*/
 CREATE TABLE IF NOT EXISTS 'anwsers_checkbox'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     quesiton_id INT NOT NULL,
@@ -246,46 +272,74 @@ CREATE TABLE IF NOT EXISTS 'anwsers_checkbox'(
 The next tables are to recored the respones from the people that are surveyed.
 */
 
-/*? unknown table*/
+/*
+Fill in the blank respons. This is for respons for the person of the population.
+*/
 CREATE TABLE IF NOT EXISTS 'respons_to_fillinblank'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     quesiton_id INT NOT NULL,
+    survey_interview_id INT NOT NULL,
     respons VARCHAR(254) NOT NULL,
     PRIMARY KEY(id),
     /*question foreign key*/
-    CONSTRAINT respons_to_anwsers_to_question_fk_con
-    FOREIGN KEY respons_to_anwsers_to_quesiton_fk(quesiton_id) 
+    CONSTRAINT respons_to_fillinblank_to_question_fk_con
+    FOREIGN KEY respons_to_fillinblank_to_quesiton_fk(quesiton_id) 
     REFERENCES question(id) 
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE,
+    /*survey_interview foreign key*/
+    CONSTRAINT respons_to_fillinblank_to_survey_interview_fk_con
+    FOREIGN KEY respons_to_fillinblank_to_survey_interview_fk(survey_interview_id) 
+    REFERENCES survey_interview(id) 
     ON DELETE RESTRICT
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-/*? unknown table*/
+/*
+This table is to connect the responses to the checkbox questions. It also 
+connects the interview to the responses.
+*/
 CREATE TABLE IF NOT EXISTS 'respons_to_checkbox'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     quesiton_id INT NOT NULL,
+    survey_interview_id INT NOT NULL,
     respons VARCHAR(254) NOT NULL,
     PRIMARY KEY(id),
     /*question foreign key*/
-    CONSTRAINT respons_to_anwsers_to_question_fk_con
-    FOREIGN KEY respons_to_anwsers_to_quesiton_fk(quesiton_id) 
+    CONSTRAINT respons_to_checkbox_to_question_fk_con
+    FOREIGN KEY respons_to_checkbox_to_quesiton_fk(quesiton_id) 
     REFERENCES question(id) 
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE,
+    /*survey_interview foreign key*/
+    CONSTRAINT respons_to_checkbox_to_survey_interview_fk_con
+    FOREIGN KEY respons_to_checkbox_to_survey_interview_fk(survey_interview_id) 
+    REFERENCES survey_interview(id) 
     ON DELETE RESTRICT
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-/*? unknown table*/
+/*
+This table connects multi choice question to respons and the interview.
+*/
 CREATE TABLE IF NOT EXISTS 'respons_to_multi_choice'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     quesiton_id INT NOT NULL,
+    survey_interview_id INT NOT NULL,
     respons VARCHAR(254) NOT NULL,
     PRIMARY KEY(id),
     /*question foreign key*/
-    CONSTRAINT respons_to_anwsers_to_question_fk_con
-    FOREIGN KEY respons_to_anwsers_to_quesiton_fk(quesiton_id) 
+    CONSTRAINT respons_to_multi_choice_to_question_fk_con
+    FOREIGN KEY respons_to_multi_choice_to_quesiton_fk(quesiton_id) 
     REFERENCES question(id) 
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE,
+    /*survey_interview foreign key*/
+    CONSTRAINT respons_to_multi_choice_to_survey_interview_fk_con
+    FOREIGN KEY respons_to_multi_choice_to_survey_interview_fk(survey_interview_id) 
+    REFERENCES survey_interview(id) 
     ON DELETE RESTRICT
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
