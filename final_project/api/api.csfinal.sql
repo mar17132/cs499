@@ -6,14 +6,16 @@
 * Description: This script will create the tables needed for csfinal database.
 */
 
+CREATE DATABASE IF NOT EXISTS csfinal;
 
-USE 'csfinal';
+
+USE csfinal;
 
 /*
 This table is a user table. The ones that will be interviewing and creating 
 surveys.
 */
-CREATE TABLE IF NOT EXISTS 'survey_users'(
+CREATE TABLE IF NOT EXISTS survey_users(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     uname VARCHAR(254) NOT NULL,
     passwd VARCHAR(60) NOT NULL,
@@ -23,7 +25,7 @@ CREATE TABLE IF NOT EXISTS 'survey_users'(
 /*
 This table is the population or people that can be interviewed.
 */
-CREATE TABLE IF NOT EXISTS 'survey_population'(
+CREATE TABLE IF NOT EXISTS survey_population(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     fname VARCHAR(254) NOT NULL,
     mname VARCHAR(254) NULL,
@@ -40,7 +42,7 @@ CREATE TABLE IF NOT EXISTS 'survey_population'(
 This table is the sample group or the portion of the population that will be
 surveyed
 */
-CREATE TABLE IF NOT EXISTS 'sample_group'(
+CREATE TABLE IF NOT EXISTS sample_group(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     sample_name VARCHAR(254) NOT NULL,
     PRIMARY KEY(id)
@@ -49,7 +51,7 @@ CREATE TABLE IF NOT EXISTS 'sample_group'(
 /*
 This table is to connect the people in the population to the sample group
 */
-CREATE TABLE IF NOT EXISTS 'surveyp_to_sampleg'(
+CREATE TABLE IF NOT EXISTS surveyp_to_sampleg(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     survey_population_id INT NOT NULL,
     sample_group_id INT NOT NULL,
@@ -71,7 +73,7 @@ CREATE TABLE IF NOT EXISTS 'surveyp_to_sampleg'(
 /*
 This table is to keep a unquie list of types for all tables
 */
-CREATE TABLE IF NOT EXISTS 'type'(
+CREATE TABLE IF NOT EXISTS type(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     type VARCHAR(100) NOT NULL,
     PRIMARY KEY(id)
@@ -83,7 +85,7 @@ the people of the population will be contacted for the survey until the intervie
 is completed or declaried completed. order_questions is if the questions are 
 displayed in a certain order defined by the user
 */
-CREATE TABLE IF NOT EXISTS 'study'(
+CREATE TABLE IF NOT EXISTS study(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
     type_id INT NOT NULL,
@@ -104,7 +106,7 @@ CREATE TABLE IF NOT EXISTS 'study'(
 This table is to connect group, population person, and study together. It
 also indicates if the has been done or is currently in progress. 
 */
-CREATE TABLE IF NOT EXISTS 'study_to_survey_pop'(
+CREATE TABLE IF NOT EXISTS study_to_survey_pop(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     study_id INT NOT NULL,
     sample_group_id INT NOT NULL,
@@ -138,7 +140,7 @@ CREATE TABLE IF NOT EXISTS 'study_to_survey_pop'(
 This table keeps track of which users is connducting the interview.
 It has the start and end timestamps and status of the interview.
 */
-CREATE TABLE IF NOT EXISTS 'survey_interview'(
+CREATE TABLE IF NOT EXISTS survey_interview(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     study_to_survey_pop_id INT NOT NULL,
     survey_users_id INT NOT NULL,
@@ -175,13 +177,14 @@ CREATE TABLE IF NOT EXISTS 'survey_interview'(
 /*
 This table is for creating the questions and what type of question. Order_Anwsers
 is to tell if the anwsers will be displayed in a certain order defined by user.
-order is where the question will be displayed. if order is -1 the order is off
+question_order is where the question will be displayed. if question_order
+ is -1 the order is off
 */
-CREATE TABLE IF NOT EXISTS 'question'(
+CREATE TABLE IF NOT EXISTS question(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     quesiton VARCHAR(254) NOT NULL,
     order_Anwsers BOOLEAN NOT NULL DEFAULT 0,
-    order INT NOT NULL DEFAULT -1,
+    question_order INT NOT NULL DEFAULT -1,
     type_id INT NOT NULL,
     PRIMARY KEY(id),
     /*type foreign key*/
@@ -195,7 +198,7 @@ CREATE TABLE IF NOT EXISTS 'question'(
 /*
 This table connects the questions to the study.
 */
-CREATE TABLE IF NOT EXISTS 'study_to_question'(
+CREATE TABLE IF NOT EXISTS study_to_question(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     quesiton_id INT NOT NULL,
     study_id INT NOT NULL,
@@ -216,13 +219,13 @@ CREATE TABLE IF NOT EXISTS 'study_to_question'(
 
 /*
 This table is for the multi choces question anwsers. It linkes the anwers to 
-the question and keeps track of the order the question will appear.
-If the order is -1 then order is off and 
+the question and keeps track of the multi_choice_order the anwsers will appear.
+If the multi_choice_order is -1 then order is off and 
 */
-CREATE TABLE IF NOT EXISTS 'anwsers_multi_choices'(
+CREATE TABLE IF NOT EXISTS anwsers_multi_choices(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     quesiton_id INT NOT NULL,
-    order INT NULL DEFAULT -1,
+    multi_choice_order INT NULL DEFAULT -1,
     anwser VARCHAR(254) NOT NULL,
     PRIMARY KEY(id),
     /*question foreign key*/
@@ -237,7 +240,7 @@ CREATE TABLE IF NOT EXISTS 'anwsers_multi_choices'(
 This table is to connect questions to fill in the blank. The table is for 
 a pretext that is in the textbox before writing has started.
 */
-CREATE TABLE IF NOT EXISTS 'anwsers_fill_in_blank'(
+CREATE TABLE IF NOT EXISTS anwsers_fill_in_blank(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     quesiton_id INT NOT NULL,
     preText VARCHAR(254) NULL,
@@ -252,12 +255,12 @@ CREATE TABLE IF NOT EXISTS 'anwsers_fill_in_blank'(
 
 /*
 This table is to connect questions to checkbox anwsers. It also tracks the 
-order of the anwser. If order is -1 then order is off.
+order of the anwser. If checkbox_order is -1 then order is off.
 */
-CREATE TABLE IF NOT EXISTS 'anwsers_checkbox'(
+CREATE TABLE IF NOT EXISTS anwsers_checkbox(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     quesiton_id INT NOT NULL,
-    order INT NULL DEFAULT -1,
+    checkbox_order INT NULL DEFAULT -1,
     anwser VARCHAR(254) NOT NULL,
     PRIMARY KEY(id),
     /*question foreign key*/
@@ -275,7 +278,7 @@ The next tables are to recored the respones from the people that are surveyed.
 /*
 Fill in the blank respons. This is for respons for the person of the population.
 */
-CREATE TABLE IF NOT EXISTS 'respons_to_fillinblank'(
+CREATE TABLE IF NOT EXISTS respons_to_fillinblank(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     quesiton_id INT NOT NULL,
     survey_interview_id INT NOT NULL,
@@ -300,7 +303,7 @@ CREATE TABLE IF NOT EXISTS 'respons_to_fillinblank'(
 This table is to connect the responses to the checkbox questions. It also 
 connects the interview to the responses.
 */
-CREATE TABLE IF NOT EXISTS 'respons_to_checkbox'(
+CREATE TABLE IF NOT EXISTS respons_to_checkbox(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     quesiton_id INT NOT NULL,
     survey_interview_id INT NOT NULL,
@@ -324,7 +327,7 @@ CREATE TABLE IF NOT EXISTS 'respons_to_checkbox'(
 /*
 This table connects multi choice question to respons and the interview.
 */
-CREATE TABLE IF NOT EXISTS 'respons_to_multi_choice'(
+CREATE TABLE IF NOT EXISTS respons_to_multi_choice(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     quesiton_id INT NOT NULL,
     survey_interview_id INT NOT NULL,
