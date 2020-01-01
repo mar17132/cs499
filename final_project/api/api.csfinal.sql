@@ -9,7 +9,10 @@
 
 USE 'csfinal';
 
-
+/*
+This table is a user table. The ones that will be interviewing and creating 
+surveys.
+*/
 CREATE TABLE IF NOT EXISTS 'survey_users'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     uname VARCHAR(254) NOT NULL,
@@ -83,6 +86,7 @@ CREATE TABLE IF NOT EXISTS 'study'(
     type_id INT NOT NULL,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
+    try_amount INT NOT NULL DEFAULT 1,
     PRIMARY KEY(id),
     /*type foreign key*/
     CONSTRAINT study_to_type_fk_con
@@ -93,7 +97,8 @@ CREATE TABLE IF NOT EXISTS 'study'(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*
-
+This table is to connect group, population person, and study together. It
+also indicates if the has been done or is currently in progress. 
 */
 CREATE TABLE IF NOT EXISTS 'study_to_survey_pop'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -102,6 +107,7 @@ CREATE TABLE IF NOT EXISTS 'study_to_survey_pop'(
     survey_population_id INT NOT NULL,
     completed BOOLEAN NOT NULL DEFAULT 0,
     locked BOOLEAN NOT NULL DEFAULT 0,
+    number_of_tries INT NOT NULL DEFAULT 0,
     PRIMARY KEY(id),
     /*sample_group foreign key*/
     CONSTRAINT sample_group_to_study_to_survey_pop_fk_con
@@ -124,6 +130,41 @@ CREATE TABLE IF NOT EXISTS 'study_to_survey_pop'(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+/*
+This table keeps track of which users is connducting the interview.
+*/
+CREATE TABLE IF NOT EXISTS 'survey_interview'(
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    study_to_survey_pop_id INT NOT NULL,
+    survey_users_id INT NOT NULL,
+    /*
+    Need start and end time of the survey. 
+    Need type that can be a status of survey.
+    complete
+    No anwser
+    denied
+    Call again
+    */
+    PRIMARY KEY(id),
+    /*study_to_survey_pop foreign key*/
+    CONSTRAINT study_to_survey_pop_to_survey_interview_fk_con
+    FOREIGN KEY study_to_survey_pop_to_survey_interview_fk(study_to_survey_pop_id) 
+    REFERENCES study_to_survey_pop(id) 
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE,
+    /*survey_users foreign key*/
+    CONSTRAINT survey_users_to_survey_interview_fk_con
+    FOREIGN KEY survey_users_to_survey_interview_fk(survey_users_id) 
+    REFERENCES survey_users(id) 
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+/*
+###################QUESTIONS TABLES###################
+*/
 CREATE TABLE IF NOT EXISTS 'question'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     quesiton VARCHAR(254) NOT NULL,
@@ -201,8 +242,12 @@ CREATE TABLE IF NOT EXISTS 'anwsers_checkbox'(
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/*
+The next tables are to recored the respones from the people that are surveyed.
+*/
+
 /*? unknown table*/
-CREATE TABLE IF NOT EXISTS 'respons_to_anwsers'(
+CREATE TABLE IF NOT EXISTS 'respons_to_fillinblank'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     quesiton_id INT NOT NULL,
     respons VARCHAR(254) NOT NULL,
@@ -216,21 +261,31 @@ CREATE TABLE IF NOT EXISTS 'respons_to_anwsers'(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE IF NOT EXISTS 'survey_interview'(
+/*? unknown table*/
+CREATE TABLE IF NOT EXISTS 'respons_to_checkbox'(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    study_to_survey_pop_id INT NOT NULL,
-    survey_users_id INT NOT NULL,
+    quesiton_id INT NOT NULL,
+    respons VARCHAR(254) NOT NULL,
     PRIMARY KEY(id),
-    /*study_to_survey_pop foreign key*/
-    CONSTRAINT study_to_survey_pop_to_survey_interview_fk_con
-    FOREIGN KEY study_to_survey_pop_to_survey_interview_fk(study_to_survey_pop_id) 
-    REFERENCES study_to_survey_pop(id) 
+    /*question foreign key*/
+    CONSTRAINT respons_to_anwsers_to_question_fk_con
+    FOREIGN KEY respons_to_anwsers_to_quesiton_fk(quesiton_id) 
+    REFERENCES question(id) 
     ON DELETE RESTRICT
-    ON UPDATE CASCADE,
-    /*survey_users foreign key*/
-    CONSTRAINT survey_users_to_survey_interview_fk_con
-    FOREIGN KEY survey_users_to_survey_interview_fk(survey_users_id) 
-    REFERENCES survey_users(id) 
+    ON UPDATE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+/*? unknown table*/
+CREATE TABLE IF NOT EXISTS 'respons_to_multi_choice'(
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    quesiton_id INT NOT NULL,
+    respons VARCHAR(254) NOT NULL,
+    PRIMARY KEY(id),
+    /*question foreign key*/
+    CONSTRAINT respons_to_anwsers_to_question_fk_con
+    FOREIGN KEY respons_to_anwsers_to_quesiton_fk(quesiton_id) 
+    REFERENCES question(id) 
     ON DELETE RESTRICT
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
