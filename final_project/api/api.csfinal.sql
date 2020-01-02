@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS survey_interview(
     survey_users_id INT NOT NULL,
     interview_start TIMESTAMP NOT NULL,
     interview_end TIMESTAMP NULL DEFAULT NULL,
-    type_id INT NOT NULL DEFAULT ,/*TODO############ get an ID for default*/ 
+    type_id INT NOT NULL DEFAULT ,/*TODO############# get an ID for default*/ 
     PRIMARY KEY(id),
     /*study_to_survey_pop foreign key*/
     CONSTRAINT study_to_survey_pop_to_survey_interview_fk_con
