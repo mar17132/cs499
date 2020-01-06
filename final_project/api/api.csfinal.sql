@@ -11,15 +11,49 @@ CREATE DATABASE IF NOT EXISTS csfinal;
 
 USE csfinal;
 
+
+/*
+This table is to create type class or catagories for the type table
+*/
+CREATE TABLE IF NOT EXISTS type_class(
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    typeClass VARCHAR(255) NOT NULL,
+    PRIMARY KEY(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+/*
+This table is to keep a unquie list of types for all tables
+*/
+CREATE TABLE IF NOT EXISTS type(
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    type VARCHAR(255) NOT NULL,
+    type_class_id INT NOT NULL,
+    PRIMARY KEY(id),
+    /*type_class foreign key*/
+    CONSTRAINT type_to_type_class_fk_con
+    FOREIGN KEY type_to_type_class_fk(type_class_id) 
+    REFERENCES type_class(id) 
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*
 This table is a user table. The ones that will be interviewing and creating 
 surveys.
 */
 CREATE TABLE IF NOT EXISTS survey_users(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    uname VARCHAR(254) NOT NULL,
+    uname VARCHAR(254) NOT NULL UNIQUE,
     passwd VARCHAR(60) NOT NULL,
-    PRIMARY KEY(id)
+    type_id INT NOT NULL,
+    PRIMARY KEY(id),
+    /*type foreign key*/
+    CONSTRAINT survey_users_to_type_fk_con
+    FOREIGN KEY survey_users_to_type_fk(type_id) 
+    REFERENCES type(id) 
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*
@@ -32,9 +66,10 @@ CREATE TABLE IF NOT EXISTS survey_population(
     lname VARCHAR(254) NOT NULL,
     street VARCHAR(254) NOT NULL,
     apt VARCHAR(5) NULL,
-    zip VARCHAR(10) NOT NULL,
+    city VARCHAR(10) NOT NULL,
     state VARCHAR(2) NOT NULL,
-    phone VARCHAR(7) NOT NULL,
+    zip VARCHAR(10) NOT NULL,
+    phone VARCHAR(10) NOT NULL,
     PRIMARY KEY(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -44,7 +79,7 @@ surveyed
 */
 CREATE TABLE IF NOT EXISTS sample_group(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    sample_name VARCHAR(254) NOT NULL,
+    sample_name VARCHAR(254) NOT NULL UNIQUE,
     PRIMARY KEY(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -70,14 +105,6 @@ CREATE TABLE IF NOT EXISTS surveyp_to_sampleg(
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*
-This table is to keep a unquie list of types for all tables
-*/
-CREATE TABLE IF NOT EXISTS type(
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    type VARCHAR(100) NOT NULL,
-    PRIMARY KEY(id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*
 This table is to create studys for the surveys. try_amount is the amount of times
@@ -98,6 +125,31 @@ CREATE TABLE IF NOT EXISTS study(
     CONSTRAINT study_to_type_fk_con
     FOREIGN KEY study_to_type_fk(type_id) 
     REFERENCES type(id) 
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+/*
+interviewer permissions. This table allows admins to set which studys interviews
+are allowed to conduct. 
+*/
+CREATE TABLE IF NOT EXISTS interviewer_permissions(
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    study_id INT NOT NULL,
+    survey_users_id INT NOT NULL,
+    allowed_permission BOOLEAN NOT NULL DEFAULT 1,
+    PRIMARY KEY(id),
+    /*interviewer_permissions foreign key*/
+    CONSTRAINT survey_users_to_interviewer_permissions_fk_con
+    FOREIGN KEY survey_users_to_interviewer_permissions_fk(survey_users_id) 
+    REFERENCES survey_users(id) 
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE,
+    /*study foreign key*/
+    CONSTRAINT study_to_interviewer_permissions_fk_con
+    FOREIGN KEY study_to_interviewer_permissions_fk(study_id) 
+    REFERENCES study(id) 
     ON DELETE RESTRICT
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -135,6 +187,28 @@ CREATE TABLE IF NOT EXISTS study_to_survey_pop(
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+/*
+This table is to put the people in a phone queue
+*/
+CREATE TABLE IF NOT EXISTS survey_queue(
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    study_id INT NOT NULL,
+    study_to_survey_pop_id INT NOT NULL,
+    queue_number INT NOT NULL,
+    PRIMARY KEY(id),
+    /*study foreign key*/
+    CONSTRAINT study_to_survey_queue_fk_con
+    FOREIGN KEY study_to_survey_queue_fk(study_id) 
+    REFERENCES study(id) 
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE,
+    /*study_to_survey_pop foreign key*/
+    CONSTRAINT study_to_survey_pop_to_survey_queue_fk_con
+    FOREIGN KEY study_to_survey_pop_to_survey_queue_fk(study_to_survey_pop_id) 
+    REFERENCES study_to_survey_pop(id) 
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*
 This table keeps track of which users is connducting the interview.
@@ -272,11 +346,11 @@ CREATE TABLE IF NOT EXISTS anwsers_checkbox(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*
-The next tables are to recored the respones from the people that are surveyed.
+The next tables are to recored the response from the people that are surveyed.
 */
 
 /*
-Fill in the blank respons. This is for respons for the person of the population.
+Fill in the blank response. This is for response for the person of the population.
 */
 CREATE TABLE IF NOT EXISTS respons_to_fillinblank(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -347,5 +421,5 @@ CREATE TABLE IF NOT EXISTS respons_to_multi_choice(
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*Add Default Items*/
+
 
