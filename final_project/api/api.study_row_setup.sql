@@ -224,3 +224,9 @@ VALUES(
     (SELECT id FROM type WHERE type = 'Completed')
 );
 
+
+/*
+survey_queue setup rows
+*/
+
+
