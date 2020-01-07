@@ -28,7 +28,7 @@ This table is to keep a unquie list of types for all tables
 CREATE TABLE IF NOT EXISTS type(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     type VARCHAR(255) NOT NULL,
-    type_class_id INT NOT NULL,
+    type_class_id INT UNSIGNED NOT NULL,
     PRIMARY KEY(id),
     /*type_class foreign key*/
     CONSTRAINT type_to_type_class_fk_con
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS survey_users(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     uname VARCHAR(254) NOT NULL UNIQUE,
     passwd VARCHAR(60) NOT NULL,
-    type_id INT NOT NULL,
+    type_id INT UNSIGNED NOT NULL,
     PRIMARY KEY(id),
     /*type foreign key*/
     CONSTRAINT survey_users_to_type_fk_con
@@ -66,10 +66,10 @@ CREATE TABLE IF NOT EXISTS survey_population(
     lname VARCHAR(254) NOT NULL,
     street VARCHAR(254) NOT NULL,
     apt VARCHAR(5) NULL,
-    city VARCHAR(10) NOT NULL,
-    state VARCHAR(2) NOT NULL,
+    city VARCHAR(254) NOT NULL,
+    state VARCHAR(3) NOT NULL,
     zip VARCHAR(10) NOT NULL,
-    phone VARCHAR(10) NOT NULL,
+    phone VARCHAR(15) NOT NULL,
     PRIMARY KEY(id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -88,8 +88,8 @@ This table is to connect the people in the population to the sample group
 */
 CREATE TABLE IF NOT EXISTS surveyp_to_sampleg(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    survey_population_id INT NOT NULL,
-    sample_group_id INT NOT NULL,
+    survey_population_id INT UNSIGNED NOT NULL,
+    sample_group_id INT UNSIGNED NOT NULL,
     PRIMARY KEY(id),
     /*sample_group foreign key*/
     CONSTRAINT sample_group_to_surveyp_to_sampleg_fk_con
@@ -115,7 +115,7 @@ displayed in a certain order defined by the user
 CREATE TABLE IF NOT EXISTS study(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
-    type_id INT NOT NULL,
+    type_id INT UNSIGNED NOT NULL,
     order_questions BOOLEAN NOT NULL DEFAULT 0,
     start_date TIMESTAMP NOT NULL,
     end_date TIMESTAMP NOT NULL,
@@ -136,8 +136,8 @@ are allowed to conduct.
 */
 CREATE TABLE IF NOT EXISTS interviewer_permissions(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    study_id INT NOT NULL,
-    survey_users_id INT NOT NULL,
+    study_id INT UNSIGNED NOT NULL,
+    survey_users_id INT UNSIGNED NOT NULL,
     allowed_permission BOOLEAN NOT NULL DEFAULT 1,
     PRIMARY KEY(id),
     /*interviewer_permissions foreign key*/
@@ -160,9 +160,9 @@ also indicates if the has been done or is currently in progress.
 */
 CREATE TABLE IF NOT EXISTS study_to_survey_pop(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    study_id INT NOT NULL,
-    sample_group_id INT NOT NULL,
-    survey_population_id INT NOT NULL,
+    study_id INT UNSIGNED NOT NULL,
+    sample_group_id INT UNSIGNED NOT NULL,
+    survey_population_id INT UNSIGNED NOT NULL,
     completed BOOLEAN NOT NULL DEFAULT 0,
     locked BOOLEAN NOT NULL DEFAULT 0,
     number_of_tries INT NOT NULL DEFAULT 0,
@@ -192,8 +192,11 @@ This table is to put the people in a phone queue
 */
 CREATE TABLE IF NOT EXISTS survey_queue(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    study_id INT NOT NULL,
-    study_to_survey_pop_id INT NOT NULL,
+    /*
+     Might need to remove the study_id could be not needed.
+    */
+    study_id INT UNSIGNED NOT NULL,
+    study_to_survey_pop_id INT UNSIGNED NOT NULL,
     queue_number INT NOT NULL,
     in_waiting_queue BOOLEAN NOT NULL DEFAULT 1,
     PRIMARY KEY(id),
@@ -217,11 +220,11 @@ It has the start and end timestamps and status of the interview.
 */
 CREATE TABLE IF NOT EXISTS survey_interview(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    study_to_survey_pop_id INT NOT NULL,
-    survey_users_id INT NOT NULL,
+    study_to_survey_pop_id INT UNSIGNED NOT NULL,
+    survey_users_id INT UNSIGNED NOT NULL,
     interview_start TIMESTAMP NOT NULL,
     interview_end TIMESTAMP NULL DEFAULT NULL,
-    type_id INT NOT NULL, 
+    type_id INT UNSIGNED NOT NULL, 
     PRIMARY KEY(id),
     /*study_to_survey_pop foreign key*/
     CONSTRAINT study_to_survey_pop_to_survey_interview_fk_con
@@ -260,7 +263,7 @@ CREATE TABLE IF NOT EXISTS question(
     quesiton VARCHAR(254) NOT NULL,
     order_Anwsers BOOLEAN NOT NULL DEFAULT 0,
     question_order INT NOT NULL DEFAULT -1,
-    type_id INT NOT NULL,
+    type_id INT UNSIGNED NOT NULL,
     PRIMARY KEY(id),
     /*type foreign key*/
     CONSTRAINT question_to_type_fk_con
@@ -275,8 +278,8 @@ This table connects the questions to the study.
 */
 CREATE TABLE IF NOT EXISTS study_to_question(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    quesiton_id INT NOT NULL,
-    study_id INT NOT NULL,
+    quesiton_id INT UNSIGNED NOT NULL,
+    study_id INT UNSIGNED NOT NULL,
     PRIMARY KEY(id),
     /*study foreign key*/
     CONSTRAINT study_to_question_to_study_fk_con
@@ -299,7 +302,7 @@ If the multi_choice_order is -1 then order is off and
 */
 CREATE TABLE IF NOT EXISTS anwsers_multi_choices(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    quesiton_id INT NOT NULL,
+    quesiton_id INT UNSIGNED NOT NULL,
     multi_choice_order INT NULL DEFAULT -1,
     anwser VARCHAR(254) NOT NULL,
     PRIMARY KEY(id),
@@ -317,7 +320,7 @@ a pretext that is in the textbox before writing has started.
 */
 CREATE TABLE IF NOT EXISTS anwsers_fill_in_blank(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    quesiton_id INT NOT NULL,
+    quesiton_id INT UNSIGNED NOT NULL,
     preText VARCHAR(254) NULL,
     PRIMARY KEY(id),
     /*question foreign key*/
@@ -334,7 +337,7 @@ order of the anwser. If checkbox_order is -1 then order is off.
 */
 CREATE TABLE IF NOT EXISTS anwsers_checkbox(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    quesiton_id INT NOT NULL,
+    quesiton_id INT UNSIGNED NOT NULL,
     checkbox_order INT NULL DEFAULT -1,
     anwser VARCHAR(254) NOT NULL,
     PRIMARY KEY(id),
@@ -355,8 +358,8 @@ Fill in the blank response. This is for response for the person of the populatio
 */
 CREATE TABLE IF NOT EXISTS respons_to_fillinblank(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    quesiton_id INT NOT NULL,
-    survey_interview_id INT NOT NULL,
+    quesiton_id INT UNSIGNED NOT NULL,
+    survey_interview_id INT UNSIGNED NOT NULL,
     respons VARCHAR(254) NOT NULL,
     PRIMARY KEY(id),
     /*question foreign key*/
@@ -380,8 +383,8 @@ connects the interview to the responses.
 */
 CREATE TABLE IF NOT EXISTS respons_to_checkbox(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    quesiton_id INT NOT NULL,
-    survey_interview_id INT NOT NULL,
+    quesiton_id INT UNSIGNED NOT NULL,
+    survey_interview_id INT UNSIGNED NOT NULL,
     respons VARCHAR(254) NOT NULL,
     PRIMARY KEY(id),
     /*question foreign key*/
@@ -404,8 +407,8 @@ This table connects multi choice question to respons and the interview.
 */
 CREATE TABLE IF NOT EXISTS respons_to_multi_choice(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    quesiton_id INT NOT NULL,
-    survey_interview_id INT NOT NULL,
+    quesiton_id INT UNSIGNED NOT NULL,
+    survey_interview_id INT UNSIGNED NOT NULL,
     respons VARCHAR(254) NOT NULL,
     PRIMARY KEY(id),
     /*question foreign key*/

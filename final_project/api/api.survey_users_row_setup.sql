@@ -13,45 +13,39 @@ USE csfinal;
 /*
 survey_users setup rows
 */
-INSERT INTO survey_users(id,uname,passwd,type_id)
+INSERT INTO survey_users(uname,passwd,type_id)
 VALUES(
-    "",
     "bob",
     PASSWORD('Passw@rd99'),
     (SELECT id FROM type WHERE type = "Admin")
 );
-INSERT INTO survey_users(id,uname,passwd,type_id)
+INSERT INTO survey_users(uname,passwd,type_id)
 VALUES(
-    "",
     "dav",
     PASSWORD('Passw@rd99'),
     (SELECT id FROM type WHERE type = "Interviewer")
 );
-INSERT INTO survey_users(id,uname,passwd,type_id)
+INSERT INTO survey_users(uname,passwd,type_id)
 VALUES(
-    "",
     "dick",
     PASSWORD('Passw@rd99'),
     (SELECT id FROM type WHERE type = "Admin")
 );
-INSERT INTO survey_users(id,uname,passwd,type_id)
+INSERT INTO survey_users(uname,passwd,type_id)
 VALUES(
-    "",
     "harry",
     PASSWORD('Passw@rd99'),
     (SELECT id FROM type WHERE type = "Interviewer")    
 );
-INSERT INTO survey_users(id,uname,passwd,type_id)
+INSERT INTO survey_users(uname,passwd,type_id)
 VALUES(
-    "",
     "tom",
     PASSWORD('Passw@rd99'),
     (SELECT id FROM type WHERE type = "Admin")
 );
-INSERT INTO survey_users(id,uname,passwd,type_id)
+INSERT INTO survey_users(uname,passwd,type_id)
 VALUES(
-    "",
-    "tom",
+    "barry",
     PASSWORD('Passw@rd99'),
     (SELECT id FROM type WHERE type = "Interviewer")
 );
