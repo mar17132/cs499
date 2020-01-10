@@ -58,6 +58,11 @@ VALUES(
 );
 INSERT INTO type(type,type_class_id) 
 VALUES(
+    "In Progress",
+    (SELECT id FROM type_class WHERE typeClass = "Study")
+);
+INSERT INTO type(type,type_class_id) 
+VALUES(
     "Checkbox",
     (SELECT id FROM type_class WHERE typeClass = "Question")
 );

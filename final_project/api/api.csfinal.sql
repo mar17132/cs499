@@ -195,17 +195,20 @@ CREATE TABLE IF NOT EXISTS survey_queue(
     /*
      Might need to remove the study_id could be not needed.
     */
-    study_id INT UNSIGNED NOT NULL,
+    /*study_id INT UNSIGNED NOT NULL,*/
     study_to_survey_pop_id INT UNSIGNED NOT NULL,
-    queue_number INT NOT NULL,
+    /*
+    change to timestamp of when recorde is created
+    */
+    queue_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     in_waiting_queue BOOLEAN NOT NULL DEFAULT 1,
     PRIMARY KEY(id),
-    /*study foreign key*/
+    /*study foreign key
     CONSTRAINT study_to_survey_queue_fk_con
     FOREIGN KEY study_to_survey_queue_fk(study_id) 
     REFERENCES study(id) 
     ON DELETE RESTRICT
-    ON UPDATE CASCADE,
+    ON UPDATE CASCADE,*/
     /*study_to_survey_pop foreign key*/
     CONSTRAINT study_to_survey_pop_to_survey_queue_fk_con
     FOREIGN KEY study_to_survey_pop_to_survey_queue_fk(study_to_survey_pop_id) 
@@ -385,7 +388,7 @@ CREATE TABLE IF NOT EXISTS respons_to_checkbox(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     quesiton_id INT UNSIGNED NOT NULL,
     survey_interview_id INT UNSIGNED NOT NULL,
-    respons VARCHAR(254) NOT NULL,
+    anwsers_checkbox_id INT UNSIGNED NOT NULL,
     PRIMARY KEY(id),
     /*question foreign key*/
     CONSTRAINT respons_to_checkbox_to_question_fk_con
@@ -398,6 +401,12 @@ CREATE TABLE IF NOT EXISTS respons_to_checkbox(
     FOREIGN KEY respons_to_checkbox_to_survey_interview_fk(survey_interview_id) 
     REFERENCES survey_interview(id) 
     ON DELETE RESTRICT
+    ON UPDATE CASCADE,
+    /*anwsers_checkbox foreign key*/
+    CONSTRAINT respons_to_checkbox_to_anwsers_checkbox_fk_con
+    FOREIGN KEY respons_to_checkbox_to_anwsers_checkbox_fk(anwsers_checkbox_id) 
+    REFERENCES anwsers_checkbox(id) 
+    ON DELETE RESTRICT
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -409,7 +418,7 @@ CREATE TABLE IF NOT EXISTS respons_to_multi_choice(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     quesiton_id INT UNSIGNED NOT NULL,
     survey_interview_id INT UNSIGNED NOT NULL,
-    respons VARCHAR(254) NOT NULL,
+    anwsers_multi_choices_id INT UNSIGNED NOT NULL,
     PRIMARY KEY(id),
     /*question foreign key*/
     CONSTRAINT respons_to_multi_choice_to_question_fk_con
@@ -421,6 +430,13 @@ CREATE TABLE IF NOT EXISTS respons_to_multi_choice(
     CONSTRAINT respons_to_multi_choice_to_survey_interview_fk_con
     FOREIGN KEY respons_to_multi_choice_to_survey_interview_fk(survey_interview_id) 
     REFERENCES survey_interview(id) 
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE,
+    /*survey_interview foreign key*/
+    CONSTRAINT respons_to_multi_choice_to_anwsers_multi_choices_fk_con
+    FOREIGN KEY 
+    respons_to_multi_choice_to_anwsers_multi_choices_fk(anwsers_multi_choices_id) 
+    REFERENCES anwsers_multi_choices(id) 
     ON DELETE RESTRICT
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

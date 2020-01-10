@@ -13,10 +13,9 @@ USE csfinal;
 /*
 survey_population setup rows
 */
-INSERT INTO survey_population(fname,mname,lname,street,city,zip,state,phone)
+INSERT INTO survey_population(fname,lname,street,city,state,zip,phone)
 VALUES(
     "Hommer",
-    "",
     "Simpsons",
     "742 Evergreen Terrace",
     "Springfield",
@@ -24,10 +23,9 @@ VALUES(
     "84015",
     "555-555-5555"
 );
-INSERT INTO survey_population(fname,mname,lname,city,street,city,zip,state,phone)
+INSERT INTO survey_population(fname,lname,street,city,state,zip,phone)
 VALUES(
     "Marge",
-    "",
     "Simpsons",
     "742 Evergreen Terrace",
     "Springfield",
@@ -35,10 +33,9 @@ VALUES(
     "84015",
     "555-555-5555"
 );
-INSERT INTO survey_population(fname,mname,lname,street,city,zip,state,phone)
+INSERT INTO survey_population(fname,lname,street,city,state,zip,phone)
 VALUES(
     "Bart",
-    "",
     "Simpsons",
     "742 Evergreen Terrace",
     "Springfield",
@@ -46,10 +43,9 @@ VALUES(
     "84015",
     "555-555-5555"
 );
-INSERT INTO survey_population(fname,mname,lname,street,city,zip,state,phone)
+INSERT INTO survey_population(fname,lname,street,city,state,zip,phone)
 VALUES(
     "Lisa",
-    "",
     "Simpsons",
     "742 Evergreen Terrace",
     "Springfield",
@@ -57,10 +53,9 @@ VALUES(
     "84015",
     "555-555-5555"
 );
-INSERT INTO survey_population(fname,mname,lname,street,city,zip,state,phone)
+INSERT INTO survey_population(fname,lname,street,city,state,zip,phone)
 VALUES(
     "Maggie",
-    "",
     "Simpsons",
     "742 Evergreen Terrace",
     "Springfield",
@@ -68,10 +63,9 @@ VALUES(
     "84015",
     "555-555-5555"
 );
-INSERT INTO survey_population(fname,mname,lname,street,city,zip,state,phone)
+INSERT INTO survey_population(fname,lname,street,city,state,zip,phone)
 VALUES(
     "Abraham",
-    "",
     "Simpsons",
     "742 Evergreen Terrace",
     "Springfield",
@@ -79,10 +73,9 @@ VALUES(
     "84015",
     "555-555-5555"
 );
-INSERT INTO survey_population(fname,mname,lname,street,city,zip,state,phone)
+INSERT INTO survey_population(fname,lname,street,city,state,zip,phone)
 VALUES(
     "Moe",
-    "",
     "Szyslak",
     "742 Evergreen Terrace",
     "Springfield",
@@ -90,10 +83,9 @@ VALUES(
     "84015",
     "555-555-5555"
 );
-INSERT INTO survey_population(fname,mname,lname,street,city,zip,state,phone)
+INSERT INTO survey_population(fname,lname,street,city,state,zip,phone)
 VALUES(
     "Monty",
-    "",
     "Burns",
     "742 Evergreen Terrace",
     "Springfield",
@@ -101,10 +93,9 @@ VALUES(
     "84015",
     "555-555-5555"
 );
-INSERT INTO survey_population(fname,mname,lname,street,city,zip,state,phone)
+INSERT INTO survey_population(fname,lname,street,city,state,zip,phone)
 VALUES(
     "Ned",
-    "",
     "Flanders",
     "742 Evergreen Terrace",
     "Springfield",
@@ -112,10 +103,9 @@ VALUES(
     "84015",
     "555-555-5555"
 );
-INSERT INTO survey_population(fname,mname,lname,street,city,zip,state,phone)
+INSERT INTO survey_population(fname,lname,street,city,state,zip,phone)
 VALUES(
     "Ralph",
-    "",
     "Wiggum",
     "742 Evergreen Terrace",
     "Springfield",
@@ -123,10 +113,9 @@ VALUES(
     "84015",
     "555-555-5555"
 );
-INSERT INTO survey_population(fname,mname,lname,street,city,zip,state,phone)
+INSERT INTO survey_population(fname,lname,street,city,state,zip,phone)
 VALUES(
     "Otto",
-    "",
     "Mann",
     "742 Evergreen Terrace",
     "Springfield",
@@ -134,10 +123,9 @@ VALUES(
     "84015",
     "555-555-5555"
 );
-INSERT INTO survey_population(fname,mname,lname,street,city,zip,state,phone)
+INSERT INTO survey_population(fname,lname,street,city,state,zip,phone)
 VALUES(
     "Clancy",
-    "",
     "Wiggum",
     "742 Evergreen Terrace",
     "Springfield",
@@ -145,10 +133,9 @@ VALUES(
     "84015",
     "555-555-5555"
 );
-INSERT INTO survey_population(fname,mname,lname,street,city,zip,state,phone)
+INSERT INTO survey_population(fname,lname,street,city,state,zip,phone)
 VALUES(
     "Milhouse",
-    "",
     "Van Houten",
     "742 Evergreen Terrace",
     "Springfield",
@@ -156,10 +143,9 @@ VALUES(
     "84015",
     "555-555-5555"
 );
-INSERT INTO survey_population(fname,mname,lname,street,city,zip,state,phone)
+INSERT INTO survey_population(fname,lname,street,city,state,zip,phone)
 VALUES(
     "Patty",
-    "",
     "Bouvier",
     "742 Evergreen Terrace",
     "Springfield",
@@ -167,10 +153,9 @@ VALUES(
     "84015",
     "555-555-5555"
 );
-INSERT INTO survey_population(fname,mname,lname,street,city,zip,state,phone)
+INSERT INTO survey_population(fname,lname,street,city,state,zip,phone)
 VALUES(
     "Waylon",
-    "",
     "Smithers",
     "742 Evergreen Terrace",
     "Springfield",

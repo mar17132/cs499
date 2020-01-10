@@ -41,39 +41,39 @@ VALUES(
 );
 
 /*
-interview_permission setup rows
+interviewer_permissions setup rows
 */
-INSERT INTO interview_permission(study_id,survey_user_id,allowed_permission)
+INSERT INTO interviewer_permissions(study_id,survey_users_id,allowed_permission)
 VALUES(
     (SELECT id FROM study WHERE name = "Harry Potter Favorite Movie"),
     (SELECT id FROM survey_users WHERE uname = "dav"),
     1
 );
-INSERT INTO interview_permission(study_id,survey_user_id,allowed_permission)
+INSERT INTO interviewer_permissions(study_id,survey_users_id,allowed_permission)
 VALUES(
     (SELECT id FROM study WHERE name = "Harry Potter Favorite Movie"),
     (SELECT id FROM survey_users WHERE uname = "harry"),
     1
 );
-INSERT INTO interview_permission(study_id,survey_user_id,allowed_permission)
+INSERT INTO interviewer_permissions(study_id,survey_users_id,allowed_permission)
 VALUES(
     (SELECT id FROM study WHERE name = "Harry Potter Favorite Movie"),
     (SELECT id FROM survey_users WHERE uname = "tom"),
     1
 );
-INSERT INTO interview_permission(study_id,survey_user_id,allowed_permission)
+INSERT INTO interviewer_permissions(study_id,survey_users_id,allowed_permission)
 VALUES(
     (SELECT id FROM study WHERE name = "Star Wars Favorite Movie"),
     (SELECT id FROM survey_users WHERE uname = "dav"),
     1
 );
-INSERT INTO interview_permission(study_id,survey_user_id,allowed_permission)
+INSERT INTO interviewer_permissions(study_id,survey_users_id,allowed_permission)
 VALUES(
     (SELECT id FROM study WHERE name = "Star Wars Favorite Movie"),
     (SELECT id FROM survey_users WHERE uname = "harry"),
     1
 );
-INSERT INTO interview_permission(study_id,survey_user_id,allowed_permission)
+INSERT INTO interviewer_permissions(study_id,survey_users_id,allowed_permission)
 VALUES(
     (SELECT id FROM study WHERE name = "Star Wars Favorite Movie"),
     (SELECT id FROM survey_users WHERE uname = "tom"),
@@ -188,7 +188,7 @@ VALUES(
 survey_interview setup rows
 */
 INSERT INTO survey_interview
-(study_to_survey_pop_id,survey_user_id,interview_start,interview_end,type_id)
+(study_to_survey_pop_id,survey_users_id,interview_start,interview_end,type_id)
 VALUES(
     (
      SELECT study_to_survey_pop.id FROM study_to_survey_pop INNER JOIN survey_population 
@@ -199,15 +199,248 @@ VALUES(
      WHERE survey_population.fname = 'Abraham' AND survey_population.lname = 'Simpsons'
      AND sample_group.sample_name = 'Group1' AND study.name = 'Harry Potter Favorite Movie'    
     ),
-    (SELECT id FROM survey_user WHERE uname = 'dav'),
+    (SELECT id FROM survey_users WHERE uname = 'dav'),
     '2020-01-01 15:00:00',
     '2020-01-01 15:10:00',
     (SELECT id FROM type WHERE type = 'Completed')
 );
-
+INSERT INTO survey_interview
+(study_to_survey_pop_id,survey_users_id,interview_start,interview_end,type_id)
+VALUES(
+    (
+     SELECT study_to_survey_pop.id FROM study_to_survey_pop INNER JOIN survey_population 
+     ON study_to_survey_pop.survey_population_id = survey_population.id
+     INNER JOIN sample_group 
+     ON study_to_survey_pop.sample_group_id = sample_group.id
+     INNER JOIN study ON study_to_survey_pop.study_id = study.id
+     WHERE survey_population.fname = 'Maggie' AND survey_population.lname = 'Simpsons'
+     AND sample_group.sample_name = 'Group1' AND study.name = 'Harry Potter Favorite Movie'    
+    ),
+    (SELECT id FROM survey_users WHERE uname = 'dav'),
+    '2020-01-01 15:25:00',
+    NULL,
+    (SELECT id FROM type WHERE type = 'In Progress')
+);
+INSERT INTO survey_interview
+(study_to_survey_pop_id,survey_users_id,interview_start,interview_end,type_id)
+VALUES(
+    (
+     SELECT study_to_survey_pop.id FROM study_to_survey_pop INNER JOIN survey_population 
+     ON study_to_survey_pop.survey_population_id = survey_population.id
+     INNER JOIN sample_group 
+     ON study_to_survey_pop.sample_group_id = sample_group.id
+     INNER JOIN study ON study_to_survey_pop.study_id = study.id
+     WHERE survey_population.fname = 'Bart' AND survey_population.lname = 'Simpsons'
+     AND sample_group.sample_name = 'Group1' AND study.name = 'Harry Potter Favorite Movie'    
+    ),
+    (SELECT id FROM survey_users WHERE uname = 'harry'),
+    '2020-01-01 15:25:00',
+    NULL,
+    (SELECT id FROM type WHERE type = 'In Progress')
+);
+INSERT INTO survey_interview
+(study_to_survey_pop_id,survey_users_id,interview_start,interview_end,type_id)
+VALUES(
+    (
+     SELECT study_to_survey_pop.id FROM study_to_survey_pop INNER JOIN survey_population 
+     ON study_to_survey_pop.survey_population_id = survey_population.id
+     INNER JOIN sample_group 
+     ON study_to_survey_pop.sample_group_id = sample_group.id
+     INNER JOIN study ON study_to_survey_pop.study_id = study.id
+     WHERE survey_population.fname = 'Waylon' AND survey_population.lname = 'Smithers'
+     AND sample_group.sample_name = 'Group2' AND study.name = 'Star Wars Favorite Movie'    
+    ),
+    (SELECT id FROM survey_users WHERE uname = 'barry'),
+    '2020-01-01 15:25:00',
+    NULL,
+    (SELECT id FROM type WHERE type = 'In Progress')
+);
+INSERT INTO survey_interview
+(study_to_survey_pop_id,survey_users_id,interview_start,interview_end,type_id)
+VALUES(
+    (
+     SELECT study_to_survey_pop.id FROM study_to_survey_pop INNER JOIN survey_population 
+     ON study_to_survey_pop.survey_population_id = survey_population.id
+     INNER JOIN sample_group 
+     ON study_to_survey_pop.sample_group_id = sample_group.id
+     INNER JOIN study ON study_to_survey_pop.study_id = study.id
+     WHERE survey_population.fname = 'Patty' AND survey_population.lname = 'Bouvier'
+     AND sample_group.sample_name = 'Group2' AND study.name = 'Star Wars Favorite Movie'    
+    ),
+    (SELECT id FROM survey_users WHERE uname = 'bob'),
+    '2020-01-01 15:25:00',
+    NULL,
+    (SELECT id FROM type WHERE type = 'In Progress')
+);
+INSERT INTO survey_interview
+(study_to_survey_pop_id,survey_users_id,interview_start,interview_end,type_id)
+VALUES(
+    (
+     SELECT study_to_survey_pop.id FROM study_to_survey_pop INNER JOIN survey_population 
+     ON study_to_survey_pop.survey_population_id = survey_population.id
+     INNER JOIN sample_group 
+     ON study_to_survey_pop.sample_group_id = sample_group.id
+     INNER JOIN study ON study_to_survey_pop.study_id = study.id
+     WHERE survey_population.fname = 'Milhouse' AND survey_population.lname = 'Van Houten'
+     AND sample_group.sample_name = 'Group2' AND study.name = 'Star Wars Favorite Movie'    
+    ),
+    (SELECT id FROM survey_users WHERE uname = 'tom'),
+    '2020-01-01 15:25:00',
+    '2020-01-01 17:25:00',
+    (SELECT id FROM type WHERE type = 'Completed')
+);
+INSERT INTO survey_interview
+(study_to_survey_pop_id,survey_users_id,interview_start,interview_end,type_id)
+VALUES(
+    (
+     SELECT study_to_survey_pop.id FROM study_to_survey_pop INNER JOIN survey_population 
+     ON study_to_survey_pop.survey_population_id = survey_population.id
+     INNER JOIN sample_group 
+     ON study_to_survey_pop.sample_group_id = sample_group.id
+     INNER JOIN study ON study_to_survey_pop.study_id = study.id
+     WHERE survey_population.fname = 'Clancy' AND survey_population.lname = 'Wiggum'
+     AND sample_group.sample_name = 'Group2' AND study.name = 'Star Wars Favorite Movie'    
+    ),
+    (SELECT id FROM survey_users WHERE uname = 'dick'),
+    '2020-01-01 15:25:00',
+    '2020-01-01 17:25:00',
+    (SELECT id FROM type WHERE type = 'Completed')
+);
 
 /*
 survey_queue setup rows
 */
+INSERT INTO survey_queue(study_to_survey_pop_id,queue_timestamp,in_waiting_queue)
+VALUES(
+    (
+      SELECT study_to_survey_pop.id FROM study_to_survey_pop
+      INNER JOIN study ON study_to_survey_pop.study_id = study.id
+      INNER JOIN sample_group ON study_to_survey_pop.sample_group_id = sample_group.id
+      INNER JOIN survey_population ON study_to_survey_pop.survey_population_id = survey_population.id
+      WHERE survey_population.fname = 'Hommer' AND survey_population.lname = 'Simpsons'
+      AND sample_group.sample_name = 'Group1' AND study.name = 'Harry Potter Favorite Movie' 
+    ),
+    '2020-01-01 15:25:00',
+    1
+);
+INSERT INTO survey_queue(study_to_survey_pop_id,queue_timestamp,in_waiting_queue)
+VALUES(
+    (
+      SELECT study_to_survey_pop.id FROM study_to_survey_pop
+      INNER JOIN study ON study_to_survey_pop.study_id = study.id
+      INNER JOIN sample_group ON study_to_survey_pop.sample_group_id = sample_group.id
+      INNER JOIN survey_population ON study_to_survey_pop.survey_population_id = survey_population.id
+      WHERE survey_population.fname = 'Abraham' AND survey_population.lname = 'Simpsons'
+      AND sample_group.sample_name = 'Group1' AND study.name = 'Harry Potter Favorite Movie' 
+    ),
+    '2020-01-01 13:25:00',
+    0
+);
+INSERT INTO survey_queue(study_to_survey_pop_id,queue_timestamp,in_waiting_queue)
+VALUES(
+    (
+      SELECT study_to_survey_pop.id FROM study_to_survey_pop
+      INNER JOIN study ON study_to_survey_pop.study_id = study.id
+      INNER JOIN sample_group ON study_to_survey_pop.sample_group_id = sample_group.id
+      INNER JOIN survey_population ON study_to_survey_pop.survey_population_id = survey_population.id
+      WHERE survey_population.fname = 'Maggie' AND survey_population.lname = 'Simpsons'
+      AND sample_group.sample_name = 'Group1' AND study.name = 'Harry Potter Favorite Movie' 
+    ),
+    '2020-01-01 13:25:00',
+    0
+);
+INSERT INTO survey_queue(study_to_survey_pop_id,queue_timestamp,in_waiting_queue)
+VALUES(
+    (
+      SELECT study_to_survey_pop.id FROM study_to_survey_pop
+      INNER JOIN study ON study_to_survey_pop.study_id = study.id
+      INNER JOIN sample_group ON study_to_survey_pop.sample_group_id = sample_group.id
+      INNER JOIN survey_population ON study_to_survey_pop.survey_population_id = survey_population.id
+      WHERE survey_population.fname = 'Lisa' AND survey_population.lname = 'Simpsons'
+      AND sample_group.sample_name = 'Group1' AND study.name = 'Harry Potter Favorite Movie' 
+    ),
+    '2020-01-01 13:25:00',
+    1
+);
+INSERT INTO survey_queue(study_to_survey_pop_id,queue_timestamp,in_waiting_queue)
+VALUES(
+    (
+      SELECT study_to_survey_pop.id FROM study_to_survey_pop
+      INNER JOIN study ON study_to_survey_pop.study_id = study.id
+      INNER JOIN sample_group ON study_to_survey_pop.sample_group_id = sample_group.id
+      INNER JOIN survey_population ON study_to_survey_pop.survey_population_id = survey_population.id
+      WHERE survey_population.fname = 'Marge' AND survey_population.lname = 'Simpsons'
+      AND sample_group.sample_name = 'Group1' AND study.name = 'Harry Potter Favorite Movie' 
+    ),
+    '2020-01-01 13:25:00',
+    1
+);
+INSERT INTO survey_queue(study_to_survey_pop_id,queue_timestamp,in_waiting_queue)
+VALUES(
+    (
+      SELECT study_to_survey_pop.id FROM study_to_survey_pop
+      INNER JOIN study ON study_to_survey_pop.study_id = study.id
+      INNER JOIN sample_group ON study_to_survey_pop.sample_group_id = sample_group.id
+      INNER JOIN survey_population ON study_to_survey_pop.survey_population_id = survey_population.id
+      WHERE survey_population.fname = 'Bart' AND survey_population.lname = 'Simpsons'
+      AND sample_group.sample_name = 'Group1' AND study.name = 'Harry Potter Favorite Movie' 
+    ),
+    '2020-01-01 13:25:00',
+    0
+);
+INSERT INTO survey_queue(study_to_survey_pop_id,queue_timestamp,in_waiting_queue)
+VALUES(
+    (
+      SELECT study_to_survey_pop.id FROM study_to_survey_pop
+      INNER JOIN study ON study_to_survey_pop.study_id = study.id
+      INNER JOIN sample_group ON study_to_survey_pop.sample_group_id = sample_group.id
+      INNER JOIN survey_population ON study_to_survey_pop.survey_population_id = survey_population.id
+      WHERE survey_population.fname = 'Waylon' AND survey_population.lname = 'Smithers'
+      AND sample_group.sample_name = 'Group2' AND study.name = 'Star Wars Favorite Movie' 
+    ),
+    '2020-01-01 13:25:00',
+    0
+);
+INSERT INTO survey_queue(study_to_survey_pop_id,queue_timestamp,in_waiting_queue)
+VALUES(
+    (
+      SELECT study_to_survey_pop.id FROM study_to_survey_pop
+      INNER JOIN study ON study_to_survey_pop.study_id = study.id
+      INNER JOIN sample_group ON study_to_survey_pop.sample_group_id = sample_group.id
+      INNER JOIN survey_population ON study_to_survey_pop.survey_population_id = survey_population.id
+      WHERE survey_population.fname = 'Patty' AND survey_population.lname = 'Bouvier'
+      AND sample_group.sample_name = 'Group2' AND study.name = 'Star Wars Favorite Movie' 
+    ),
+    '2020-01-01 13:25:00',
+    0
+);
+INSERT INTO survey_queue(study_to_survey_pop_id,queue_timestamp,in_waiting_queue)
+VALUES(
+    (
+      SELECT study_to_survey_pop.id FROM study_to_survey_pop
+      INNER JOIN study ON study_to_survey_pop.study_id = study.id
+      INNER JOIN sample_group ON study_to_survey_pop.sample_group_id = sample_group.id
+      INNER JOIN survey_population ON study_to_survey_pop.survey_population_id = survey_population.id
+      WHERE survey_population.fname = 'Clancy' AND survey_population.lname = 'Wiggum'
+      AND sample_group.sample_name = 'Group2' AND study.name = 'Star Wars Favorite Movie' 
+    ),
+    '2020-01-01 13:25:00',
+    0
+);
+INSERT INTO survey_queue(study_to_survey_pop_id,queue_timestamp,in_waiting_queue)
+VALUES(
+    (
+      SELECT study_to_survey_pop.id FROM study_to_survey_pop
+      INNER JOIN study ON study_to_survey_pop.study_id = study.id
+      INNER JOIN sample_group ON study_to_survey_pop.sample_group_id = sample_group.id
+      INNER JOIN survey_population ON study_to_survey_pop.survey_population_id = survey_population.id
+      WHERE survey_population.fname = 'Milhouse' AND survey_population.lname = 'Van Houten'
+      AND sample_group.sample_name = 'Group2' AND study.name = 'Star Wars Favorite Movie' 
+    ),
+    '2020-01-01 13:25:00',
+    0
+);
+
+
 
 
