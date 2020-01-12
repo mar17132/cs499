@@ -263,7 +263,7 @@ question_order is where the question will be displayed. if question_order
 */
 CREATE TABLE IF NOT EXISTS question(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    quesiton VARCHAR(254) NOT NULL,
+    question VARCHAR(254) NOT NULL,
     order_Anwsers BOOLEAN NOT NULL DEFAULT 0,
     question_order INT NOT NULL DEFAULT -1,
     type_id INT UNSIGNED NOT NULL,
@@ -281,7 +281,7 @@ This table connects the questions to the study.
 */
 CREATE TABLE IF NOT EXISTS study_to_question(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    quesiton_id INT UNSIGNED NOT NULL,
+    question_id INT UNSIGNED NOT NULL,
     study_id INT UNSIGNED NOT NULL,
     PRIMARY KEY(id),
     /*study foreign key*/
@@ -292,7 +292,7 @@ CREATE TABLE IF NOT EXISTS study_to_question(
     ON UPDATE CASCADE,
     /*question foreign key*/
     CONSTRAINT study_to_question_to_question_fk_con
-    FOREIGN KEY study_to_question_to_quesiton_fk(quesiton_id) 
+    FOREIGN KEY study_to_question_to_quesiton_fk(question_id) 
     REFERENCES question(id) 
     ON DELETE RESTRICT
     ON UPDATE CASCADE
@@ -305,13 +305,13 @@ If the multi_choice_order is -1 then order is off and
 */
 CREATE TABLE IF NOT EXISTS anwsers_multi_choices(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    quesiton_id INT UNSIGNED NOT NULL,
+    question_id INT UNSIGNED NOT NULL,
     multi_choice_order INT NULL DEFAULT -1,
     anwser VARCHAR(254) NOT NULL,
     PRIMARY KEY(id),
     /*question foreign key*/
     CONSTRAINT anwsers_multi_choices_to_question_fk_con
-    FOREIGN KEY sanwsers_multi_choices_to_quesiton_fk(quesiton_id) 
+    FOREIGN KEY sanwsers_multi_choices_to_quesiton_fk(question_id) 
     REFERENCES question(id) 
     ON DELETE RESTRICT
     ON UPDATE CASCADE
@@ -323,12 +323,12 @@ a pretext that is in the textbox before writing has started.
 */
 CREATE TABLE IF NOT EXISTS anwsers_fill_in_blank(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    quesiton_id INT UNSIGNED NOT NULL,
+    question_id INT UNSIGNED NOT NULL,
     preText VARCHAR(254) NULL,
     PRIMARY KEY(id),
     /*question foreign key*/
     CONSTRAINT anwsers_fill_in_blank_to_question_fk_con
-    FOREIGN KEY anwsers_fill_in_blank_to_quesiton_fk(quesiton_id) 
+    FOREIGN KEY anwsers_fill_in_blank_to_quesiton_fk(question_id) 
     REFERENCES question(id) 
     ON DELETE RESTRICT
     ON UPDATE CASCADE
@@ -340,13 +340,13 @@ order of the anwser. If checkbox_order is -1 then order is off.
 */
 CREATE TABLE IF NOT EXISTS anwsers_checkbox(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    quesiton_id INT UNSIGNED NOT NULL,
+    question_id INT UNSIGNED NOT NULL,
     checkbox_order INT NULL DEFAULT -1,
     anwser VARCHAR(254) NOT NULL,
     PRIMARY KEY(id),
     /*question foreign key*/
     CONSTRAINT anwsers_checkbox_to_question_fk_con
-    FOREIGN KEY anwsers_checkbox_to_quesiton_fk(quesiton_id) 
+    FOREIGN KEY anwsers_checkbox_to_quesiton_fk(question_id) 
     REFERENCES question(id) 
     ON DELETE RESTRICT
     ON UPDATE CASCADE
@@ -361,13 +361,13 @@ Fill in the blank response. This is for response for the person of the populatio
 */
 CREATE TABLE IF NOT EXISTS respons_to_fillinblank(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    quesiton_id INT UNSIGNED NOT NULL,
+    question_id INT UNSIGNED NOT NULL,
     survey_interview_id INT UNSIGNED NOT NULL,
     respons VARCHAR(254) NOT NULL,
     PRIMARY KEY(id),
     /*question foreign key*/
     CONSTRAINT respons_to_fillinblank_to_question_fk_con
-    FOREIGN KEY respons_to_fillinblank_to_quesiton_fk(quesiton_id) 
+    FOREIGN KEY respons_to_fillinblank_to_quesiton_fk(question_id) 
     REFERENCES question(id) 
     ON DELETE RESTRICT
     ON UPDATE CASCADE,
@@ -386,13 +386,13 @@ connects the interview to the responses.
 */
 CREATE TABLE IF NOT EXISTS respons_to_checkbox(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    quesiton_id INT UNSIGNED NOT NULL,
+    question_id INT UNSIGNED NOT NULL,
     survey_interview_id INT UNSIGNED NOT NULL,
     anwsers_checkbox_id INT UNSIGNED NOT NULL,
     PRIMARY KEY(id),
     /*question foreign key*/
     CONSTRAINT respons_to_checkbox_to_question_fk_con
-    FOREIGN KEY respons_to_checkbox_to_quesiton_fk(quesiton_id) 
+    FOREIGN KEY respons_to_checkbox_to_quesiton_fk(question_id) 
     REFERENCES question(id) 
     ON DELETE RESTRICT
     ON UPDATE CASCADE,
@@ -416,13 +416,13 @@ This table connects multi choice question to respons and the interview.
 */
 CREATE TABLE IF NOT EXISTS respons_to_multi_choice(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    quesiton_id INT UNSIGNED NOT NULL,
+    question_id INT UNSIGNED NOT NULL,
     survey_interview_id INT UNSIGNED NOT NULL,
     anwsers_multi_choices_id INT UNSIGNED NOT NULL,
     PRIMARY KEY(id),
     /*question foreign key*/
     CONSTRAINT respons_to_multi_choice_to_question_fk_con
-    FOREIGN KEY respons_to_multi_choice_to_quesiton_fk(quesiton_id) 
+    FOREIGN KEY respons_to_multi_choice_to_quesiton_fk(question_id) 
     REFERENCES question(id) 
     ON DELETE RESTRICT
     ON UPDATE CASCADE,
