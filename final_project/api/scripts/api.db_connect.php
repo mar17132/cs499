@@ -3,7 +3,7 @@
 *
 */
 
-include_once "api.db_config.php";
+require_once 'api.db_config.php';
 
 
 class mydbconnect
@@ -14,6 +14,7 @@ class mydbconnect
     private $dbname = NULL;
     private $myConnect = NULL;
     private $dberror = NULL;
+    private $selectResults = NULL;
 
     public function __construct($name,$pass,$host,$database)
     {
@@ -89,11 +90,11 @@ class mydbconnect
         }
         
         $this->myConnect = 
-        mysqli_connect($this->server,$this->uname,$this->passwd,$this->dbname);
+        new mysqli($this->server,$this->uname,$this->passwd,$this->dbname);
 
-        if(!$this->myConnect)
+        if($this->myConnect->connect_errno)
         {
-           $this->dberror = "Cannot connect to database!";
+           $this->dberror = "Cannot connect to database! " . $this->myConnect->connect_errno;
            exit(); 
         }
 
@@ -105,14 +106,14 @@ class mydbconnect
         $this->myConnect = NULL;
     }
 
-    public function queryUpdate()
+    public function queryUpdate($sql)
     {
         $this->dberror = NULL;
         if(!is_null($this->myConnect))
         {
             if(!($this->myConnect->query($sql) === TRUE))
             {
-                $this->dberror = "Not able to update! " . $this->error;
+                $this->dberror = "Not able to update! " . $this->myConnect->error;
             }
         }
         else
@@ -123,14 +124,27 @@ class mydbconnect
 
     }
 
-    public function querySelect()
+    public function querySelect($sql)
     {
         $this->dberror = NULL;
         if(!is_null($this->myConnect))
         {
-            if(!($this->myConnect->query($sql) === TRUE))
+            //$result = $this->myConnect->query($sql);
+           // print_r($result);
+            if($result = $this->myConnect->query($sql))
             {
-                $this->dberror = "Not able to select! " . $this->error;
+                $mysqlArray = array();
+                while($row = $result->fetch_assoc())
+                {
+                    $mysqlArray[] = $row;
+                    echo json_encode($row);
+                }
+
+                $this->selectResults = json_encode();/*###################*/
+            }
+            else
+            {
+                $this->dberror = "Not able to select! " . $this->myConnect->error;
             }
         }
         else
@@ -148,7 +162,7 @@ class mydbconnect
         {
             if(!($this->myConnect->query($sql) === TRUE))
             {
-                $this->dberror = "Not able to insert! " . $this->error;
+                $this->dberror = "Not able to insert! " . $this->myConnect->error;
             }
         }
         else
@@ -166,7 +180,7 @@ class mydbconnect
         {
             if(!($this->myConnect->query($sql) === TRUE))
             {
-                $this->dberror = "Not able to delete! " . $this->error;
+                $this->dberror = "Not able to delete! " . $this->myConnect->error;
             }
         }
         else
@@ -175,6 +189,16 @@ class mydbconnect
             exit();
         }
 
+    }
+
+    public function getQuery()
+    {
+        return $this->myConnect;
+    }
+
+    public function getSQLResults()
+    {
+        return $this->selectResults;
     }
 
     

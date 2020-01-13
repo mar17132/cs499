@@ -6,7 +6,8 @@
 * Description: This script will create the tables needed for csfinal database.
 */
 
-CREATE DATABASE IF NOT EXISTS csfinal;
+CREATE DATABASE IF NOT EXISTS csfinal
+DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 
 USE csfinal;
