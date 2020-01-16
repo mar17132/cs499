@@ -2,79 +2,147 @@
 
 $testArray = array(array('bob' => 'manager','fruit' => 'apple'),array('dav' => 'no','dick' => 'harry'));
 
-function is_multi_array($newArray)
+class php_to_json
 {
-    if(is_array($newArray))
+    private $dbrowString = '';
+    private $jsonvarsString = '';
+
+
+    private function is_multi_array($newArray)
     {
-        foreach($newArray as $row)
+        if(is_array($newArray))
         {
-            if(!is_array($row))
+            foreach($newArray as $row)
             {
-                return false;
+                if(!is_array($row))
+                {
+                    return false;
+                }
             }
+
+            return true;
         }
-
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
-
-function array_to_json($arrayjson)
-{
-    $jsonString = '';
-
-    $endKey = end(array_keys($arrayjson));
-
-    while(list($key,$val) = each($arrayjson))
-    {
-        $jsonString .= '"'.$key.'"'.':'.'"'.$val.'"';
-
-        if(strcmp($endKey,$key) != 0)
+        else
         {
-            $jsonString .= ',';
+            return false;
         }
     }
 
-    return $jsonString;
-}
-
-function jsonEncode($arrayConvert)
-{
-    $jsonString = '{"rows":[';
-
-    if(is_multi_array($arrayConvert))
+    private function array_to_json($arrayjson)
     {
-        foreach($arrayConvert as $index => $dbrow)
+        $jsonString = '';
+
+        $endKey = end(array_keys($arrayjson));
+
+        while(list($key,$val) = each($arrayjson))
         {
-            $jsonString .= '{';
-            //$dbKeys = array_keys($dbrow);
-           // $endKey = end(array_keys($dbrow));
+            $jsonString .= '"'.$key.'"'.':'.'"'.$val.'"';
 
-            $jsonString .= array_to_json($dbrow);
-
-            $jsonString .= '}';
-
-            if($index < (count($arrayConvert) - 1))
+            if(strcmp($endKey,$key) != 0)
             {
                 $jsonString .= ',';
             }
         }
-    }
-    else
-    {
-        $jsonString .= '{';
-        $jsonString .= array_to_json($arrayConvert);
-        $jsonString .= '}';
+
+        return $jsonString;
     }
 
-    return $jsonString . ']}';
+    function jsonEncode($arrayConvert)
+    {
+        $this->dbrowString = '"rows":[';
+
+        if($this->is_multi_array($arrayConvert))
+        {
+            foreach($arrayConvert as $index => $dbrow)
+            {
+                $this->dbrowString .= '{';
+                //$dbKeys = array_keys($dbrow);
+            // $endKey = end(array_keys($dbrow));
+
+                $this->dbrowString .= $this->array_to_json($dbrow);
+
+                $this->dbrowString .= '}';
+
+                if($index < (count($arrayConvert) - 1))
+                {
+                    $this->dbrowString .= ',';
+                }
+            }
+        }
+        else
+        {
+            $this->dbrowString .= '{';
+            $this->dbrowString .= $this->array_to_json($arrayConvert);
+            $this->dbrowString .= '}';
+        }
+
+        $this->dbrowString .= ']';
+    }
+
+    public function addJsonVars($jsonVarsArray)
+    {
+        $this->jsonvarsString = '"rows":[';
+
+        if($this->is_multi_array($jsonVarsArray))
+        {
+            foreach($jsonVarsArray as $index => $dbrow)
+            {
+                $this->jsonvarsString .= '{';
+                //$dbKeys = array_keys($dbrow);
+            // $endKey = end(array_keys($dbrow));
+
+                $this->jsonvarsString .= $this->array_to_json($dbrow);
+
+                $this->jsonvarsString .= '}';
+
+                if($index < (count($arrayConvert) - 1))
+                {
+                    $this->jsonvarsString .= ',';
+                }
+            }
+        }
+        else
+        {
+            $this->jsonvarsString .= '{';
+            $this->jsonvarsString .= $this->array_to_json($jsonVarsArray);
+            $this->jsonvarsString .= '}';
+        }
+
+        $this->jsonvarsString .= ']';
+    }
+
+    public function addOneJsonVar($var,$val)
+    {
+        $this->jsonvarsString .= '"'. $var . '":"' . $val . '"';
+    }
+
+    public function getJsonString()
+    {
+        $returnString = '';
+
+        if(!empty($this->jsonvarsString))
+        {
+            $returnString  = '{' . $this->jsonvarsString . ',' . $this->dbrowString . '}';
+        }
+        elseif(!empty($this->dbrowString))
+        {
+            $returnString = '{' . $this->dbrowString . '}'; 
+        }
+        else
+        {
+            $returnString = false;
+        }
+
+        return $returnString;
+    }
 }
 
-echo jsonEncode($testArray);
+$mytest = new php_to_json();
 
-print_r(json_decode('{"rows":[{"bob":"manager","fruit":"apple"},{"dav":"no","dick":"harry"}]}'));
+$mytest->jsonEncode($testArray);
+
+echo $mytest->getJsonString();
+
+print_r(json_decode($mytest->getJsonString()));
 
 ?>
