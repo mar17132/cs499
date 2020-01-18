@@ -1,6 +1,5 @@
 <?php
 
-$testArray = array(array('bob' => 'manager','fruit' => 'apple'),array('dav' => 'no','dick' => 'harry'));
 
 class php_to_json
 {
@@ -137,12 +136,5 @@ class php_to_json
     }
 }
 
-$mytest = new php_to_json();
-
-$mytest->jsonEncode($testArray);
-
-echo $mytest->getJsonString();
-
-print_r(json_decode($mytest->getJsonString()));
 
 ?>

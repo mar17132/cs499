@@ -4,6 +4,7 @@
 */
 
 require_once 'api.db_config.php';
+require_once 'api.json_converter.php';
 
 
 class mydbconnect
@@ -15,6 +16,7 @@ class mydbconnect
     private $myConnect = NULL;
     private $dberror = NULL;
     private $selectResults = NULL;
+    private $jsonConvert = NULL;
 
     public function __construct($name,$pass,$host,$database)
     {
@@ -22,6 +24,7 @@ class mydbconnect
         $this->passwd = $pass;
         $this->$server = $host;
         $this->dbname = $database;
+        $this->jsonConvert = new php_to_json();
     }
 
     public function __destruct()
@@ -129,18 +132,18 @@ class mydbconnect
         $this->dberror = NULL;
         if(!is_null($this->myConnect))
         {
-            //$result = $this->myConnect->query($sql);
-           // print_r($result);
+
             if($result = $this->myConnect->query($sql))
             {
                 $mysqlArray = array();
                 while($row = $result->fetch_assoc())
                 {
                     $mysqlArray[] = $row;
-                    echo json_encode($row);
                 }
 
-                $this->selectResults = json_encode();/*###################*/
+                //$this->jsonConvert->jsonEncode($mysqlArray);
+                //$this->selectResults = $this->jsonConvert->getJsonString();
+                $this->selectResults = $mysqlArray;
             }
             else
             {
@@ -198,6 +201,12 @@ class mydbconnect
 
     public function getSQLResults()
     {
+        $returnString = "";
+
+        if($this->isDberror())
+        {
+            $returnString = '{"status":"error","error":'. $this->getDberror() . '}';
+        }
         return $this->selectResults;
     }
 

@@ -3,9 +3,8 @@
 *
 */
 
-echo "test";
-
 require_once 'api.db_connect.php';
+
 
 $dbObject->setConnection();
 
