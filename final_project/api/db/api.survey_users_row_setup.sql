@@ -22,7 +22,7 @@ VALUES(
 INSERT INTO survey_users(uname,passwd,type_id)
 VALUES(
     "dav",
-    PASSWORD('Passw@rd99'),
+    "$2y$10$24HpxepBPMapioLZ8GiG.OMZMHBKmChfRXlnNARr1qpZlpBs9/EX6",
     (SELECT id FROM type WHERE type = "Interviewer")
 );
 INSERT INTO survey_users(uname,passwd,type_id)

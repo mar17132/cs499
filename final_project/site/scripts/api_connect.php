@@ -30,7 +30,7 @@ class apiconnection
 
     public function setParameters($newParam)
     {
-        $this->parameters[] = $newParam;
+        $this->parameters = $newParam;
     }
 
     public function getParameters()
@@ -52,7 +52,7 @@ class apiconnection
             CURLOPT_HEADER => false,
             CURLOPT_RETURNTRANSFER => true
         );
-        
+
         $this->myCurl = curl_init(); 
 
         curl_setopt_array($this->myCurl,$curlOptions);
@@ -76,10 +76,26 @@ class apiconnection
 }
 
 $test = new apiconnection();
-$test->setPage("api/scripts/api.db_users.php");
-$test->setParameters(array('type'=>'user','return_results'=>'login','uname'=>'dav'));
+$test->setPage("final_project/api/scripts/api.db_users.php");
+$test->setParameters(array('type'=>'user','return_results'=>'login','uname'=>'dav'
+                      ,'pass'=> password_hash('Passw@rd99',PASSWORD_DEFAULT)));
 $test->connect_api();
-echo $test->getResults();
+
+$theResults = $test->getResults();
+
+echo $theResults;
+$jsonArray = json_decode($theResults,true,2048,JSON_OBJECT_AS_ARRAY);
+
+print_r($jsonArray);
+
+if(password_verify('Passw@rd99','$2y$10$24HpxepBPMapioLZ8GiG.OMZMHBKmChfRXlnNARr1qpZlpBs9/EX6'))
+{
+    echo $theResults;
+}
+else
+{
+    echo "this failed";
+}
 
 
 ?>

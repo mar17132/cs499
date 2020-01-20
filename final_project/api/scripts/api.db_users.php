@@ -4,32 +4,40 @@
 */
 
 require_once 'api.db_connect.php';
+require_once 'api.json_converter.php';
 
 
-if(isset($_POST))
+
+if(!empty($_POST))
 {
-    
-}
+    //'type'=>'user','return_results'=>'login','uname'=>'dav'
+    $dbObject->setConnection();
 
-
-$dbObject->setConnection();
-
-if(!$dbObject->isDberror())
-{
-    $dbObject->querySelect("select * from survey_users");
-    if($dbObject->isDberror())
+    if(!$dbObject->isDberror())
     {
-        echo $dbObject->getDberror();
+        if(strcmp($_POST["type"],'user') == 0)
+        {
+            switch($_POST['return_results'])
+            {
+                case 'login':
+                    echo getUserLogin($_POST['uname'],$_POST['pass']);
+                break;
+    
+            }
+        }
+        else
+        {
+            return '{"status":"good","results":"Bad type"}';
+        }
     }
     else
     {
-        echo $dbObject->getSQLResults();
+        echo $dbObject->getDberror();
     }
 }
-else
-{
-    echo $dbObject->getDberror();
-}
+
+
+
 
 
 function getAllUsers()
@@ -46,6 +54,31 @@ function getUserPermission($myUser)
 function getUserLogin($myUser,$pass)
 {
     //this will test if there is a user with pass
+    GLOBAL $dbObject;
+    GLOBAL $toJsonString; 
+
+    $dbObject->querySelect("select * from survey_users 
+                             where uname = '$myUser'");
+    if($dbObject->isDberror())
+    {
+        return $dbObject->getDberror();
+    }
+    else
+    {
+        if(count($dbObject->getSQLResults()) > 0)
+        {
+            //user exisit
+            $toJsonString->jsonEncode($dbObject->getSQLResults());
+            
+            return '{"status":"good","results":"true",'. $toJsonString->getdbrowString() . '}';
+        }
+        else
+        {
+            //user does not exisist
+            return '{"status":"good","results":"false"}';
+        }
+    }    
+
 }
 
 

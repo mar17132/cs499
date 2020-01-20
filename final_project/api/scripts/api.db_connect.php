@@ -4,7 +4,6 @@
 */
 
 require_once 'api.db_config.php';
-require_once 'api.json_converter.php';
 
 
 class mydbconnect
@@ -22,9 +21,9 @@ class mydbconnect
     {
         $this->uname = $name;
         $this->passwd = $pass;
-        $this->$server = $host;
+        $this->server = $host;
         $this->dbname = $database;
-        $this->jsonConvert = new php_to_json();
+        //$this->jsonConvert = new php_to_json();
     }
 
     public function __destruct()
@@ -207,7 +206,12 @@ class mydbconnect
         {
             $returnString = '{"status":"error","error":'. $this->getDberror() . '}';
         }
-        return $this->selectResults;
+        else
+        {
+            $returnString = $this->selectResults;
+        }
+
+        return $returnString;
     }
 
     
