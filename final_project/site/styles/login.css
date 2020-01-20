@@ -24,6 +24,13 @@
 body{
     background-image: url("../images/login_background.jpg");
     background-repeat: no-repeat;
-    background-position: center;
-    background-size: auto;
+    background-position: initial;
+    background-size: cover;
+    -webkit-backgound-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+}
+html,body{
+    margin: 0;
+    padding: 0;
 }
