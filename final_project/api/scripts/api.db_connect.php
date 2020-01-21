@@ -139,9 +139,7 @@ class mydbconnect
                 {
                     $mysqlArray[] = $row;
                 }
-
-                //$this->jsonConvert->jsonEncode($mysqlArray);
-                //$this->selectResults = $this->jsonConvert->getJsonString();
+                
                 $this->selectResults = $mysqlArray;
             }
             else
