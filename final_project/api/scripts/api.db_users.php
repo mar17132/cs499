@@ -22,7 +22,9 @@ if(!empty($_POST))
                 case 'login':
                     echo getUserLogin($_POST['uname'],$_POST['pass']);
                 break;
-    
+                case 'all':
+                    echo getAllUsers();
+                break;    
             }
         }
         else
@@ -43,10 +45,36 @@ if(!empty($_POST))
 function getAllUsers()
 {
     //This will get all users names
-    //and type and permissions
+    //and type 
+
+        GLOBAL $dbObject;
+        GLOBAL $toJsonString; 
+    
+        $dbObject->querySelect("select user.id,user.uname,type.type
+                                from survey_users as user 
+                                INNER JOIN type on user.type_id = type.id");
+        if($dbObject->isDberror())
+        {
+            return $dbObject->getDberror();
+        }
+        else
+        {
+            if(count($dbObject->getSQLResults()) > 0)
+            {
+                //user exisit
+                $toJsonString->jsonEncode($dbObject->getSQLResults());
+                
+                return '{"status":"good","results":"true",'. $toJsonString->getdbrowString() . '}';
+            }
+            else
+            {
+                //user does not exisist
+                return '{"status":"good","results":"false"}';
+            }
+        }    
 }
 
-function getUserPermission($myUser)
+function getUserPermission($userID)
 {
     //this will get one users permissions
 }

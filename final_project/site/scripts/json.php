@@ -1,7 +1,7 @@
 <?php
 
 
-class api_php_to_json
+class php_to_json
 {
     private $dbrowString = '';
     private $jsonvarsString = '';
@@ -137,12 +137,12 @@ class api_php_to_json
     }
 }
 
-$toJsonString = new api_php_to_json();
+$phpToString = new php_to_json();
 
 
 
 
-class api_json_to_php
+class json_to_php
 {
     private $jsonArray = array();
     private $jsonString = NULL;
@@ -150,19 +150,21 @@ class api_json_to_php
     public function json_to_array($jstring)
     {
         $arrayString = explode('"',trim($jstring)); 
+
         $newkey = NULL;
         $newVal = NULL;
         $newArraykey = NULL;
         $newArrayVal = NULL;
         $isArray = false;
         $newArray = array();
-        $haystack = array("{",":","}","}]","[{","}]}",",",":[{",", ");
+        $haystack = array("{",":","}","}]","[{","}]}",",",":[{",",","{ ");
         $arrayEndHaystack = array("}]","}]}","},","}, {","},{");    
 
         foreach($arrayString as $jsonVar)
         {    
             $jsonVar = trim($jsonVar);
-            $jsonVar = str_replace(array("\n\r", "\n", "\r"," "), "", $jsonVar);
+            $jsonVar = rtrim($jsonVar);
+            $jsonVar = str_replace(array("\n\r", "\n", "\r"," ","\t"), "", $jsonVar);
 
             if($newkey == NULL && !$isArray)
             {
@@ -174,6 +176,7 @@ class api_json_to_php
             }
             elseif($newVal == NULL && !$isArray)
             {
+                
                 if(!in_array($jsonVar,$haystack))
                 {
                     $newVal = $jsonVar;
@@ -266,7 +269,7 @@ class api_json_to_php
 
 }
 
-$toJsonArray = new api_json_to_php();
+$jsonTophp = new json_to_php();
 
 ?>
 

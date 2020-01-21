@@ -1,5 +1,7 @@
 <?php
 
+require_once 'json.php';
+
 class apiconnection
 {
     private $myCurl = NULL;
@@ -75,27 +77,28 @@ class apiconnection
 
 }
 
-$test = new apiconnection();
+/*$test = new apiconnection();
 $test->setPage("final_project/api/scripts/api.db_users.php");
-$test->setParameters(array('type'=>'user','return_results'=>'login','uname'=>'dav'
-                      ,'pass'=> password_hash('Passw@rd99',PASSWORD_DEFAULT)));
+$test->setParameters(array('type'=>'user','return_results'=>'all'));
 $test->connect_api();
 
 $theResults = $test->getResults();
 
-echo $theResults;
-$jsonArray = json_decode($theResults,true,2048,JSON_OBJECT_AS_ARRAY);
+//echo $theResults;
 
-print_r($jsonArray);
+$jsonTophp->json_to_array($theResults);
+$test2 = $jsonTophp->getjsonArray();
 
-if(password_verify('Passw@rd99','$2y$10$24HpxepBPMapioLZ8GiG.OMZMHBKmChfRXlnNARr1qpZlpBs9/EX6'))
+print_r($test2);
+
+if(password_verify('Passw@rd99',$test2['rows'][0]['passwd']))
 {
-    echo $theResults;
+    print_r($test2);
 }
 else
 {
     echo "this failed";
-}
+}*/
 
 
 ?>
