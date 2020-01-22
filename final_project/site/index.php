@@ -1,7 +1,7 @@
 
 <?php
 
-require_once 'documents/header.php';
+require_once 'documents/header_index.php';
 
 
 

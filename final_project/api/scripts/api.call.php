@@ -49,7 +49,7 @@ function usertype()
     switch($_POST['return_results'])
     {
         case 'login':
-            echo getUserLogin($_POST['uname'],$_POST['pass']);
+            echo getUserLogin($_POST['uname']);
         break;
         case 'all':
             echo getAllUsers();

@@ -77,7 +77,7 @@ function getUserPermission($userID)
 
 }
 
-function getUserLogin($myUser,$pass)
+function getUserLogin($myUser)
 {
     //this will test if there is a user with pass
     GLOBAL $dbObject;

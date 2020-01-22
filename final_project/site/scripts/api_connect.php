@@ -77,7 +77,7 @@ class apiconnection
 
 }
 
-$test = new apiconnection();
+/*$test = new apiconnection();
 $test->setPage("final_project/api/scripts/api.call.php");
 $test->setParameters(array('type'=>'user','return_results'=>'permissions',"userid"=>'5'));
 $test->connect_api();
@@ -91,7 +91,7 @@ $test2 = $jsonTophp->getjsonArray();
 
 print_r($test2);
 
-/*if(password_verify('Passw@rd99',$test2['rows'][0]['passwd']))
+if(password_verify('Passw@rd99',$test2['rows'][0]['passwd']))
 {
     print_r($test2);
 }

@@ -1,4 +1,17 @@
 
-#menu_logout{
+
+
+#logoutUL{
+    padding-right: 50px;
+}
+
+.menu_a{
+    outline: none;
     cursor: pointer;
 }
+
+
+.mydarkdrop{
+    background-color: #343a40;
+}
+
