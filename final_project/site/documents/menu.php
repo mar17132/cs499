@@ -39,7 +39,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link menu_a" href="#">
+            <a class="nav-link menu_a" href="'.$myURL.'/documents/users_body.php">
               Users
             </a>
           </li>';
@@ -54,7 +54,7 @@
         <div class="dropdown-menu dropdown-menu-right mydarkdrop" 
         aria-labelledby="navbarDropdownMenuLink">
             <a id="menu_logout" href="<?php 
-              echo $myURL."/site/documents/login.php";
+              echo $myURL."/documents/login.php";
             ?>" class="dropdown-item menu_a">
               Logout
             </a>

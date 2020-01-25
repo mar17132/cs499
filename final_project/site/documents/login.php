@@ -2,7 +2,6 @@
 <?php 
 
 include_once 'header_login.php'; 
-//include_once '../scripts/api_connect.php'; 
 
 ?>
 
@@ -28,7 +27,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 
     if(password_verify($_POST['pass'],$returnArray['rows'][0]['passwd']))
     {
-        setLoginSession($_POST);
+        setLoginSession($returnArray['rows'][0]);
         header("location:../index.php");
     }
     else

@@ -83,7 +83,9 @@ function getUserLogin($myUser)
     GLOBAL $dbObject;
     GLOBAL $toJsonString; 
 
-    $dbObject->querySelect("select * from survey_users 
+    $dbObject->querySelect("select users.id, users.uname, users.passwd, type.type
+                            from survey_users as users 
+                            INNER JOIN type ON users.type_id = type.id
                              where uname = '$myUser'");
     if($dbObject->isDberror())
     {
@@ -105,6 +107,36 @@ function getUserLogin($myUser)
         }
     }    
 
+}
+
+function getUserTypes()
+{
+    //this will test if there is a user with pass
+    GLOBAL $dbObject;
+    GLOBAL $toJsonString; 
+
+    $dbObject->querySelect("select type.id,type.type,type_class.typeClass from type  
+            inner join type_class on type.type_class_id = type_class.id
+            where type_class.typeClass = 'Users'");
+    if($dbObject->isDberror())
+    {
+        return $dbObject->getDberror();
+    }
+    else
+    {
+        if(count($dbObject->getSQLResults()) > 0)
+        {
+            //user exisit
+            $toJsonString->jsonEncode($dbObject->getSQLResults());
+            
+            return '{"status":"good","results":"true",'. $toJsonString->getdbrowString() . '}';
+        }
+        else
+        {
+            //user does not exisist
+            return '{"status":"good","results":"false"}';
+        }
+    }  
 }
 
 

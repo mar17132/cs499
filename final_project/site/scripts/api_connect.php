@@ -76,10 +76,10 @@ class apiconnection
     }
 
 }
-
-/*$test = new apiconnection();
+/*
+$test = new apiconnection();
 $test->setPage("final_project/api/scripts/api.call.php");
-$test->setParameters(array('type'=>'user','return_results'=>'permissions',"userid"=>'5'));
+$test->setParameters(array('type'=>'user','return_results'=>'types'));
 $test->connect_api();
 
 $theResults = $test->getResults();
@@ -91,14 +91,7 @@ $test2 = $jsonTophp->getjsonArray();
 
 print_r($test2);
 
-if(password_verify('Passw@rd99',$test2['rows'][0]['passwd']))
-{
-    print_r($test2);
-}
-else
-{
-    echo "this failed";
-}*/
+*/
 
 
 ?>

@@ -57,6 +57,9 @@ function usertype()
         case 'permissions':
             echo getUserPermission($_POST['userid']);
         break;
+        case 'types':
+            echo getUserTypes();
+        break;
         default:
             echo '{"status":"good","results":"Bad return"}';
         break;     

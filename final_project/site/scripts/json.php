@@ -135,6 +135,12 @@ class php_to_json
     {
         return $this->dbrowString;
     }
+
+    public function clearVars()
+    {
+        $this->dbrowString = '';
+        $this->jsonvarsString = '';
+    }
 }
 
 $phpToString = new php_to_json();
@@ -265,6 +271,13 @@ class json_to_php
     public function getjsonArray()
     {
         return $this->jsonArray;
+    }
+
+    public function clearVars()
+    {
+        $this->jsonArray = NULL;
+        $this->jsonString = NULL;
+        $this->jsonArray = array();
     }
 
 }
