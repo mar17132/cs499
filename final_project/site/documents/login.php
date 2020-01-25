@@ -2,7 +2,7 @@
 <?php 
 
 include_once 'header_login.php'; 
-include_once '../scripts/api_connect.php'; 
+//include_once '../scripts/api_connect.php'; 
 
 ?>
 
@@ -54,10 +54,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
             ?>
         </span>      
         <div class="form-group">
-            <input type="text" class="form-control" name="uname" placeholder="Username" required="required">
+            <input type="text" class="form-control" 
+            name="uname" placeholder="Username" required="required">
         </div>
         <div class="form-group">
-            <input type="password" name="pass" class="form-control" placeholder="Password" required="required">
+            <input type="password" 
+            name="pass" class="form-control" placeholder="Password" required="required">
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block">Log in</button>

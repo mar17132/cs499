@@ -12,11 +12,12 @@ USE csfinal;
 
 /*
 survey_users setup rows
+Passw@rd99
 */
 INSERT INTO survey_users(uname,passwd,type_id)
 VALUES(
     "bob",
-    PASSWORD('Passw@rd99'),
+    "$2y$10$24HpxepBPMapioLZ8GiG.OMZMHBKmChfRXlnNARr1qpZlpBs9/EX6",
     (SELECT id FROM type WHERE type = "Admin")
 );
 INSERT INTO survey_users(uname,passwd,type_id)
@@ -28,24 +29,24 @@ VALUES(
 INSERT INTO survey_users(uname,passwd,type_id)
 VALUES(
     "dick",
-    PASSWORD('Passw@rd99'),
+    "$2y$10$24HpxepBPMapioLZ8GiG.OMZMHBKmChfRXlnNARr1qpZlpBs9/EX6",
     (SELECT id FROM type WHERE type = "Admin")
 );
 INSERT INTO survey_users(uname,passwd,type_id)
 VALUES(
     "harry",
-    PASSWORD('Passw@rd99'),
+    "$2y$10$24HpxepBPMapioLZ8GiG.OMZMHBKmChfRXlnNARr1qpZlpBs9/EX6",
     (SELECT id FROM type WHERE type = "Interviewer")    
 );
 INSERT INTO survey_users(uname,passwd,type_id)
 VALUES(
     "tom",
-    PASSWORD('Passw@rd99'),
+    "$2y$10$24HpxepBPMapioLZ8GiG.OMZMHBKmChfRXlnNARr1qpZlpBs9/EX6",
     (SELECT id FROM type WHERE type = "Admin")
 );
 INSERT INTO survey_users(uname,passwd,type_id)
 VALUES(
     "barry",
-    PASSWORD('Passw@rd99'),
+    "$2y$10$24HpxepBPMapioLZ8GiG.OMZMHBKmChfRXlnNARr1qpZlpBs9/EX6",
     (SELECT id FROM type WHERE type = "Interviewer")
 );

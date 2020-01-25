@@ -1,7 +1,9 @@
 
 <?php
 
+require_once '../scripts/global_config.php';
 require_once '../scripts/sessions.php';
+require_once "../scripts/api_connect.php"; 
 
 ?>
 

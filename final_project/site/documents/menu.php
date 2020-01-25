@@ -29,16 +29,22 @@
           Interviews
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link menu_a" href="#">
-          Populations
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link menu_a" href="#">
-          Users
-        </a>
-      </li>
+      <?php
+        if($_SESSION['type'] == 'Admin')
+        {
+          echo '
+          <li class="nav-item">
+            <a class="nav-link menu_a" href="#">
+              Populations
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link menu_a" href="#">
+              Users
+            </a>
+          </li>';
+        }
+      ?>
     </ul>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown">        
@@ -47,7 +53,9 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right mydarkdrop" 
         aria-labelledby="navbarDropdownMenuLink">
-            <a id="menu_logout" class="dropdown-item menu_a">
+            <a id="menu_logout" href="<?php 
+              echo $myURL."/site/documents/login.php";
+            ?>" class="dropdown-item menu_a">
               Logout
             </a>
         </div>
