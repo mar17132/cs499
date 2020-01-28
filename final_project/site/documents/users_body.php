@@ -1,9 +1,30 @@
 
 <?php require_once 'header.php'; ?>
 
+<?php
+/*
+if($_SERVER['REQUEST_METHOD'] == 'POST')
+{
+    $userActions = new apiconnection();
+    $userActions->setPage("final_project/api/scripts/api.call.php");
+    $userActions->setParameters(array(
+        'type'=>'user',
+        'return_results'=>'all'
+    ));
+    $userActions->connect_api();
+        
+    $jsonTophp->clearVars();
+    $jsonTophp->json_to_array($userActions->getResults());
+    $returnArray = $jsonTophp->getjsonArray();
+
+}*/
+
+//header("refresh: 10;");
+
+?>
 
 <?php 
-    
+    /*
     $userConnection = new apiconnection();
     $userConnection->setPage("final_project/api/scripts/api.call.php");
     $userConnection->setParameters(array(
@@ -12,9 +33,10 @@
     ));
     $userConnection->connect_api();
 
+    $jsonTophp->clearVars();    
     $jsonTophp->json_to_array($userConnection->getResults());
     $returnArray = $jsonTophp->getjsonArray();
-        
+       */ 
 ?>
 
 <nav class="navbar navbar-expand-sm bg-light justify-content-center page-title">
@@ -22,7 +44,7 @@
 </nav>
 
 <div class="user-table container">
-    <table class="table table-striped">
+  <!--  <table class="table table-striped">
         <thead>
             <tr>
                 <th scope="col">Username</th>
@@ -33,25 +55,37 @@
         <tbody>
 
             <?php 
-                foreach($returnArray['rows'] as $row)
+             /*   foreach($returnArray['rows'] as $row)
                 {
                     echo "<tr>";
                     echo "<td scope='row' class='uname'>". $row['uname'] . "</td>";
                     echo "<td class='utype'>" . $row['type'] . "</td>";
                     echo "<td>
                           <input type='hidden' value='". $row['id'] . "'/>  
-                          <button type='button' class='btn btn-secondary editbtn'>
+                          <button type='button' class='btn btn-secondary editbtn'
+                          data-toggle='modal' data-target='#userEdit'>
                           Edit
                           </button>
-                          <button type='button' class='btn btn-secondary deletebtn'>
+                          <button type='button' class='btn btn-secondary deletebtn"; 
+                          
+                    if($_SESSION['uname'] == $row['uname'])
+                    {
+                        echo " disbtn' disabled >";
+                    }
+                    else
+                    {
+                        echo "' data-toggle='modal' data-target='#userDelete'>";
+                    }      
+                    echo " 
                           Delete
                           </button>
                           </td>";
                     echo "</tr>";
-                }
+                }*/
             ?>
         </tbody>
-    </table>
+    </table> -->
+    <?php require_once '../scripts/user_table.php'; ?>
 </div>
 
 <!-- The Modal -->
@@ -72,8 +106,9 @@
 
 ?>
 
-<div class="modal" id="userEdit">
-    <div class="modal-dialog">
+<!--################Edit User#######################-->
+<div class="modal fade" id="userEdit">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
             <!-- Modal Header -->
@@ -86,6 +121,7 @@
             <form action="#" method="post">
             <div class="modal-body">                
                 <div class="form-group" >
+                    <input type="hidden" id="edit_uid" name="edit_uid" /> 
                     <label for="uname">User Name </lable>
                     <input type="text" class="form-control" id="uname" 
                         name="uname" placeholder="Username" required="required"/>
@@ -114,7 +150,8 @@
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                <button type="button" id="update_user_btn" 
+                class="btn btn-success" data-dismiss="modal">
                     Save
                 </button>                
                 <button type="button" class="btn btn-danger" data-dismiss="modal">
@@ -127,31 +164,49 @@
     </div>
 </div>
 
+<!--################Delete User#######################-->
+<div class="modal fade" id="userDelete">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
 
-<script type="text/javascript" >
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Delete User</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
 
-    function getHiddenVal($currentObj)
-    {
-        return $currentObj.siblings("input[type=hidden]").val();
-    }
+            <!-- Modal body -->
+            <form action="#" method="post">
+            <div class="modal-body">                
+                <div class="form-group" >
+                   <p>
+                      You are about to delete user <span id="delespan_uname" ></span>. 
+                      <br/>
+                      Are you sure?   
+                   </p>        
+                   <input type="hidden" id="delete_uname" name="delete_uname" /> 
+                   <input type="hidden" id="delete_uid" name="delete_uid" />         
+                </div>
 
-    function getUnameVal($currentObj)
-    {
-        $test1 = $currentObj.parent();
-       // $test2 = $test1.siblings($(".uname"));
-        //$test3 = $test2.text();
-        return $currentObj.parent().siblings(".uname").text();
-    }
+            </div>
 
-    function getUtypeVal($currentObj)
-    {
-        return $currentObj.parent().siblings(".utype").text();
-    }
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-dismiss="modal">
+                    Cancel
+                </button>                
+                <button type="button" id="delete_user_btn" 
+                class="btn btn-danger" data-dismiss="modal">
+                    Delete
+                </button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-    $(".editbtn").on('click',function(){
-        alert(getUtypeVal($(this)));
-    });
-</script>    
+
+<script type="text/javascript" src="../scripts/user_body.js" ></script>    
 
 
 <?php include_once 'footer.php'; ?>

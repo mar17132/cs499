@@ -60,6 +60,9 @@ function usertype()
         case 'types':
             echo getUserTypes();
         break;
+        case 'delete':
+            echo '{"status":"good","results":"This Worked"}';
+        break;
         default:
             echo '{"status":"good","results":"Bad return"}';
         break;     

@@ -35,3 +35,12 @@
     border-color: #dc3545;
 }
 
+.disbtn{
+    cursor: default !important;
+}
+
+.disbtn:hover{
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
