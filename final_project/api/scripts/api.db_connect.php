@@ -212,6 +212,11 @@ class mydbconnect
         return $returnString;
     }
 
+    public function get_affected_rows()
+    {
+        return $this->myConnect->affected_rows;
+    }
+
     
 }
 

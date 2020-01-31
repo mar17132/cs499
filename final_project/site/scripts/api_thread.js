@@ -1,49 +1,82 @@
-/*function secondThread()
+
+
+function getFromApi(passData)
 {
-    var w;
-    if(typeof(Worker) !== "undefined")
+    let postURL = passData.url != null ? 
+    passData.url : "http://localhost/final_project/api/scripts/api.call.php";
+    let postData = passData.database;
+    let thisPage = passData.page;
+
+    if(postData)
     {
-        if(typeof(w) == "undefined")
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200)
+            {   
+                try
+                {   
+                    let jobj = JSON.parse(this.responseText);
+
+                    jobj.page = thisPage;
+
+                    postMessage(jobj);                                       
+                }
+                catch
+                {
+                    if(postData == 'refresh')
+                    {
+                        postMessage({"status":"good","results":"refresh",
+                        "rows":this.responseText,'page':thisPage});
+                    }                    
+                    else
+                    {
+                        postMessage({"status":"error",
+                        "results":"Bad return format",thisPage});
+                    }
+
+                }
+            }
+        };
+
+        xhttp.open("POST",postURL,false);
+        xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xhttp.send(object_to_string(postData));
+    }
+    else
+    {
+        postMessage({"status":"error","results":"Var not set"});
+    }
+}
+
+
+function object_to_string(obj)
+{
+    let returnString = "";
+    if(obj != "refresh")
+    {
+        let endKey = Object.keys(obj)[Object.keys(obj).length - 1];
+        
+        for(let key in obj)
         {
-            w = new Worker("");
-            w.postMessage(true);
-            w.onmessage = function(event){
+            returnString += key + "=" + obj[key];
 
-                if(event.data.status == "done")
-                {
-
-                    w.terminate();
-                }
-                else
-                {
-                    console.log(event.data.data);
-                    w.terminate();
-                }
-            };
+            if(key != endKey)
+            {
+                returnString += "&";
+            }    
         }
     }
-}*/
+    else
+    {
+        returnString = "";
+    }
+
+    return returnString;
+}
 
 
 
-$("#delete_user_btn").on('click',function(){
-    $.post("final_project/api/scripts/api.call.php",
-        {
-            'type':'user',
-            'return_results':'delete',
-            'uname':$("#delete_uname").val(),
-            'uid':$("#delete_uid").val()
-        },
-        function(data,status,xhr){
-            if(status == "success")
-            {
-                console.log(data);
-            }
-            else
-            {
-                console.log(status);
-            }
-    });
-},"text");
-
+onmessage = function(event){
+   getFromApi(event.data);
+};
 

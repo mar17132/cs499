@@ -1,91 +1,18 @@
 
 <?php require_once 'header.php'; ?>
 
-<?php
-/*
-if($_SERVER['REQUEST_METHOD'] == 'POST')
-{
-    $userActions = new apiconnection();
-    $userActions->setPage("final_project/api/scripts/api.call.php");
-    $userActions->setParameters(array(
-        'type'=>'user',
-        'return_results'=>'all'
-    ));
-    $userActions->connect_api();
-        
-    $jsonTophp->clearVars();
-    $jsonTophp->json_to_array($userActions->getResults());
-    $returnArray = $jsonTophp->getjsonArray();
 
-}*/
 
-//header("refresh: 10;");
-
-?>
-
-<?php 
-    /*
-    $userConnection = new apiconnection();
-    $userConnection->setPage("final_project/api/scripts/api.call.php");
-    $userConnection->setParameters(array(
-        'type'=>'user',
-        'return_results'=>'all'
-    ));
-    $userConnection->connect_api();
-
-    $jsonTophp->clearVars();    
-    $jsonTophp->json_to_array($userConnection->getResults());
-    $returnArray = $jsonTophp->getjsonArray();
-       */ 
-?>
 
 <nav class="navbar navbar-expand-sm bg-light justify-content-center page-title">
     <h3 class="justify-content-center page-name">Users</h3>
 </nav>
 
 <div class="user-table container">
-  <!--  <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">Username</th>
-                <th scope="col">Type</th>
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            <?php 
-             /*   foreach($returnArray['rows'] as $row)
-                {
-                    echo "<tr>";
-                    echo "<td scope='row' class='uname'>". $row['uname'] . "</td>";
-                    echo "<td class='utype'>" . $row['type'] . "</td>";
-                    echo "<td>
-                          <input type='hidden' value='". $row['id'] . "'/>  
-                          <button type='button' class='btn btn-secondary editbtn'
-                          data-toggle='modal' data-target='#userEdit'>
-                          Edit
-                          </button>
-                          <button type='button' class='btn btn-secondary deletebtn"; 
-                          
-                    if($_SESSION['uname'] == $row['uname'])
-                    {
-                        echo " disbtn' disabled >";
-                    }
-                    else
-                    {
-                        echo "' data-toggle='modal' data-target='#userDelete'>";
-                    }      
-                    echo " 
-                          Delete
-                          </button>
-                          </td>";
-                    echo "</tr>";
-                }*/
-            ?>
-        </tbody>
-    </table> -->
-    <?php require_once '../scripts/user_table.php'; ?>
+<nav class="navbar navbar-expand-sm bg-dark user-cmd-bar">
+    <button type="button" class="btn btn-danger">Add User</button>
+</nav>
+     <?php require_once '../scripts/user_table.php'; ?>
 </div>
 
 <!-- The Modal -->
@@ -206,6 +133,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 </div>
 
 
+<?php include_once 'information_modal.php'; ?>
+
+<?php include_once 'error_modal.php'; ?>
+
+<script type="text/javascript" src="../scripts/get_api_data.js" ></script>  
 <script type="text/javascript" src="../scripts/user_body.js" ></script>    
 
 

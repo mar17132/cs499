@@ -61,7 +61,11 @@ function usertype()
             echo getUserTypes();
         break;
         case 'delete':
-            echo '{"status":"good","results":"This Worked"}';
+            echo deleteUser($_POST['uid'],$_POST['uname']);
+        break;
+        case 'update':
+            echo updateUser($_POST['uid'],$_POST['uname'],
+            $_POST['passwd'],$_POST['type_id']);
         break;
         default:
             echo '{"status":"good","results":"Bad return"}';

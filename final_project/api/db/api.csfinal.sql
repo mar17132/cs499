@@ -96,13 +96,13 @@ CREATE TABLE IF NOT EXISTS surveyp_to_sampleg(
     CONSTRAINT sample_group_to_surveyp_to_sampleg_fk_con
     FOREIGN KEY sample_group_to_surveyp_to_sampleg_fk(sample_group_id) 
     REFERENCES sample_group(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE,
     /*survey_population foreign key*/
     CONSTRAINT survey_population_to_surveyp_to_sampleg_fk_con
     FOREIGN KEY survey_population_to_surveyp_to_sampleg_fk(survey_population_id) 
     REFERENCES survey_population(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -145,13 +145,13 @@ CREATE TABLE IF NOT EXISTS interviewer_permissions(
     CONSTRAINT survey_users_to_interviewer_permissions_fk_con
     FOREIGN KEY survey_users_to_interviewer_permissions_fk(survey_users_id) 
     REFERENCES survey_users(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE,
     /*study foreign key*/
     CONSTRAINT study_to_interviewer_permissions_fk_con
     FOREIGN KEY study_to_interviewer_permissions_fk(study_id) 
     REFERENCES study(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -172,19 +172,19 @@ CREATE TABLE IF NOT EXISTS study_to_survey_pop(
     CONSTRAINT sample_group_to_study_to_survey_pop_fk_con
     FOREIGN KEY sample_group_to_study_to_survey_pop_fk(sample_group_id) 
     REFERENCES sample_group(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE,
     /*study foreign key*/
     CONSTRAINT study_to_study_to_survey_pop_fk_con
     FOREIGN KEY study_to_study_to_survey_pop_fk(study_id) 
     REFERENCES study(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE,
     /*survey_population foreign key*/
     CONSTRAINT survey_population_to_study_to_survey_pop_fk_con
     FOREIGN KEY survey_population_to_study_to_survey_pop_fk(survey_population_id) 
     REFERENCES survey_population(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -214,7 +214,7 @@ CREATE TABLE IF NOT EXISTS survey_queue(
     CONSTRAINT study_to_survey_pop_to_survey_queue_fk_con
     FOREIGN KEY study_to_survey_pop_to_survey_queue_fk(study_to_survey_pop_id) 
     REFERENCES study_to_survey_pop(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -234,13 +234,13 @@ CREATE TABLE IF NOT EXISTS survey_interview(
     CONSTRAINT study_to_survey_pop_to_survey_interview_fk_con
     FOREIGN KEY study_to_survey_pop_to_survey_interview_fk(study_to_survey_pop_id) 
     REFERENCES study_to_survey_pop(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE,
     /*survey_users foreign key*/
     CONSTRAINT survey_users_to_survey_interview_fk_con
     FOREIGN KEY survey_users_to_survey_interview_fk(survey_users_id) 
     REFERENCES survey_users(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE,
     /*type foreign key*/
     CONSTRAINT type_to_survey_interview_fk_con
@@ -289,13 +289,13 @@ CREATE TABLE IF NOT EXISTS study_to_question(
     CONSTRAINT study_to_question_to_study_fk_con
     FOREIGN KEY study_to_question_to_study_fk(study_id) 
     REFERENCES study(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE,
     /*question foreign key*/
     CONSTRAINT study_to_question_to_question_fk_con
     FOREIGN KEY study_to_question_to_quesiton_fk(question_id) 
     REFERENCES question(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -314,7 +314,7 @@ CREATE TABLE IF NOT EXISTS anwsers_multi_choices(
     CONSTRAINT anwsers_multi_choices_to_question_fk_con
     FOREIGN KEY sanwsers_multi_choices_to_quesiton_fk(question_id) 
     REFERENCES question(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -331,7 +331,7 @@ CREATE TABLE IF NOT EXISTS anwsers_fill_in_blank(
     CONSTRAINT anwsers_fill_in_blank_to_question_fk_con
     FOREIGN KEY anwsers_fill_in_blank_to_quesiton_fk(question_id) 
     REFERENCES question(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -349,7 +349,7 @@ CREATE TABLE IF NOT EXISTS anwsers_checkbox(
     CONSTRAINT anwsers_checkbox_to_question_fk_con
     FOREIGN KEY anwsers_checkbox_to_quesiton_fk(question_id) 
     REFERENCES question(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -370,13 +370,13 @@ CREATE TABLE IF NOT EXISTS respons_to_fillinblank(
     CONSTRAINT respons_to_fillinblank_to_question_fk_con
     FOREIGN KEY respons_to_fillinblank_to_quesiton_fk(question_id) 
     REFERENCES question(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE,
     /*survey_interview foreign key*/
     CONSTRAINT respons_to_fillinblank_to_survey_interview_fk_con
     FOREIGN KEY respons_to_fillinblank_to_survey_interview_fk(survey_interview_id) 
     REFERENCES survey_interview(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -395,19 +395,19 @@ CREATE TABLE IF NOT EXISTS respons_to_checkbox(
     CONSTRAINT respons_to_checkbox_to_question_fk_con
     FOREIGN KEY respons_to_checkbox_to_quesiton_fk(question_id) 
     REFERENCES question(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE,
     /*survey_interview foreign key*/
     CONSTRAINT respons_to_checkbox_to_survey_interview_fk_con
     FOREIGN KEY respons_to_checkbox_to_survey_interview_fk(survey_interview_id) 
     REFERENCES survey_interview(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE,
     /*anwsers_checkbox foreign key*/
     CONSTRAINT respons_to_checkbox_to_anwsers_checkbox_fk_con
     FOREIGN KEY respons_to_checkbox_to_anwsers_checkbox_fk(anwsers_checkbox_id) 
     REFERENCES anwsers_checkbox(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -425,20 +425,20 @@ CREATE TABLE IF NOT EXISTS respons_to_multi_choice(
     CONSTRAINT respons_to_multi_choice_to_question_fk_con
     FOREIGN KEY respons_to_multi_choice_to_quesiton_fk(question_id) 
     REFERENCES question(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE,
     /*survey_interview foreign key*/
     CONSTRAINT respons_to_multi_choice_to_survey_interview_fk_con
     FOREIGN KEY respons_to_multi_choice_to_survey_interview_fk(survey_interview_id) 
     REFERENCES survey_interview(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE,
     /*survey_interview foreign key*/
     CONSTRAINT respons_to_multi_choice_to_anwsers_multi_choices_fk_con
     FOREIGN KEY 
     respons_to_multi_choice_to_anwsers_multi_choices_fk(anwsers_multi_choices_id) 
     REFERENCES anwsers_multi_choices(id) 
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

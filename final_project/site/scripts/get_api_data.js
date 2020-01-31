@@ -1,41 +1,103 @@
-function apiObjCall()
-{
 
+function secondThread(sendMessage)
+{
+    let w;
+    if(typeof(Worker) !== "undefined")
+    {
+        if(typeof(w) == "undefined")
+        {
+            w = new Worker("../scripts/api_thread.js");
+            w.postMessage(sendMessage);
+            w.onmessage = function(event){
+                w.terminate();
+                if(event.data.status == "good")
+                {
+                    threadReturn(event.data);
+                }
+                else
+                {
+                    console.log(event.data);                 
+                }
+            };
+        }
+    }
+}
+
+function threadReturn(obj)
+{
+    if(obj.results == 'refresh')
+    {
+        switch(obj.page)
+        {
+            case 'users':
+                userRefresh(obj.rows);
+            break;
+            case 'population':
+
+            break;
+            case 'interviews':
+
+            break;
+            case 'study':
+
+            break;
+            case 'index':
+
+            break;
+            default:
+        }
+    }
+    else
+    {
+        switch(obj.page)
+        {
+            case 'users':
+                displayInfo(obj);
+            break;
+            case 'population':
+
+            break;
+            case 'interviews':
+
+            break;
+            case 'study':
+
+            break;
+            case 'index':
+
+            break;
+            default:
+        }
+    }
 }
 
 
-apiObjCall.prototype.getSongsLoop = function(){
+function userRefresh(userObj)
+{
+    userTable = $(".user-table");
+    userTable.empty();
+    $(userObj).appendTo(userTable);
+}
 
+function displayInfo(Obj)
+{
+    infoDiv = $("#informationMod");
+    $(".informationMod-p").text(Obj.results);
+    infoDiv.modal('show');
+}
 
-    currentObj = this;
-    xhttp = new XMLHttpRequest();
-    jsonURL = this.apiUrl + this.trackEndpoint + "?apikey=" + this.apikey +
-              "&format=jsonp&callback=callback&country=us&page=1&page_size=100&f_has_lyrics=1";
-    xhttp.onreadystatechange = function(){
-
-        if(this.readyState == 4 && this.status == 200)
-        {
-            if(currentObj.headerStatus(this.responseText) == 200)
-            {
-                currentObj.setResponsObj(this.responseText);
-                currentObj.apiReturn();
-            }
-            else
-            {
-                postMessage({"status":"error","data":"Error: API Key"});
-            }
-        }
-    };
-
-    xhttp.open("GET",jsonURL,false);
-    xhttp.send();
-
-};
+function displayError(Obj)
+{
+    infoDiv = $("#errorMod");
+    $(".errorMod-p").text(Obj.results);
+    infoDiv.modal('show');
+}
 
 
 
 
-onmessage = function(event){
-    var songsApiCall = new apiObjCall();
-    this.postMessage({"status":"done","data":songsApiCall.songArray});
-};
+
+
+
+
+

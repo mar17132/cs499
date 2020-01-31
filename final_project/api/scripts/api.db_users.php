@@ -140,6 +140,76 @@ function getUserTypes()
 }
 
 
+function deleteUser($uid,$uname)
+{
+    //this will test if there is a user with pass
+    GLOBAL $dbObject;
+    GLOBAL $toJsonString; 
+
+    $dbObject->queryDelete("delete from survey_users
+            where uname = '$uname' and id = '$uid'");
+    if($dbObject->isDberror())
+    {
+        return '{"status":"error","results":"'.$dbObject->getDberror().'"}';
+    }
+    else
+    {
+        if($dbObject->get_affected_rows() > 0)
+        {
+            return '{"status":"good","results":"The user was deleted!"}';
+        }
+        else
+        {
+            //user does not exisist
+            return '{"status":"error","results":"No records to delete."}';
+        }
+    }  
+}
+
+
+function updateUser($uid,$uname,$pass,$type)
+{
+    //this will test if there is a user with pass
+    GLOBAL $dbObject;
+    GLOBAL $toJsonString; 
+    $queryString = "update survey_users set ";
+
+    if($uname != null || $uname != "")
+    {
+        $queryString .= "uname='". $uname . "',";
+    }
+
+    if($pass != null || $pass != "")
+    {
+        $queryString .= "passwd='". password_hash($pass,PASSWORD_DEFAULT) . "',";
+    }
+
+    if($type != null || $type != "")
+    {
+        $queryString .= "type_id='". $type . "' ";
+    }
+
+
+    $dbObject->queryUpdate("$queryString where id='$uid'");
+    if($dbObject->isDberror())
+    {
+        return '{"status":"error","results":"'.$dbObject->getDberror().'",
+        "query":"'.$queryString.'"}';
+    }
+    else
+    {
+        if($dbObject->get_affected_rows() > 0)
+        {
+            return '{"status":"good","results":"The user was Updated!"}';
+        }
+        else
+        {
+            //user does not exisist
+            return '{"status":"error","results":"No records to update."}';
+        }
+    }  
+}
+
 
 
 

@@ -15,7 +15,7 @@ $userConnection->setParameters(array(
 ));
 $userConnection->connect_api();
 
-$jsonTophp->clearVars();    
+$jsonTophp->clearVars();   
 $jsonTophp->json_to_array($userConnection->getResults());
 $returnArray = $jsonTophp->getjsonArray();
 
