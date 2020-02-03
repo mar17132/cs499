@@ -1,8 +1,8 @@
 
 <?php 
-require_once 'global_config.php';
-require_once 'sessions.php';
-require_once "api_connect.php"; 
+require_once '../scripts/global_config.php';
+require_once '../scripts/sessions.php';
+require_once "../scripts/api_connect.php"; 
 ?>
 
 <?php
@@ -21,7 +21,7 @@ $returnArray = $jsonTophp->getjsonArray();
 
 ?>
 
-<table class="table table-striped">
+<table class="table table-striped userTable">
     <thead>
         <tr>
             <th scope="col">Username</th>
@@ -40,8 +40,12 @@ $returnArray = $jsonTophp->getjsonArray();
                 echo "<td>
                         <input type='hidden' value='". $row['id'] . "'/>  
                         <button type='button' class='btn btn-secondary editbtn'
-                        data-toggle='modal' data-target='#userEdit'>
+                        data-toggle='modal' data-target='#userAddEdit'>
                         Edit
+                        </button>
+                        <button type='button' class='btn btn-secondary permissionbtn'
+                        data-toggle='modal' data-target='#userPermissions'>
+                        Permissions
                         </button>
                         <button type='button' class='btn btn-secondary deletebtn"; 
                         

@@ -75,7 +75,8 @@ function threadReturn(obj)
 function userRefresh(userObj)
 {
     userTable = $(".user-table");
-    userTable.empty();
+    //this will remove just the user table
+    userTable.children(".userTable").remove();
     $(userObj).appendTo(userTable);
 }
 

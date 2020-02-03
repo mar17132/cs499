@@ -9,10 +9,12 @@
 USE csfinal;
 
 /*Run all SQL scripts */
+SOURCE api.trigger_procedures.sql
 SOURCE api.type_row_setup.sql
+SOURCE api.study_row_setup.sql
 SOURCE api.survey_users_row_setup.sql
 SOURCE api.population_row_setup.sql
-SOURCE api.study_row_setup.sql
+SOURCE api.survey_interview_row_setup.sql
 SOURCE api.question_row_setup.sql
 
 

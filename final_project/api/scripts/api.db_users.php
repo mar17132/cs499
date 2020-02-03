@@ -210,6 +210,33 @@ function updateUser($uid,$uname,$pass,$type)
     }  
 }
 
+function addUser($uname,$pass,$type)
+{
+    //this will test if there is a user with pass
+    GLOBAL $dbObject;
+    GLOBAL $toJsonString; 
+
+    $dbObject->queryInsert("insert into survey_users(uname,passwd,type_id)
+    values('$uname','".password_hash($pass,PASSWORD_DEFAULT)."','$type')");
+    if($dbObject->isDberror())
+    {
+        return '{"status":"error","results":"'.$dbObject->getDberror().'",
+        "query":"'.$queryString.'"}';
+    }
+    else
+    {
+        if($dbObject->get_affected_rows() > 0)
+        {
+            return '{"status":"good","results":"The user was Added!"}';
+        }
+        else
+        {
+            //user does not exisist
+            return '{"status":"error","results":"No user was not Added."}';
+        }
+    }  
+}
+
 
 
 

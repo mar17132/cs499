@@ -67,8 +67,11 @@ function usertype()
             echo updateUser($_POST['uid'],$_POST['uname'],
             $_POST['passwd'],$_POST['type_id']);
         break;
+        case 'add':
+            echo addUser($_POST['uname'],$_POST['passwd'],$_POST['type_id']);
+        break;
         default:
-            echo '{"status":"good","results":"Bad return"}';
+            echo '{"status":"good","results":"Bad return type"}';
         break;     
     }
 }

@@ -31,7 +31,7 @@ function getFromApi(passData)
                     else
                     {
                         postMessage({"status":"error",
-                        "results":"Bad return format",thisPage});
+                        "results":"Bad return format","page":thisPage});
                     }
 
                 }
