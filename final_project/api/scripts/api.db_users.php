@@ -237,6 +237,36 @@ function addUser($uname,$pass,$type)
     }  
 }
 
+function updateUserPermission($permisArray)
+{
+    //this will get one users permissions
+    GLOBAL $dbObject;
+    GLOBAL $toJsonString;   
+
+    $updateArray = (array) $permisArray;
+    $queryString = "";
+    
+    foreach($updateArray as $permis)
+    {   
+        $explodeArray = explode(",",$permis);
+        $queryString .="update interviewer_permissions set allowed_permission='";
+        $queryString .= $explodeArray[2]."' where survey_users_id='";
+        $queryString .= $explodeArray[0]."' and study_id ='";
+        $queryString .= $explodeArray[1]."';";
+    }
+
+    $dbObject->queryUpdateMult($queryString);
+
+    if($dbObject->isDberror())
+    {
+        return $dbObject->getDberror();
+    }
+    else
+    { 
+        return '{"status":"good","results":"The user permissions have been updated"}';
+    }  
+
+}
 
 
 

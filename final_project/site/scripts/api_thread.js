@@ -6,7 +6,7 @@ function getFromApi(passData)
     passData.url : "http://localhost/final_project/api/scripts/api.call.php";
     let postData = passData.database;
     let thisPage = passData.page;
-
+    
     if(postData)
     {
         let xhttp = new XMLHttpRequest();
@@ -25,13 +25,18 @@ function getFromApi(passData)
                 {
                     if(postData == 'refresh')
                     {
-                        postMessage({"status":"good","results":"refresh",
+                        postMessage({"status":"good","results":'refresh',
+                        "rows":this.responseText,'page':thisPage});
+                    } 
+                    else if(passData.refresh_type != null)
+                    {
+                        postMessage({"status":"good","results":passData.refresh_type,
                         "rows":this.responseText,'page':thisPage});
                     }                    
                     else
                     {
                         postMessage({"status":"error",
-                        "results":"Bad return format","page":thisPage});
+                        "results":"Bad return format","page":thisPage,"text":this.responseText});
                     }
 
                 }
@@ -58,12 +63,27 @@ function object_to_string(obj)
         
         for(let key in obj)
         {
-            returnString += key + "=" + obj[key];
+            if(key != 'values')
+            {
+                returnString += key + "=" + obj[key];
+            }
+            else if(key == 'values')
+            {
+                for(let i = 0; i < obj[key].length; i++)
+                {
+                    returnString += key + "["+i+"]=" + object_to_array_string(obj[key][i]);
 
+                    if((i + 1) != obj[key].length)
+                    {
+                        returnString += "&";
+                    }
+                }
+            } 
+            
             if(key != endKey)
             {
                 returnString += "&";
-            }    
+            } 
         }
     }
     else
@@ -71,6 +91,28 @@ function object_to_string(obj)
         returnString = "";
     }
 
+    return returnString;
+}
+
+function object_to_array_string(objArray)
+{
+    //name=Actor1,
+    let returnString = "";
+
+    let endKey = Object.keys(objArray)[Object.keys(objArray).length - 1];
+    
+    for(let key in objArray)
+    {
+        objString = objArray[key].trim();
+        //returnString += key + "=" + objString.replace("\n","");
+        returnString += objString.replace("\n","");
+
+        if(key != endKey)
+        {
+            returnString += ",";
+        }    
+    }
+    
     return returnString;
 }
 

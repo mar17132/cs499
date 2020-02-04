@@ -34,7 +34,8 @@
         {
           echo '
           <li class="nav-item">
-            <a class="nav-link menu_a" href="#">
+            <a class="nav-link menu_a" href="
+            '.$myURL.'/documents/population_body.php">
               Populations
             </a>
           </li>

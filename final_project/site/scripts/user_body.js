@@ -17,9 +17,41 @@ function getUtypeVal(currentObj)
 function refreshContent()
 {
     secondThread({
-        'url':'http://localhost/final_project/site/scripts/user_table.php',
+        'url':'http://localhost/final_project/site/documents/partial/user_table.php',
         'database':'refresh',
         'page':'users'
+    });
+}
+
+function displayUserPermis(uid)
+{
+    secondThread({
+        'url':'http://localhost/final_project/site/documents/partial/user_permissions_table.php',
+        'database':{'userid':uid},
+        'page':'users',
+        'refresh_type':'permissions'        
+    });
+}
+
+function updateUserPermis()
+{
+    let sendVar = [];
+
+    $(".userpermission-select").each(function(){
+        sendVar.push({
+            'userid': $(this).siblings(".hidden-permis-uid").val(),
+            'study_id':$(this).siblings(".hidden-studyid").val(),
+            'permissions':$(this).val()
+        });
+    });
+
+    secondThread({
+        'database':{
+            'type':'user',
+            'return_results':'permissionsUpdate',
+            'values':sendVar
+        },
+        'page':'users'       
     });
 }
 
@@ -196,6 +228,15 @@ $('.form-input').on('change',function(){
 $('.form-input').on('click',function(){
 
     $(this).removeClass("required");    
+});
+
+$(".user-table").on('click','.permissionbtn',function(){
+    $(".username-permiss-title").text(getUnameVal($(this)));
+    displayUserPermis(getHiddenVal($(this)));
+});
+
+$("#save_userpermission_btn").on('click',function(){
+    updateUserPermis($(this));
 });
 
 

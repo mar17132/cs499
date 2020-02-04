@@ -170,7 +170,7 @@ class json_to_php
         {    
             $jsonVar = trim($jsonVar);
             $jsonVar = rtrim($jsonVar);
-            $jsonVar = str_replace(array("\n\r", "\n", "\r"," ","\t"), "", $jsonVar);
+           // $jsonVar = str_replace(array("\n\r", "\n", "\r"," ","\t"), "", $jsonVar);
 
             if($newkey == NULL && !$isArray)
             {

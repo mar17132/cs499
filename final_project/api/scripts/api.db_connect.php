@@ -126,6 +126,24 @@ class mydbconnect
 
     }
 
+    public function queryUpdateMult($sql)
+    {
+        $this->dberror = NULL;
+        if(!is_null($this->myConnect))
+        {
+            if(!($this->myConnect->multi_query($sql) === TRUE))
+            {
+                $this->dberror = "Not able to update! " . $this->myConnect->error;
+            }
+        }
+        else
+        {
+            $this->dberror = "Database Connection is not set.";
+            exit();
+        }
+
+    }
+
     public function querySelect($sql)
     {
         $this->dberror = NULL;

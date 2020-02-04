@@ -18,6 +18,8 @@
      <?php require_once 'partial/user_table.php';  ?>
 </div>
 
+<?php include_once 'partial/user_permissions_modal.php'; ?>
+
 <?php include_once 'partial/user_add_edit_modal.php'; ?>
 
 <?php include_once 'partial/user_delete_modal.php'; ?>

@@ -1,8 +1,11 @@
 
 <?php 
-require_once '../scripts/global_config.php';
-require_once '../scripts/sessions.php';
-require_once "../scripts/api_connect.php"; 
+require_once file_exists("../scripts/global_config.php") ? 
+"../scripts/global_config.php" : "../../scripts/global_config.php";
+require_once file_exists("../scripts/sessions.php") ? 
+"../scripts/sessions.php" : "../../scripts/sessions.php";
+require_once file_exists("../scripts/api_connect.php") ?
+ "../scripts/api_connect.php" : "../../scripts/api_connect.php"; 
 ?>
 
 <?php

@@ -47,6 +47,28 @@ function threadReturn(obj)
             default:
         }
     }
+    else if(obj.results == 'permissions')
+    {
+        switch(obj.page)
+        {
+            case 'users':
+                UserPermisRefresh(obj.rows);
+            break;
+            case 'population':
+
+            break;
+            case 'interviews':
+
+            break;
+            case 'study':
+
+            break;
+            case 'index':
+
+            break;
+            default:
+        }
+    }
     else
     {
         switch(obj.page)
@@ -78,6 +100,13 @@ function userRefresh(userObj)
     //this will remove just the user table
     userTable.children(".userTable").remove();
     $(userObj).appendTo(userTable);
+}
+
+function UserPermisRefresh(userObj)
+{
+    userPermis = $(".user-permission-table");
+    userPermis.empty();
+    $(userObj).appendTo(userPermis);
 }
 
 function displayInfo(Obj)
