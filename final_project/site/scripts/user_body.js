@@ -63,11 +63,7 @@ function displayEditUser(editbtnclk)
     $("#type_id option").each(function(){
         if($(this).text() == utype)
         {
-            $(this).attr('selected','selected');
-        }
-        else
-        {
-            $(this).removeAttr('selected'); 
+            $(this).parent().val($(this).val());
         }
     });
 }
@@ -77,17 +73,11 @@ function clearUserInputs()
     $("#edit_uid").val("");
     $("#uname").val("");
     $("#passwd").val("");
-    $("#type_id option").each(function(){
-        if($(this).val() == 'null')
-        {
-            $(this).attr('selected','selected');
-        }
-        else
-        {
-            $(this).removeAttr('selected');
-        }
-    });
+    $("#type_id").val('null');
     $(".form-error-msg").text("");
+    $(".form-input").each(function(){
+        $(this).removeClass('required');
+    });
 }
 
 function editUser()
@@ -102,7 +92,7 @@ function editUser()
             'passwd': $("#passwd").val()          
         },
         'page':'users'
-        }
+        },refreshContent
     );
 }
 
@@ -117,7 +107,7 @@ function addUser()
             'passwd': $("#passwd").val()          
         },
         'page':'users'
-        }
+        },refreshContent
     );
 }
 
@@ -152,11 +142,21 @@ $(".user-table").on('click',".deletebtn",function(){
 });
 
 $("#userAddEdit_btn").on('click',function(){
-   
+      
     if($(".addedit_title").text() == 'Edit User')
     {
-        editUser();
-        $("#userAddEdit").modal('hide'); 
+        if($("#uname").val() != null && $.trim($("#uname").val()) != "")
+        {
+            editUser();
+            $("#userAddEdit").modal('hide'); 
+        }
+        else
+        {
+            $(".form-error-msg").text(
+                "Error: Please make sure the username has input"
+                );
+            return;
+        }
     }
     else
     {
@@ -173,8 +173,7 @@ $("#userAddEdit_btn").on('click',function(){
             return;
         }
     }
-    refreshContent();
-    clearUserInputs();
+
 });
 
 $("#add-user-btn").on('click',function(){
@@ -193,10 +192,9 @@ $("#delete_user_btn").on('click',function(){
                 'uid':$("#delete_uid").val()                
             },
             'page':'users'
-        }
+        },refreshContent
     );
 
-    refreshContent();
 });
 
 $("#userAddEdit_close_btn").on('click',function(){
@@ -213,21 +211,22 @@ $("#userAddEdit").on('shown.bs.modal',function(){
 
 $('.form-input').on('blur',function(){
 
-    if($(this).val() == null || $(this).val().trim() == "" 
-       || $(this).val() == "null")
+    if($(".addedit_title").text() == "Add User" || ($(this).attr('id') == $("#uname").attr('id')))
     {
-        $(this).addClass("required");
+        if($(this).val() == null || $(this).val().trim() == "" 
+        || $(this).val() == "null")
+        {
+            $(this).addClass("required");
+        }
     }
 });
 
-$('.form-input').on('change',function(){
-
-    $(this).removeClass("required");    
+$('.form-input').on('change',function(){    
+    $(this).removeClass("required");        
 });
 
 $('.form-input').on('click',function(){
-
-    $(this).removeClass("required");    
+    $(this).removeClass("required");   
 });
 
 $(".user-table").on('click','.permissionbtn',function(){
@@ -238,5 +237,7 @@ $(".user-table").on('click','.permissionbtn',function(){
 $("#save_userpermission_btn").on('click',function(){
     updateUserPermis($(this));
 });
+
+
 
 

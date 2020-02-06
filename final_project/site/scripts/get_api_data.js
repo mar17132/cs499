@@ -1,5 +1,5 @@
 
-function secondThread(sendMessage)
+function secondThread(sendMessage,callback)
 {
     let w;
     if(typeof(Worker) !== "undefined")
@@ -9,10 +9,14 @@ function secondThread(sendMessage)
             w = new Worker("../scripts/api_thread.js");
             w.postMessage(sendMessage);
             w.onmessage = function(event){
-                w.terminate();
+                //w.terminate();
                 if(event.data.status == "good")
                 {
                     threadReturn(event.data);
+                    if(callback != null)
+                    {
+                        callback();
+                    }
                 }
                 else
                 {
@@ -20,6 +24,7 @@ function secondThread(sendMessage)
                 }
             };
         }
+
     }
 }
 
