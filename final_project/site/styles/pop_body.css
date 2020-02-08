@@ -1,0 +1,14 @@
+
+.pop-cmd-btn:not(:first-child){
+    margin-left: 10px;
+}
+
+.pop-cmd-btn:hover{
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.pop-cmd-btn:focus{   
+    box-shadow: none;    
+}
+
