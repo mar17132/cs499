@@ -84,14 +84,14 @@ function populationtype()
 {
     switch($_POST['return_results'])
     {
-        case 'login':
-            echo getUserLogin($_POST['uname'],$_POST['pass']);
+        case 'update':
+            echo updatePop($_POST);
         break;
         case 'all':
-            echo getAllUsers();
+            echo getAllPop();
         break;
-        case 'permissions':
-            echo getUserPermission($_POST['userid']);
+        case 'delete':
+            echo deletePop($_POST['popid']);
         break;
         default:
             echo '{"status":"good","results":"Bad return"}';

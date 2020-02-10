@@ -8,15 +8,15 @@
     <h3 class="justify-content-center page-name">Population</h3>
 </nav>
 
-<div class="user-table container">
+<div class="pop-table container">
 <nav class="navbar navbar-expand-sm bg-dark pop-cmd-bar">
     <button type="button" class="btn btn-secondary btn-sm pop-cmd-btn"
-            id="add-pop-btn" >
+            id="add-pop-btn" data-toggle='modal' data-target='#pop_Add_Edit' >
         Add Person
     </button>
     <button type="button" class="btn btn-secondary btn-sm pop-cmd-btn"
             id="view-Groups-btn" >
-        Groups
+        View Groups
     </button>
     <button type="button" class="btn btn-secondary btn-sm pop-cmd-btn"
             id="add-Groups-btn" >

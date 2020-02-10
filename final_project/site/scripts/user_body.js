@@ -132,6 +132,11 @@ $(".user-table").on('click',".editbtn",function(){
     clearUserInputs();
     $(".addedit_title").text("Edit User");
     displayEditUser($(this));
+    //user will have close modal with close button
+    $("#userAddEdit").modal({
+        backdrop:"static",
+        keyboard:false
+    });
 });
 
 $(".user-table").on('click',".deletebtn",function(){    
@@ -179,7 +184,12 @@ $("#userAddEdit_btn").on('click',function(){
 $("#add-user-btn").on('click',function(){
     clearUserInputs();
     $(".addedit_title").text("Add User");
-    $("#userAddEdit").modal('show');    
+    $("#userAddEdit").modal('show');
+    //user will have close modal with close button
+    $("#userAddEdit").modal({
+        backdrop:"static",
+        keyboard:false
+    });    
 });
 
 $("#delete_user_btn").on('click',function(){

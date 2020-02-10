@@ -1,4 +1,11 @@
 
+.pop-table{
+    margin-top: 30px;
+}
+
+.pop-table table tbody tr:last-child{
+    border-bottom: thin solid #dee2e6;
+}
 .pop-cmd-btn:not(:first-child){
     margin-left: 10px;
 }
@@ -10,5 +17,9 @@
 
 .pop-cmd-btn:focus{   
     box-shadow: none;    
+}
+
+.pop-add-edit-table tbody tr td{
+    border: none !important;
 }
 
