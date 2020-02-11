@@ -54,7 +54,7 @@ function getAllGroups()
         GLOBAL $dbObject;
         GLOBAL $toJsonString; 
     
-        $dbObject->querySelect("select * from sample_groups;");
+        $dbObject->querySelect("select * from sample_group;");
         if($dbObject->isDberror())
         {
             return $dbObject->getDberror();

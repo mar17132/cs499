@@ -9,7 +9,7 @@
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title ">
-                    <span class="pop-groups-title" ></span> Permissions
+                    <span class="pop-groups-title" ></span> Groups
                 </h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>

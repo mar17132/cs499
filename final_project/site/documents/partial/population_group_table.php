@@ -7,23 +7,48 @@ require_once "../../scripts/api_connect.php";
 
 <?php
 
-$userPermission = null;
+$allGroupsArray = null;
+$allPersonGroups = null;
 
 if($_SERVER['REQUEST_METHOD'] == 'POST')
 {
+    $allGroupsArray = allGroups();
+    $allPersonGroups = personsGroups();
+}
 
-    $userPermission = new apiconnection();
-    $userPermission->setPage("final_project/api/scripts/api.call.php");
-    $userPermission->setParameters(array(
-        'type'=>'user',
-        'return_results'=>'permissions',
-        'userid' => $_POST['userid']
+function allGroups()
+{
+    GLOBAL $jsonTophp;
+
+    $groupsPop = new apiconnection();
+    $groupsPop->setPage("final_project/api/scripts/api.call.php");
+    $groupsPop->setParameters(array(
+        'type'=>'population',
+        'return_results'=>'allgroups'
     ));
-    $userPermission->connect_api();
+    $groupsPop->connect_api();
 
     $jsonTophp->clearVars();   
-    $jsonTophp->json_to_array($userPermission->getResults());
-    $userPermissionArray = $jsonTophp->getjsonArray();
+    $jsonTophp->json_to_array($groupsPop->getResults());
+    return $jsonTophp->getjsonArray();
+}
+
+function personsGroups()
+{
+    GLOBAL $jsonTophp;
+
+    $personGroups = new apiconnection();
+    $personGroups->setPage("final_project/api/scripts/api.call.php");
+    $personGroups->setParameters(array(
+        'type'=>'population',
+        'return_results'=>'groups',
+        'id' => $_POST['id']
+    ));
+    $personGroups->connect_api();
+
+    $jsonTophp->clearVars();   
+    $jsonTophp->json_to_array($personGroups->getResults());
+    return $jsonTophp->getjsonArray();
 }
 
 ?>
@@ -31,41 +56,26 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 <table class="table table-striped popGroupTable">
     <thead>
         <tr>
-            <th scope="col">Study</th>
-            <th scope="col">Permission</th>
+            <th scope="col">Group</th>
+            <th scope="col">Member</th>
         </tr>
     </thead>  
     <tbody>
         <?php
-            if($userPermissionArray)
+            if($allGroupsArray)
             {
-                foreach($userPermissionArray['rows'] as $row)
+                foreach($allGroupsArray['rows'] as $row)
                 {
                     echo "<tr>";
-                    echo "<td scope='row' class='studyname'>"
-                          . $row['study']. "</td>";
+                    echo "<td scope='row' class='samplename'>"
+                          . $row['sample_name']. "</td>";
                     echo "<td>
                           <div class='form-group' >  
-                          <input type='hidden' class='hidden-permis-uid' value='
-                          ".$row['user_id']."' />
-                          <input type='hidden' class='hidden-studyid' value='
-                          ".$row['study_id']."' />";
-                    echo "<select class='form-control form-input 
-                          userpermission-select' >";  
-                    echo "<option value='null'>Choose Permission</option>";  
-
-                    if($row['permission'] == 1)
-                    {
-                        echo "<option value='1' selected='selected'>Allowed</option>"; 
-                        echo "<option value='0' >Not Allowed</option>"; 
-                    }
-                    else
-                    {
-                        echo "<option value='1' >Allowed</option>"; 
-                        echo "<option value='0' selected='selected'>Not Allowed</option>";
-                    }
-
-                    echo "</select></div>";  
+                          <input type='hidden' class='hidden-pop-id' value='
+                          ".$_POST['id']."' />";
+                    echo "<input type='checkbox' class='group-chkbox form-check-input' 
+                            value='".$row['id']."'/>";
+                    echo "</div>";  
                     echo "</tr>";
                 }
             }

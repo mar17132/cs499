@@ -129,6 +129,19 @@ function updatePop()
     );
 }
 
+function displayGroupPop(populationid)
+{
+    secondThread({
+        url:'http://localhost/final_project/site/documents/partial/population_group_table.php',
+        database:{
+            'id':populationid              
+        },
+        'refresh_type':'groups', 
+        'page':'population'
+        }
+    );
+}
+
 function refreshContentPop()
 {
     secondThread({
@@ -252,6 +265,10 @@ $(document).ready(function(){
     $(".pop-table").on('click',".pop-delete-btn",function(){    
         $("#delespan_pop_name").text(getPopFname($(this)) + " " + getPopLname($(this)));
         $("#delete_popid").val(getPopid($(this)));
+    });
+
+    $(".pop-table").on('click','.pop-groups-btn',function(){
+        displayGroupPop(getPopid($(this)));
     });
     
 

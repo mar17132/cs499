@@ -73,7 +73,30 @@ function threadReturn(obj)
 
             break;
             default:
-                displayError(Obj)
+                displayError(Obj);
+        }
+    }
+    else if(obj.results == 'groups')
+    {
+        switch(obj.page)
+        {
+            case 'users':
+                //UserPermisRefresh(obj.rows);
+            break;
+            case 'population':
+                popGroupRefresh(obj.rows);
+            break;
+            case 'interviews':
+
+            break;
+            case 'study':
+
+            break;
+            case 'index':
+
+            break;
+            default:
+                displayError(Obj);
         }
     }
     else
@@ -96,7 +119,7 @@ function threadReturn(obj)
 
             break;
             default:
-                displayError(Obj)
+                displayError(Obj);
         }
     }
 }
@@ -125,12 +148,13 @@ function popRefresh(popObj)
     $(popObj).appendTo(popContainer);
 }
 
-/*function UserPermisRefresh(userObj)
+function popGroupRefresh(popObj)
 {
-    userPermis = $(".user-permission-table");
-    userPermis.empty();
-    $(userObj).appendTo(userPermis);
-}*/
+    console.log(popObj)
+    popGroups = $(".pop-groups-table");
+    popGroups.empty();
+    $(popObj).appendTo(popGroups);
+}
 
 function displayInfo(Obj)
 {
