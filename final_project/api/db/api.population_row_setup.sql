@@ -9,6 +9,21 @@
 
 USE csfinal;
 
+/*
+sample_group setup rows
+*/
+INSERT INTO sample_group(sample_name)
+VALUES(
+    "Group1"
+);
+INSERT INTO sample_group(sample_name)
+VALUES(
+    "Group2"
+);
+INSERT INTO sample_group(sample_name)
+VALUES(
+    "Group3"
+);
 
 /*
 survey_population setup rows
@@ -162,22 +177,6 @@ VALUES(
     "UT",
     "84015",
     "555-555-5555"
-);
-
-/*
-sample_group setup rows
-*/
-INSERT INTO sample_group(sample_name)
-VALUES(
-    "Group1"
-);
-INSERT INTO sample_group(sample_name)
-VALUES(
-    "Group2"
-);
-INSERT INTO sample_group(sample_name)
-VALUES(
-    "Group3"
 );
 
 /*
