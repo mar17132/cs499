@@ -11,7 +11,7 @@ BEGIN
     SET num_of_study = (SELECT COUNT(*) FROM study);
 
     insert_loop: LOOP
-        if num_of_study < 1 THEN
+        IF num_of_study < 1 THEN
             LEAVE insert_loop;
         END IF;
         INSERT INTO interviewer_permissions
@@ -21,6 +21,29 @@ BEGIN
             user_id
         );
         SET num_of_study = num_of_study - 1;
+    END LOOP;
+END$$
+
+CREATE DEFINER = 'csfinaluser'@'localhost' TRIGGER add_population_person_groups 
+AFTER INSERT ON survey_population FOR EACH ROW 
+BEGIN
+    DECLARE pop_person_id INT;
+    DECLARE num_of_groups INT;
+
+    SET pop_person_id = (SELECT id FROM survey_population ORDER BY id DESC LIMIT 1);
+    SET num_of_groups = (SELECT COUNT(*) FROM sample_group);
+
+    insert_loop: LOOP
+        IF num_of_groups < 1 THEN
+            LEAVE insert_loop;
+        END IF;
+        INSERT INTO surveyp_to_sampleg
+        (survey_population_id,sample_group_id)
+        VALUES(
+            pop_person_id,
+            num_of_groups
+        );
+        SET num_of_groups = num_of_groups - 1;
     END LOOP;
 END$$
 
