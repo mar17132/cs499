@@ -65,6 +65,7 @@ function displayEditPop(currentObject)
     state.val(getState(currentObject));
     zip.val(getZip(currentObject));
     phone.val(getPhone(currentObject));
+    popid.val(getPopid(currentObject));
 }
 
 function clear_editAdd_input()
@@ -78,6 +79,73 @@ function clear_editAdd_input()
 function changeTitle(newTitle)
 {
     $(".addedit_pop_title").text(newTitle);
+}
+
+function getChangeTitle()
+{
+    return $(".addedit_pop_title").text();
+}
+
+function addPop()
+{
+    secondThread({
+        database:{
+            'type':'population',
+            'return_results':'add',
+            'fname':fname.val(),
+            'mname':mname.val(),
+            'lname':lname.val(),
+            'street':street.val(),
+            'apt':apt.val(),
+            'city':city.val(),
+            'state':state.val(),
+            'zip':zip.val(),
+            'phone':phone.val()         
+        },
+        'page':'population'
+        },refreshContentPop
+    );
+}
+
+function updatePop()
+{
+    secondThread({
+        database:{
+            'type':'population',
+            'return_results':'update',
+            'id':popid.val(), 
+            'fname':fname.val(),
+            'mname':mname.val(),
+            'lname':lname.val(),
+            'street':street.val(),
+            'apt':apt.val(),
+            'city':city.val(),
+            'state':state.val(),
+            'zip':zip.val(),
+            'phone':phone.val()                    
+        },
+        'page':'population'
+        },refreshContentPop
+    );
+}
+
+function refreshContentPop()
+{
+    secondThread({
+        'url':'http://localhost/final_project/site/documents/partial/population_table.php',
+        'database':'refresh',
+        'page':'population'
+    });
+}
+
+function checkPopInputs()
+{
+    if($(".required").length == 0)
+    {
+        return true;
+    }
+
+    return false;
 }
 
 $(document).ready(function(){
@@ -140,7 +208,50 @@ $(document).ready(function(){
     });
 
     $("#popAddEdit_btn").on('click',function(){
-        
+
+        if(getChangeTitle() == 'Edit Population')
+        {
+            if(checkPopInputs())
+            {
+                updatePop();
+                $("#pop_Add_Edit").modal("hide");
+                clear_editAdd_input();
+                return;
+            }
+        }
+        else
+        {
+            if(checkPopInputs())
+            {
+                addPop();
+                $("#pop_Add_Edit").modal("hide");
+                clear_editAdd_input();
+                return;
+            }
+        }
+
+        $(".form-error-msg").text(
+            "Error: Please make sure all feilds have input");
+
+    });
+
+    $("#delete_pop_btn").on('click',function(){
+
+        secondThread({
+                database:{
+                    'type':'population',
+                    'return_results':'delete',
+                    'id':$("#delete_popid").val()                
+                },
+                'page':'population'
+            },refreshContentPop
+        );
+    
+    });
+
+    $(".pop-table").on('click',".pop-delete-btn",function(){    
+        $("#delespan_pop_name").text(getPopFname($(this)) + " " + getPopLname($(this)));
+        $("#delete_popid").val(getPopid($(this)));
     });
     
 

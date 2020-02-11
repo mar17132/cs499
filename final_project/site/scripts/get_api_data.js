@@ -20,7 +20,8 @@ function secondThread(sendMessage,callback)
                 }
                 else
                 {
-                    console.log(event.data);                 
+                    console.log(event.data);  
+                    displayError(event.data);               
                 }
             };
         }
@@ -38,7 +39,7 @@ function threadReturn(obj)
                 userRefresh(obj.rows);
             break;
             case 'population':
-
+                popRefresh(obj.rows)
             break;
             case 'interviews':
 
@@ -72,6 +73,7 @@ function threadReturn(obj)
 
             break;
             default:
+                displayError(Obj)
         }
     }
     else
@@ -82,7 +84,7 @@ function threadReturn(obj)
                 displayInfo(obj);
             break;
             case 'population':
-
+                displayInfo(obj);
             break;
             case 'interviews':
 
@@ -94,6 +96,7 @@ function threadReturn(obj)
 
             break;
             default:
+                displayError(Obj)
         }
     }
 }
@@ -113,6 +116,21 @@ function UserPermisRefresh(userObj)
     userPermis.empty();
     $(userObj).appendTo(userPermis);
 }
+
+function popRefresh(popObj)
+{
+    popContainer = $(".pop-table");
+    //this will remove just the user table
+    popContainer.children(".popTable").remove();
+    $(popObj).appendTo(popContainer);
+}
+
+/*function UserPermisRefresh(userObj)
+{
+    userPermis = $(".user-permission-table");
+    userPermis.empty();
+    $(userObj).appendTo(userPermis);
+}*/
 
 function displayInfo(Obj)
 {

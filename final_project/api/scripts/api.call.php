@@ -91,7 +91,10 @@ function populationtype()
             echo getAllPop();
         break;
         case 'delete':
-            echo deletePop($_POST['popid']);
+            echo deletePop($_POST['id']);
+        break;
+        case 'add':
+           // echo deletePop($_POST['popid']);
         break;
         default:
             echo '{"status":"good","results":"Bad return"}';

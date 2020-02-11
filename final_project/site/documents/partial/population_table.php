@@ -49,11 +49,11 @@ $returnArray = $jsonTophp->getjsonArray();
                         Edit
                         </button>
                         <button type='button' class='btn btn-secondary pop-groups-btn'
-                        data-toggle='modal' data-target=''>
+                        data-toggle='modal' data-target='#popGroups'>
                         Groups
                         </button>
                         <button type='button' class='btn btn-secondary pop-delete-btn";              
-                echo "' data-toggle='modal' data-target='#userDelete'>";                    
+                echo "' data-toggle='modal' data-target='#populaitonDelete'>";                    
                 echo " 
                         Delete
                         </button>

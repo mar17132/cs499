@@ -20,7 +20,7 @@
                 <tr>
                 <td>              
                     <div class="form-group" >
-                        <input type="hidden" id="popid" name="popid" /> 
+                        <input class="form-input" type="hidden" id="popid" name="popid" /> 
                         <label for="fname">First Name </lable>
                         <input type="text" class="form-control form-input" id="fname" 
                             name="fname" placeholder="First Name" />

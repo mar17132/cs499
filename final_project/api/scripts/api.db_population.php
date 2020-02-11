@@ -46,6 +46,67 @@ function getAllPop()
         }    
 }
 
+function getAllGroups()
+{
+    //This will get all users names
+    //and type 
+
+        GLOBAL $dbObject;
+        GLOBAL $toJsonString; 
+    
+        $dbObject->querySelect("select * from sample_groups;");
+        if($dbObject->isDberror())
+        {
+            return $dbObject->getDberror();
+        }
+        else
+        {
+            if(count($dbObject->getSQLResults()) > 0)
+            {
+                //user exisit
+                $toJsonString->jsonEncode($dbObject->getSQLResults());
+                
+                return '{"status":"good","results":"true",'. $toJsonString->getdbrowString() . '}';
+            }
+            else
+            {
+                //user does not exisist
+                return '{"status":"good","results":"false"}';
+            }
+        }    
+}
+
+function getPopGroups($popid)
+{
+    //This will get all users names
+    //and type 
+
+        GLOBAL $dbObject;
+        GLOBAL $toJsonString; 
+    
+        $dbObject->querySelect("select sample_group_id 
+                    from surveyp_to_sampleg where survey_population_id='$popid'");
+        if($dbObject->isDberror())
+        {
+            return $dbObject->getDberror();
+        }
+        else
+        {
+            if(count($dbObject->getSQLResults()) > 0)
+            {
+                //user exisit
+                $toJsonString->jsonEncode($dbObject->getSQLResults());
+                
+                return '{"status":"good","results":"true",'. $toJsonString->getdbrowString() . '}';
+            }
+            else
+            {
+                //user does not exisist
+                return '{"status":"good","results":"false"}';
+            }
+        }    
+}
+
 function deletePop($popid)
 {
     //this will test if there is a user with pass
@@ -53,7 +114,7 @@ function deletePop($popid)
     GLOBAL $toJsonString; 
 
     $dbObject->queryDelete("delete from survey_population
-            where id = '$popid'");
+            where id='$popid'");
     if($dbObject->isDberror())
     {
         return '{"status":"error","results":"'.$dbObject->getDberror().'"}';
@@ -79,6 +140,8 @@ function updatePop($callArray)
     GLOBAL $dbObject;
     GLOBAL $toJsonString; 
     $popid = $callArray['id'];
+    $endKey = array_key_last($callArray);
+    $added = false;
     $queryString = "update survey_population set ";
 
     foreach($callArray as $key => $value)
@@ -88,6 +151,13 @@ function updatePop($callArray)
             if($value != null || trim($value) != "")
             {
                 $queryString .= $key ."='" . $value . "'";
+                $added = true;
+            }
+
+            if($key != $endKey && $added)
+            {
+                $queryString .= ",";
+                $added = false;
             }
         }
     }
@@ -169,6 +239,7 @@ function updatePopGroups($permisArray)
     }  
 
 }
+
 
 
 
