@@ -269,6 +269,7 @@ $(document).ready(function(){
 
     $(".pop-table").on('click','.pop-groups-btn',function(){
         displayGroupPop(getPopid($(this)));
+        $(".pop-groups-title").text(getPopFname($(this)) + " " + getPopLname($(this)));
     });
     
 

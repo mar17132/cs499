@@ -9,7 +9,7 @@ function secondThread(sendMessage,callback)
             w = new Worker("../scripts/api_thread.js");
             w.postMessage(sendMessage);
             w.onmessage = function(event){
-                //w.terminate();
+                w.terminate();
                 if(event.data.status == "good")
                 {
                     threadReturn(event.data);
@@ -150,7 +150,7 @@ function popRefresh(popObj)
 
 function popGroupRefresh(popObj)
 {
-    console.log(popObj)
+   // console.log(popObj)
     popGroups = $(".pop-groups-table");
     popGroups.empty();
     $(popObj).appendTo(popGroups);
