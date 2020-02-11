@@ -1,7 +1,7 @@
 
 DELIMITER $$
 
-CREATE DEFINER = 'csfinaluser'@'localhost' TRIGGER add_users_permissions 
+/*CREATE DEFINER = 'csfinaluser'@'localhost' TRIGGER add_users_permissions 
 AFTER INSERT ON survey_users FOR EACH ROW 
 BEGIN
     DECLARE user_id INT;
@@ -22,6 +22,37 @@ BEGIN
         );
         SET num_of_study = num_of_study - 1;
     END LOOP;
+END$$*/
+
+CREATE DEFINER = 'csfinaluser'@'localhost' TRIGGER add_users_permissions 
+AFTER INSERT ON survey_users FOR EACH ROW 
+BEGIN
+    DECLARE user_id INT;
+    DECLARE finished INTEGER DEFAULT 0;
+    DECLARE studyid INTEGER;
+    
+    SET user_id = (SELECT id FROM survey_users ORDER BY id DESC LIMIT 1);
+    
+    DECLARE studyCursor CURSOR FOR SELECT id FROM study;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
+    
+    OPEN studyCursor;
+    
+
+    insert_loop: LOOP
+        FETCH studyCursor INTO studyid;
+        IF finished = 1 THEN
+            LEAVE insert_loop;
+        END IF;
+        INSERT INTO interviewer_permissions
+        (study_id,survey_users_id)
+        VALUES(
+            studyid,
+            user_id
+        );
+        SET num_of_study = num_of_study - 1;
+    END LOOP;
+    CLOSE studyCursor;
 END$$
 
 CREATE DEFINER = 'csfinaluser'@'localhost' TRIGGER add_population_person_groups 
