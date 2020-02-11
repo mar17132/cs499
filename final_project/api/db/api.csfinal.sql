@@ -91,6 +91,8 @@ CREATE TABLE IF NOT EXISTS surveyp_to_sampleg(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     survey_population_id INT UNSIGNED NOT NULL,
     sample_group_id INT UNSIGNED NOT NULL,
+    /*######This will change the table to control the permissions of membership#####*/
+    member BOOLEAN NOT NULL DEFAULT 0, /*The default for users will be not member */
     PRIMARY KEY(id),
     /*sample_group foreign key*/
     CONSTRAINT sample_group_to_surveyp_to_sampleg_fk_con
