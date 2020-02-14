@@ -84,8 +84,13 @@ function getPopGroups($popid)
         GLOBAL $dbObject;
         GLOBAL $toJsonString; 
     
-        $dbObject->querySelect("select sample_group_id 
-                    from surveyp_to_sampleg where survey_population_id='$popid'");
+        $dbObject->querySelect("select 
+        pop.id as popid,concat(pop.lname,' ', pop.fname) as popname,
+        sgroup.id as groupid, sgroup.sample_name as groupname, pg.member 
+        from surveyp_to_sampleg pg
+        join survey_population pop on pg.survey_population_id = pop.id
+        join sample_group sgroup on pg.sample_group_id = sgroup.id
+        where pg.survey_population_id='$popid'");
         if($dbObject->isDberror())
         {
             return $dbObject->getDberror();

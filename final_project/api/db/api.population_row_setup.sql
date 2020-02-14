@@ -182,54 +182,65 @@ VALUES(
 /*
 surveyp_to_sampleg setup rows
 */
-INSERT INTO surveyp_to_sampleg(survey_population_id,sample_group_id)
-VALUES(
-    (SELECT id FROM survey_population WHERE fname = 'Hommer' AND lname = 'Simpsons'),
-    (SELECT id FROM sample_group WHERE sample_name = 'Group1')
-);
-INSERT INTO surveyp_to_sampleg(survey_population_id,sample_group_id)
-VALUES(
-    (SELECT id FROM survey_population WHERE fname = 'Abraham' AND lname = 'Simpsons'),
-    (SELECT id FROM sample_group WHERE sample_name = 'Group1')
-);
-INSERT INTO surveyp_to_sampleg(survey_population_id,sample_group_id)
-VALUES(
-    (SELECT id FROM survey_population WHERE fname = 'Maggie' AND lname = 'Simpsons'),
-    (SELECT id FROM sample_group WHERE sample_name = 'Group1')
-);
-INSERT INTO surveyp_to_sampleg(survey_population_id,sample_group_id)
-VALUES(
-    (SELECT id FROM survey_population WHERE fname = 'Lisa' AND lname = 'Simpsons'),
-    (SELECT id FROM sample_group WHERE sample_name = 'Group1')
-);
-INSERT INTO surveyp_to_sampleg(survey_population_id,sample_group_id)
-VALUES(
-    (SELECT id FROM survey_population WHERE fname = 'Marge' AND lname = 'Simpsons'),
-    (SELECT id FROM sample_group WHERE sample_name = 'Group1')
-);
-INSERT INTO surveyp_to_sampleg(survey_population_id,sample_group_id)
-VALUES(
-    (SELECT id FROM survey_population WHERE fname = 'Bart' AND lname = 'Simpsons'),
-    (SELECT id FROM sample_group WHERE sample_name = 'Group1')
-);
-INSERT INTO surveyp_to_sampleg(survey_population_id,sample_group_id)
-VALUES(
-    (SELECT id FROM survey_population WHERE fname = 'Waylon' AND lname = 'Smithers'),
-    (SELECT id FROM sample_group WHERE sample_name = 'Group2')
-);
-INSERT INTO surveyp_to_sampleg(survey_population_id,sample_group_id)
-VALUES(
-    (SELECT id FROM survey_population WHERE fname = 'Patty' AND lname = 'Bouvier'),
-    (SELECT id FROM sample_group WHERE sample_name = 'Group2')
-);
-INSERT INTO surveyp_to_sampleg(survey_population_id,sample_group_id)
-VALUES(
-    (SELECT id FROM survey_population WHERE fname = 'Clancy' AND lname = 'Wiggum'),
-    (SELECT id FROM sample_group WHERE sample_name = 'Group2')
-);
-INSERT INTO surveyp_to_sampleg(survey_population_id,sample_group_id)
-VALUES(
-    (SELECT id FROM survey_population WHERE fname = 'Milhouse' AND lname = 'Van Houten'),
-    (SELECT id FROM sample_group WHERE sample_name = 'Group2')
-);
+UPDATE surveyp_to_sampleg SET member=1 WHERE 
+survey_population_id=(SELECT id FROM survey_population 
+WHERE fname = 'Hommer' AND lname = 'Simpsons')
+AND
+sample_group_id=(SELECT id FROM sample_group WHERE sample_name = 'Group1');
+
+UPDATE surveyp_to_sampleg SET member=1 WHERE 
+survey_population_id=(SELECT id FROM survey_population 
+WHERE fname = 'Abraham' AND lname = 'Simpsons')
+AND
+sample_group_id=(SELECT id FROM sample_group WHERE sample_name = 'Group1');
+
+UPDATE surveyp_to_sampleg SET member=1 WHERE 
+survey_population_id=(SELECT id FROM survey_population 
+WHERE fname = 'Maggie' AND lname = 'Simpsons')
+AND
+sample_group_id=(SELECT id FROM sample_group WHERE sample_name = 'Group1');
+
+UPDATE surveyp_to_sampleg SET member=1 WHERE 
+survey_population_id=(SELECT id FROM survey_population 
+WHERE fname = 'Lisa' AND lname = 'Simpsons')
+AND
+sample_group_id=(SELECT id FROM sample_group WHERE sample_name = 'Group1');
+
+UPDATE surveyp_to_sampleg SET member=1 WHERE 
+survey_population_id=(SELECT id FROM survey_population 
+WHERE fname = 'Marge' AND lname = 'Simpsons')
+AND
+sample_group_id=(SELECT id FROM sample_group WHERE sample_name = 'Group1');
+
+UPDATE surveyp_to_sampleg SET member=1 WHERE 
+survey_population_id=(SELECT id FROM survey_population 
+WHERE fname = 'Bart' AND lname = 'Simpsons')
+AND
+sample_group_id=(SELECT id FROM sample_group WHERE sample_name = 'Group1');
+
+
+UPDATE surveyp_to_sampleg SET member=1 WHERE 
+survey_population_id=(SELECT id FROM survey_population 
+WHERE fname = 'Waylon' AND lname = 'Smithers')
+AND
+sample_group_id=(SELECT id FROM sample_group WHERE sample_name = 'Group2');
+
+UPDATE surveyp_to_sampleg SET member=1 WHERE 
+survey_population_id=(SELECT id FROM survey_population 
+WHERE fname = 'Patty' AND lname = 'Bouvier')
+AND
+sample_group_id=(SELECT id FROM sample_group WHERE sample_name = 'Group2');
+
+UPDATE surveyp_to_sampleg SET member=1 WHERE 
+survey_population_id=(SELECT id FROM survey_population 
+WHERE fname = 'Clancy' AND lname = 'Wiggum')
+AND
+sample_group_id=(SELECT id FROM sample_group WHERE sample_name = 'Group2');
+
+UPDATE surveyp_to_sampleg SET member=1 WHERE 
+survey_population_id=(SELECT id FROM survey_population 
+WHERE fname = 'Milhouse' AND lname = 'Van Houten')
+AND
+sample_group_id=(SELECT id FROM sample_group WHERE sample_name = 'Group2');
+
 

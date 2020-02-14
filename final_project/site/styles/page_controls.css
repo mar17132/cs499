@@ -87,4 +87,10 @@
     margin-left: 25px;
 }
 
+.modal .modal-body{
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 400px;
+}
+
 

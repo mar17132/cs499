@@ -28,19 +28,18 @@ CREATE DEFINER = 'csfinaluser'@'localhost' TRIGGER add_users_permissions
 AFTER INSERT ON survey_users FOR EACH ROW 
 BEGIN
     DECLARE user_id INT;
-    DECLARE finished INTEGER DEFAULT 0;
-    DECLARE studyid INTEGER;
+    DECLARE finished INT DEFAULT 0;
+    DECLARE studyid INT;   
     
-    SET user_id = (SELECT id FROM survey_users ORDER BY id DESC LIMIT 1);
-    
-    DECLARE studyCursor CURSOR FOR SELECT id FROM study;
+    DECLARE studycursor CURSOR FOR SELECT id FROM csfinal.study;
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
-    
-    OPEN studyCursor;
-    
+
+    SET user_id = (SELECT id FROM survey_users ORDER BY id DESC LIMIT 1);
+
+    OPEN studycursor;    
 
     insert_loop: LOOP
-        FETCH studyCursor INTO studyid;
+        FETCH studycursor INTO studyid;
         IF finished = 1 THEN
             LEAVE insert_loop;
         END IF;
@@ -50,32 +49,40 @@ BEGIN
             studyid,
             user_id
         );
-        SET num_of_study = num_of_study - 1;
     END LOOP;
-    CLOSE studyCursor;
+    CLOSE studycursor;
 END$$
 
-CREATE DEFINER = 'csfinaluser'@'localhost' TRIGGER add_population_person_groups 
+
+CREATE DEFINER = 'csfinaluser'@'localhost' TRIGGER add_population_person_groups
 AFTER INSERT ON survey_population FOR EACH ROW 
 BEGIN
     DECLARE pop_person_id INT;
-    DECLARE num_of_groups INT;
+    DECLARE finished INTEGER DEFAULT 0;
+    DECLARE groupid INTEGER;   
+    
+    DECLARE groupCursor CURSOR FOR SELECT id FROM sample_group;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
 
     SET pop_person_id = (SELECT id FROM survey_population ORDER BY id DESC LIMIT 1);
-    SET num_of_groups = (SELECT COUNT(*) FROM sample_group);
+
+    OPEN groupCursor;    
 
     insert_loop: LOOP
-        IF num_of_groups < 1 THEN
+        FETCH groupCursor INTO groupid;
+        IF finished = 1 THEN
             LEAVE insert_loop;
         END IF;
         INSERT INTO surveyp_to_sampleg
         (survey_population_id,sample_group_id)
         VALUES(
             pop_person_id,
-            num_of_groups
+            groupid
         );
-        SET num_of_groups = num_of_groups - 1;
     END LOOP;
+    CLOSE groupCursor;
 END$$
+
+
 
 DELIMITER ;

@@ -12,8 +12,8 @@ $allPersonGroups = null;
 
 if($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-    $allGroupsArray = allGroups();
-    $allPersonGroups = personsGroups();
+    //$allGroupsArray = allGroups();
+    $allPersonGroups = personsGroups($_POST['id']);
 }
 
 function allGroups()
@@ -33,7 +33,7 @@ function allGroups()
     return $jsonTophp->getjsonArray();
 }
 
-function personsGroups()
+function personsGroups($popid)
 {
     GLOBAL $jsonTophp;
 
@@ -42,7 +42,7 @@ function personsGroups()
     $personGroups->setParameters(array(
         'type'=>'population',
         'return_results'=>'groups',
-        'id' => $_POST['id']
+        'id' => $popid
     ));
     $personGroups->connect_api();
 
@@ -62,19 +62,28 @@ function personsGroups()
     </thead>  
     <tbody>
         <?php
-            if($allGroupsArray)
+            if($allPersonGroups)
             {
-                foreach($allGroupsArray['rows'] as $row)
+                foreach($allPersonGroups['rows'] as $row)
                 {
                     echo "<tr>";
-                    echo "<td scope='row' class='samplename'>"
-                          . $row['sample_name']. "</td>";
+                    echo "<td scope='row' class='sample-groupname'>"
+                          . $row['groupname']. "</td>";
                     echo "<td>
                           <div class='form-group' >  
                           <input type='hidden' class='hidden-pop-id' value='
-                          ".$_POST['id']."' />";
-                    echo "<input type='checkbox' class='group-chkbox form-check-input' 
-                            value='".$row['id']."'/>";
+                          ".$row['popid']."' />
+                          <input type='hidden' class='hidden-pop-group-id' value='
+                          ".$row['groupid']."' />";
+                    echo "<input type='checkbox' class='group-chkbox form-check-input' "; 
+                    if($row['member'])
+                    {
+                        echo "checked='checked' />";
+                    }
+                    else
+                    {
+                        echo "/>";
+                    }
                     echo "</div>";  
                     echo "</tr>";
                 }
