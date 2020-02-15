@@ -15,7 +15,7 @@
         Add Person
     </button>
     <button type="button" class="btn btn-secondary btn-sm pop-cmd-btn"
-            id="view-Groups-btn" >
+            id="view-Groups-btn" data-toggle='modal' data-target='#allGroups'>
         View Groups
     </button>
     <button type="button" class="btn btn-secondary btn-sm pop-cmd-btn"
@@ -27,6 +27,8 @@
 </div>
 
 <?php include_once 'partial/population_group_modal.php'; ?>
+
+<?php include_once 'partial/population_all_groups_modal.php'; ?>
 
 <?php include_once 'partial/pop_add_edit_modal.php'; ?>
 

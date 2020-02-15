@@ -70,14 +70,14 @@
                     <div class="form-group" >
                         <label for="state">State</lable>
                         <input type="text" class="form-control form-input" id="state" 
-                            name="state" placeholder="State" />
+                            name="state" placeholder="State" maxlength='2' />
                     </div>
                 </td>
                 <td>    
                     <div class="form-group" >
                         <label for="zip">Zip</lable>
                         <input type="text" class="form-control form-input" id="zip" 
-                            name="zip" placeholder="Zip" />
+                            name="zip" placeholder="Zip" maxlength='5' />
                     </div>
                 </td>
                 </tr>
@@ -86,7 +86,7 @@
                     <div class="form-group" >
                         <label for="phone">Phone</lable>
                         <input type="text" class="form-control form-input" id="phone" 
-                            name="phone" placeholder="Phone Number" />
+                            name="phone" placeholder="Phone Number" maxlength='12' />
                     </div>
                 </td>
                 <td></td>

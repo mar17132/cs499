@@ -187,14 +187,41 @@ function updatePop($callArray)
     }  
 }
 
-function addPop($uname,$pass,$type)
+function addPop($callArray)
 {
     //this will test if there is a user with pass
     GLOBAL $dbObject;
     GLOBAL $toJsonString; 
 
-    $dbObject->queryInsert("insert into survey_users(uname,passwd,type_id)
-    values('$uname','".password_hash($pass,PASSWORD_DEFAULT)."','$type')");
+   
+    $endKey = array_key_last($callArray);
+    $added = false;
+    $queryString = "";
+    $keycol = "";
+
+    foreach($callArray as $key => $value)
+    {
+        if($key != 'type' && $key != 'return_results' && $key != 'id')
+        {
+            if($value != null || trim($value) != "")
+            {
+                $queryString .= "'$value'";
+                $keycol .= $key;
+                $added = true;
+            }
+
+            if($key != $endKey && $added)
+            {
+                $queryString .= ",";
+                $keycol .= ",";
+                $added = false;
+            }
+        }
+    }
+
+    $dbObject->queryInsert("insert into survey_population($keycol)
+    values($queryString)");
+
     if($dbObject->isDberror())
     {
         return '{"status":"error","results":"'.$dbObject->getDberror().'",
@@ -204,12 +231,12 @@ function addPop($uname,$pass,$type)
     {
         if($dbObject->get_affected_rows() > 0)
         {
-            return '{"status":"good","results":"The user was Added!"}';
+            return '{"status":"good","results":"The population person was Added!"}';
         }
         else
         {
             //user does not exisist
-            return '{"status":"error","results":"No user was not Added."}';
+            return '{"status":"error","results":"No person was Added."}';
         }
     }  
 }
@@ -222,13 +249,13 @@ function updatePopGroups($permisArray)
 
     $updateArray = (array) $permisArray;
     $queryString = "";
-    
+   
     foreach($updateArray as $permis)
     {   
         $explodeArray = explode(",",$permis);
-        $queryString .="update interviewer_permissions set allowed_permission='";
-        $queryString .= $explodeArray[2]."' where survey_users_id='";
-        $queryString .= $explodeArray[0]."' and study_id ='";
+        $queryString .="update surveyp_to_sampleg set member='";
+        $queryString .= $explodeArray[2]."' where survey_population_id='";
+        $queryString .= $explodeArray[0]."' and sample_group_id='";
         $queryString .= $explodeArray[1]."';";
     }
 
@@ -240,7 +267,7 @@ function updatePopGroups($permisArray)
     }
     else
     { 
-        return '{"status":"good","results":"The user permissions have been updated"}';
+        return '{"status":"good","results":"The group membership has been updated"}';
     }  
 
 }

@@ -129,6 +129,29 @@ function updatePop()
     );
 }
 
+function updatePopGroups()
+{
+    let sendArray = [];
+
+    $(".group-chkbox").each(function(){
+        sendArray.push({
+            'popid':$(this).siblings(".hidden-pop-id").val(),
+            'groupid':$(this).siblings(".hidden-pop-group-id").val(),
+            'member': $(this).is(":checked") ? '1' : '0'
+        });
+    });
+
+    secondThread({
+        database:{
+            'type':'population',
+            'return_results':'popgroupupdate',
+            'values':sendArray                 
+        },
+        'page':'population'
+        }
+    );
+}
+
 function displayGroupPop(populationid)
 {
     secondThread({
@@ -138,6 +161,16 @@ function displayGroupPop(populationid)
         },
         'refresh_type':'groups', 
         'page':'population'
+        }
+    );
+}
+
+function displayAllGroupPop()
+{
+    secondThread({
+        url:'http://localhost/final_project/site/documents/partial/population_all_groups_table.php',
+        'database':'refresh', 
+        'page':'groups'
         }
     );
 }
@@ -271,7 +304,18 @@ $(document).ready(function(){
         displayGroupPop(getPopid($(this)));
         $(".pop-groups-title").text(getPopFname($(this)) + " " + getPopLname($(this)));
     });
+
+    $("#save_pop_groups_btn").on('click',function(){
+        updatePopGroups();
+    });
     
+    $("#view-Groups-btn").on('click',function(){
+        displayAllGroupPop();
+        $("#allGroups").modal({
+            backdrop:"static",
+            keyboard:false
+        });
+    });
 
 });
 

@@ -39,7 +39,10 @@ function threadReturn(obj)
                 userRefresh(obj.rows);
             break;
             case 'population':
-                popRefresh(obj.rows)
+                popRefresh(obj.rows);
+            break;
+            case 'groups':
+                allGroupRefresh(obj.rows);
             break;
             case 'interviews':
 
@@ -154,6 +157,14 @@ function popGroupRefresh(popObj)
     popGroups = $(".pop-groups-table");
     popGroups.empty();
     $(popObj).appendTo(popGroups);
+}
+
+function allGroupRefresh(allgroupsObj)
+{
+   // console.log(popObj)
+    allGroups = $(".pop-all-groups-table");
+    allGroups.empty();
+    $(allgroupsObj).appendTo(allGroups);
 }
 
 function displayInfo(Obj)

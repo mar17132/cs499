@@ -104,7 +104,6 @@ function object_to_array_string(objArray)
     for(let key in objArray)
     {
         objString = objArray[key].trim();
-        //returnString += key + "=" + objString.replace("\n","");
         returnString += objString.replace("\n","");
 
         if(key != endKey)
