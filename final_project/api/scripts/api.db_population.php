@@ -144,7 +144,7 @@ function addGroup($groupname)
     GLOBAL $dbObject;
     GLOBAL $toJsonString; 
 
-    $dbObject->queryInsert("insert into sample_group(sample_group)
+    $dbObject->queryInsert("insert into sample_group(sample_name)
     values('$groupname')");
     if($dbObject->isDberror())
     {
@@ -154,7 +154,7 @@ function addGroup($groupname)
     {
         if($dbObject->get_affected_rows() > 0)
         {
-            return '{"status":"good","results":"The group was deleted!"}';
+            return '{"status":"good","results":"The group was added!"}';
         }
         else
         {

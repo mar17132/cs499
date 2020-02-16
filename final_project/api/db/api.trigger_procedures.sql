@@ -1,29 +1,6 @@
 
 DELIMITER $$
 
-/*CREATE DEFINER = 'csfinaluser'@'localhost' TRIGGER add_users_permissions 
-AFTER INSERT ON survey_users FOR EACH ROW 
-BEGIN
-    DECLARE user_id INT;
-    DECLARE num_of_study INT;
-
-    SET user_id = (SELECT id FROM survey_users ORDER BY id DESC LIMIT 1);
-    SET num_of_study = (SELECT COUNT(*) FROM study);
-
-    insert_loop: LOOP
-        IF num_of_study < 1 THEN
-            LEAVE insert_loop;
-        END IF;
-        INSERT INTO interviewer_permissions
-        (study_id,survey_users_id)
-        VALUES(
-            num_of_study,
-            user_id
-        );
-        SET num_of_study = num_of_study - 1;
-    END LOOP;
-END$$*/
-
 CREATE DEFINER = 'csfinaluser'@'localhost' TRIGGER add_users_permissions 
 AFTER INSERT ON survey_users FOR EACH ROW 
 BEGIN
@@ -83,6 +60,34 @@ BEGIN
     CLOSE groupCursor;
 END$$
 
+CREATE DEFINER = 'csfinaluser'@'localhost' TRIGGER add_group_to_pops
+AFTER INSERT ON sample_group FOR EACH ROW 
+BEGIN
+    DECLARE sample_group_id INT;
+    DECLARE finished INTEGER DEFAULT 0;
+    DECLARE popid INTEGER;   
+    
+    DECLARE popCursor CURSOR FOR SELECT id FROM survey_population;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
+
+    SET sample_group_id = (SELECT id FROM sample_group ORDER BY id DESC LIMIT 1);
+
+    OPEN popCursor;    
+
+    insert_loop: LOOP
+        FETCH popCursor INTO popid;
+        IF finished = 1 THEN
+            LEAVE insert_loop;
+        END IF;
+        INSERT INTO surveyp_to_sampleg
+        (survey_population_id,sample_group_id)
+        VALUES(
+            popid,
+            sample_group_id
+        );
+    END LOOP;
+    CLOSE popCursor;
+END$$
 
 
 DELIMITER ;

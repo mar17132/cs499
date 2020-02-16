@@ -20,6 +20,7 @@ require_once "../scripts/api_connect.php";
         <link rel="stylesheet" href="../styles/main_menu.css"/>
         <link rel="stylesheet" href="../styles/user_body.css"/>
         <link rel="stylesheet" href="../styles/pop_body.css"/>
+        <link rel="stylesheet" href="../styles/study_body.css"/>
         <link rel="stylesheet" href="../styles/page_controls.css"/>
         <script type="text/javascript" src="../scripts/jquery-3.4.1.min.js" ></script>
         <script type="text/javascript" src="../scripts/bootstrap/4.4.1/js/bootstrap.bundle.min.js" ></script>

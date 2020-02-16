@@ -19,11 +19,18 @@
           Home 
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link menu_a" href="#">
-          Studys
-        </a>
-      </li>
+      <?php
+        if($_SESSION['type'] == 'Admin')
+        {
+          echo '
+          <li class="nav-item">
+            <a class="nav-link menu_a" href="
+            '.$myURL.'/documents/study_body.php">
+              Studys
+            </a>
+          </li>';
+        }
+      ?>
       <li class="nav-item">
         <a class="nav-link menu_a" href="#">
           Interviews

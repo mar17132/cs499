@@ -362,6 +362,7 @@ $(document).ready(function(){
             );
 
             $("#addGroups").modal("hide");
+            return;
         }
 
         $(".form-error-msg").text(
@@ -375,9 +376,9 @@ $(document).ready(function(){
         });
     });
 
-    $("#close_add_group_btn").on('show.bs.modal',function(){
-        $("#addGroups").val(""); 
-        $("#addGroups").removeClass("");
+    $("#addGroups").on('hidden.bs.modal',function(){
+        $("#groupname").val(""); 
+        $("#groupname").removeClass("");
         $(".form-error-msg").text("");
 
     });

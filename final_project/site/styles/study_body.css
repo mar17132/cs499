@@ -1,0 +1,8 @@
+
+.study-table{
+    margin-top: 30px;
+}
+
+.study-table table tbody tr:last-child{
+    border-bottom: thin solid #dee2e6;
+}

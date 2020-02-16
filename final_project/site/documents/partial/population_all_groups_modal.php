@@ -40,7 +40,7 @@
 
 <!--################Permissions User#######################-->
 <div class="modal fade" id="addGroups">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
             <!-- Modal Header -->
