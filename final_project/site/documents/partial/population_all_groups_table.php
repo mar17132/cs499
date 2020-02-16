@@ -53,11 +53,11 @@ function allGroups()
                     echo "<tr>";
                     echo "<td scope='row' class='allgroupname'>"
                           . $row['sample_name']. "</td>";
-                    echo "<td>
-                          <div class='form-group' >  
-                          <input type='hidden' class='hidden-all-group-id' value='
-                          ".$row['id']."' />";
-                    echo "<button type='button' class='all-group-del-btn btn btn-secondary pop-delete-btn'> ";                 
+                    echo "<td><div class='form-group' >  
+                          <input type='hidden' 
+                          class='hidden-all-group-id' value='".$row['id']."' />";
+                    echo "<button type='button' 
+                    class='all-group-del-btn btn btn-secondary'> ";                 
                     echo "Delete</button></div>";  
                     echo "</tr>";
                 }

@@ -317,5 +317,70 @@ $(document).ready(function(){
         });
     });
 
+    $("#allGroups").on('click','.all-group-del-btn',function(){
+        secondThread({
+            database:{
+                'type':'population',
+                'return_results':'groupdelete',
+                'id':$(this).siblings(".hidden-all-group-id").val()                
+            },
+            'page':'population'
+            },displayAllGroupPop
+        );
+    });
+
+    $('.form-addgroup-input').on('blur',function(){
+
+        if($(this).val() == null || $(this).val().trim() == "" 
+        || $(this).val() == "null")
+        {
+            $(this).addClass("required");
+        }
+
+    });
+    
+    $('.form-addgroup-input').on('change',function(){    
+        $(this).removeClass("required");        
+    });
+    
+    $('.form-addgroup-input').on('click',function(){
+        $(this).removeClass("required");   
+    });
+
+    $("#add_group_btn").on('click',function(){
+
+        if($("#groupname").val() != null && $("#groupname").val().trim() != "")
+        {
+            secondThread({
+                database:{
+                    'type':'population',
+                    'return_results':'addgroup',
+                    'name':$("#groupname").val()                
+                },
+                'page':'population'
+                }
+            );
+
+            $("#addGroups").modal("hide");
+        }
+
+        $(".form-error-msg").text(
+            "Error: Please make sure all feilds have input");
+    });
+    
+    $("#add-Groups-btn").on('click',function(){
+        $("#addGroups").modal({
+            backdrop:"static",
+            keyboard:false
+        });
+    });
+
+    $("#close_add_group_btn").on('show.bs.modal',function(){
+        $("#addGroups").val(""); 
+        $("#addGroups").removeClass("");
+        $(".form-error-msg").text("");
+
+    });
+
 });
 

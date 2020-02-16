@@ -93,6 +93,12 @@ function populationtype()
         case 'delete':
             echo deletePop($_POST['id']);
         break;
+        case 'groupdelete':
+            echo deleteGroup($_POST['id']);
+        break;
+        case 'addgroup':
+            echo addGroup($_POST['name']);
+        break;
         case 'add':
            echo addPop($_POST);
         break;

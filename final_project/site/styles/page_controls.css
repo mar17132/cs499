@@ -93,4 +93,11 @@
     max-height: 400px;
 }
 
+.all-group-del-btn:focus{   
+    box-shadow: none;    
+}
 
+.all-group-del-btn:hover{
+    background-color: #dc3545;
+    border-color: #dc3545;
+}

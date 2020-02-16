@@ -19,7 +19,7 @@
         View Groups
     </button>
     <button type="button" class="btn btn-secondary btn-sm pop-cmd-btn"
-            id="add-Groups-btn" >
+            id="add-Groups-btn" data-toggle='modal' data-target='#addGroups'>
         Add Groups
     </button>
 </nav>

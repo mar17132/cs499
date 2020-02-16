@@ -138,6 +138,56 @@ function deletePop($popid)
     }  
 }
 
+function addGroup($groupname)
+{
+    //this will test if there is a user with pass
+    GLOBAL $dbObject;
+    GLOBAL $toJsonString; 
+
+    $dbObject->queryInsert("insert into sample_group(sample_group)
+    values('$groupname')");
+    if($dbObject->isDberror())
+    {
+        return '{"status":"error","results":"'.$dbObject->getDberror().'"}';
+    }
+    else
+    {
+        if($dbObject->get_affected_rows() > 0)
+        {
+            return '{"status":"good","results":"The group was deleted!"}';
+        }
+        else
+        {
+            //user does not exisist
+            return '{"status":"error","results":"No records to delete."}';
+        }
+    }  
+}
+
+function deleteGroup($groupid)
+{
+    //this will test if there is a user with pass
+    GLOBAL $dbObject;
+    GLOBAL $toJsonString; 
+
+    $dbObject->queryDelete("delete from sample_group where id='$groupid'");
+    if($dbObject->isDberror())
+    {
+        return '{"status":"error","results":"'.$dbObject->getDberror().'"}';
+    }
+    else
+    {
+        if($dbObject->get_affected_rows() > 0)
+        {
+            return '{"status":"good","results":"The group was deleted!"}';
+        }
+        else
+        {
+            //user does not exisist
+            return '{"status":"error","results":"No records to delete."}';
+        }
+    }  
+}
 
 function updatePop($callArray)
 {
