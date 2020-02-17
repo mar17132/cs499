@@ -7,16 +7,16 @@
 </nav>
 
 <div class="study-table container">
-<nav class="navbar navbar-expand-sm bg-dark pop-cmd-bar">
-    <button type="button" class="btn btn-secondary btn-sm pop-cmd-btn"
+<nav class="navbar navbar-expand-sm bg-dark study-cmd-bar">
+    <button type="button" class="btn btn-secondary btn-sm study-cmd-btn"
             id="add-studt-btn" data-toggle='modal' data-target='' >
         Add Study
     </button>
-    <button type="button" class="btn btn-secondary btn-sm pop-cmd-btn"
+    <button type="button" class="btn btn-secondary btn-sm study-cmd-btn"
             id="" data-toggle='modal' data-target=''>
-        View Groups
+        Add Question
     </button>
-    <button type="button" class="btn btn-secondary btn-sm pop-cmd-btn"
+    <button type="button" class="btn btn-secondary btn-sm study-cmd-btn"
             id="" data-toggle='modal' data-target='#'>
         Add Groups
     </button>
@@ -27,6 +27,8 @@
 <?php include_once 'partial/study_add_edit_modal.php'; ?>
 
 <?php include_once 'partial/study_delete_modal.php'; ?>
+
+<?php include_once 'partial/study_groups_modal.php'; ?>
 
 <?php include_once 'partial/information_modal.php'; ?>
 

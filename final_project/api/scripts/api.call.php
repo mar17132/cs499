@@ -122,14 +122,11 @@ function studytype()
 {
     switch($_POST['return_results'])
     {
-        case 'login':
-            echo getUserLogin($_POST['uname'],$_POST['pass']);
-        break;
         case 'all':
-            echo getAllUsers();
+            echo getAllStudy();
         break;
-        case 'permissions':
-            echo getUserPermission($_POST['userid']);
+        case 'studygroups':
+            echo getAllStudyGroups($_POST['id']);
         break;
         default:
             echo '{"status":"good","results":"Bad return"}';

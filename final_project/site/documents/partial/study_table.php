@@ -10,50 +10,62 @@ require_once file_exists("../scripts/api_connect.php") ?
 
 <?php
 
-$pop_table_Connection = new apiconnection();
-$pop_table_Connection->setPage("final_project/api/scripts/api.call.php");
-$pop_table_Connection->setParameters(array(
-    'type'=>'population',
+$study_table_Connection = new apiconnection();
+$study_table_Connection->setPage("final_project/api/scripts/api.call.php");
+$study_table_Connection->setParameters(array(
+    'type'=>'study',
     'return_results'=>'all'
 ));
-$pop_table_Connection->connect_api();
+$study_table_Connection->connect_api();
 
 $jsonTophp->clearVars();   
-$jsonTophp->json_to_array($pop_table_Connection->getResults());
-$returnArray = $jsonTophp->getjsonArray();
+$jsonTophp->json_to_array($study_table_Connection->getResults());
+$returnStudyArray = $jsonTophp->getjsonArray();
 
 ?>
 
-<table class="table table-striped popTable">
+<table class="table table-striped studyTable">
     <thead>
         <tr>
             <th scope="col">Name</th>
-            <th scope="col">Address</th>
-            <th scope="col">Phone</th>
+            <th scope="col">Type</th>
+            <th scope="col">Order</th>
+            <th scope="col">Contact</th>
+            <th scope="col">Start</th>
+            <th scope="col">End</th>
             <th scope="col">Action</th>
         </tr>
     </thead>
     <tbody>
 
         <?php 
-            foreach($returnArray['rows'] as $row)
+            foreach($returnStudyArray['rows'] as $row)
             {
                 echo "<tr>";
-                echo "<td scope='row' class='popname'>". $row['name'] . "</td>";
-                echo "<td class='popaddress'>" . $row['address'] . "</td>";
-                echo "<td class='popphone'>".$row['phone']."</td>";
+                echo "<td scope='row' class='studyname'>". $row['name'] . "</td>";
+                echo "<td class='studytype'>" . $row['typename'] . "</td>";
+                echo "<td class='studyorder'>".
+                $row['order_questions'] = 1 ? 'True' : 'False'."</td>";
+                echo "<td class='studytrys'>". $row['try_amount']."</td>";
+                echo "<td class='startdate' >".$row['start']. "</td>";
+                echo "<td class='enddate' >".$row['end']. "</td>";
+                //Action buttons
                 echo "<td>
                         <input type='hidden' value='". $row['id'] . "'/>  
-                        <button type='button' class='btn btn-secondary pop-edit-btn'
-                        data-toggle='modal' data-target='#pop_Add_Edit'>
+                        <button type='button' class='btn btn-secondary study-edit-btn'
+                        data-toggle='modal' data-target='#'>
                         Edit
                         </button>
-                        <button type='button' class='btn btn-secondary pop-groups-btn'
-                        data-toggle='modal' data-target='#popGroups'>
+                        <button type='button' class='btn btn-secondary study-pop-btn'
+                        data-toggle='modal' data-target='#study_groups_modal'>
                         Groups
                         </button>
-                        <button type='button' class='btn btn-secondary pop-delete-btn";              
-                echo "' data-toggle='modal' data-target='#populaitonDelete'>";                    
+                        <button type='button' class='btn btn-secondary study-questions-btn'
+                        data-toggle='modal' data-target='#'>
+                        Questions
+                        </button>
+                        <button type='button' class='btn btn-secondary study-delete-btn";              
+                echo "' data-toggle='modal' data-target='#'>";                    
                 echo " 
                         Delete
                         </button>

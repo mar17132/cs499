@@ -44,6 +44,9 @@ function threadReturn(obj)
             case 'groups':
                 allGroupRefresh(obj.rows);
             break;
+            case 'studygroup':
+                studyGroupRefresh(obj.rows);
+            break;
             case 'interviews':
 
             break;
@@ -94,6 +97,29 @@ function threadReturn(obj)
             break;
             case 'study':
 
+            break;
+            case 'index':
+
+            break;
+            default:
+                displayError(Obj);
+        }
+    }
+        else if(obj.results == 'groups')
+    {
+        switch(obj.page)
+        {
+            case 'users':
+                //UserPermisRefresh(obj.rows);
+            break;
+            case 'population':
+                popGroupRefresh(obj.rows);
+            break;
+            case 'interviews':
+
+            break;
+            case 'study':
+                studyGroupRefresh(obj.rows);
             break;
             case 'index':
 
@@ -163,6 +189,14 @@ function allGroupRefresh(allgroupsObj)
 {
    // console.log(popObj)
     allGroups = $(".pop-all-groups-table");
+    allGroups.empty();
+    $(allgroupsObj).appendTo(allGroups);
+}
+
+function studyGroupRefresh(allgroupsObj)
+{
+   // console.log(popObj)
+    allGroups = $(".study-group-table");
     allGroups.empty();
     $(allgroupsObj).appendTo(allGroups);
 }

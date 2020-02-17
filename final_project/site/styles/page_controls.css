@@ -101,3 +101,51 @@
     background-color: #dc3545;
     border-color: #dc3545;
 }
+
+.study-edit-btn:hover{
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.study-edit-btn:focus{   
+    box-shadow: none;    
+}
+
+.study-pop-btn:hover{
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+
+.study-pop-btn:focus{
+    box-shadow: none;
+}
+
+.study-delete-btn:focus{   
+    box-shadow: none;    
+}
+
+.study-delete-btn:hover{
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.study-delete-btn{
+    margin-left: 10px;
+}
+
+.study-pop-btn{
+    margin-left: 10px;
+}
+
+.study-questions-btn{
+    margin-left: 10px;
+}
+
+.study-questions-btn:focus{   
+    box-shadow: none;    
+}
+
+.study-questions-btn:hover{
+    background-color: #007bff;
+    border-color: #007bff;
+}

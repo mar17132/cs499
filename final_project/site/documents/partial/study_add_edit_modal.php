@@ -1,7 +1,7 @@
 <!-- The Modal -->
 
 <!--################Add/Edit User#######################-->
-<div class="modal fade" id="pop_Add_Edit">
+<div class="modal fade" id="study_Add_Edit">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
 
@@ -15,7 +15,7 @@
             <form action="#" method="post">
                 <p class="form-error-msg"></p>           
             <div class="modal-body">   
-                <table class="table pop-add-edit-table"> 
+                <table class="table study-add-edit-table"> 
                 <tbody>
                 <tr>
                 <td>              
