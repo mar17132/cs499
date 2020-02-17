@@ -42,6 +42,36 @@ function getAllStudy()
         }    
 }
 
+function getStudyTypes()
+{
+    //this will test if there is a user with pass
+    GLOBAL $dbObject;
+    GLOBAL $toJsonString; 
+
+    $dbObject->querySelect("select type.id,type.type,type_class.typeClass from type  
+            inner join type_class on type.type_class_id = type_class.id
+            where type_class.typeClass = 'Study'");
+    if($dbObject->isDberror())
+    {
+        return $dbObject->getDberror();
+    }
+    else
+    {
+        if(count($dbObject->getSQLResults()) > 0)
+        {
+            //user exisit
+            $toJsonString->jsonEncode($dbObject->getSQLResults());
+            
+            return '{"status":"good","results":"true",'. $toJsonString->getdbrowString() . '}';
+        }
+        else
+        {
+            //user does not exisist
+            return '{"status":"good","results":"false"}';
+        }
+    }  
+}
+
 function getAllStudyGroups($studyid)
 {
     //This will get all users names
@@ -51,14 +81,16 @@ function getAllStudyGroups($studyid)
         GLOBAL $toJsonString; 
     
         $dbObject->querySelect("select sgroup.sample_name,
-        concat(pop.fname,' ',pop.lname) as name
+        concat(pop.fname,' ',pop.lname) as name, sgroup.id as groupid,
+        study.id as studyid
         from study_to_survey_pop
         join sample_group sgroup on 
         sgroup.id = study_to_survey_pop.sample_group_id
         join survey_population pop on 
         study_to_survey_pop.survey_population_id = pop.id
         join study on study_to_survey_pop.study_id = study.id
-        where study.id='1'");
+        where study.id='$studyid'");
+
         if($dbObject->isDberror())
         {
             return $dbObject->getDberror();
@@ -80,13 +112,13 @@ function getAllStudyGroups($studyid)
         }    
 }
 
-function deleteStudy($groupid)
+function deleteStudy($studyid)
 {
     //this will test if there is a user with pass
     GLOBAL $dbObject;
     GLOBAL $toJsonString; 
 
-    $dbObject->queryDelete("delete from sample_group where id='$groupid'");
+    $dbObject->queryDelete("delete from study where id='$studyid'");
     if($dbObject->isDberror())
     {
         return '{"status":"error","results":"'.$dbObject->getDberror().'"}';
@@ -95,7 +127,7 @@ function deleteStudy($groupid)
     {
         if($dbObject->get_affected_rows() > 0)
         {
-            return '{"status":"good","results":"The group was deleted!"}';
+            return '{"status":"good","results":"The study was deleted!"}';
         }
         else
         {
@@ -110,10 +142,10 @@ function updateStudy($callArray)
     //this will test if there is a user with pass
     GLOBAL $dbObject;
     GLOBAL $toJsonString; 
-    $popid = $callArray['id'];
+    $studyid = $callArray['id'];
     $endKey = array_key_last($callArray);
     $added = false;
-    $queryString = "update survey_population set ";
+    $queryString = "update study set ";
 
     foreach($callArray as $key => $value)
     {
@@ -133,7 +165,7 @@ function updateStudy($callArray)
         }
     }
 
-    $dbObject->queryUpdate("$queryString where id='$popid'");
+    $dbObject->queryUpdate("$queryString where id='$studyid'");
     if($dbObject->isDberror())
     {
         return '{"status":"error","results":"'.$dbObject->getDberror().'",
@@ -143,7 +175,7 @@ function updateStudy($callArray)
     {
         if($dbObject->get_affected_rows() > 0)
         {
-            return '{"status":"good","results":"The population person was Updated!"}';
+            return '{"status":"good","results":"The study was Updated!"}';
         }
         else
         {
@@ -185,7 +217,7 @@ function addStudy($callArray)
         }
     }
 
-    $dbObject->queryInsert("insert into survey_population($keycol)
+    $dbObject->queryInsert("insert into study($keycol)
     values($queryString)");
 
     if($dbObject->isDberror())
@@ -197,12 +229,12 @@ function addStudy($callArray)
     {
         if($dbObject->get_affected_rows() > 0)
         {
-            return '{"status":"good","results":"The population person was Added!"}';
+            return '{"status":"good","results":"The study was Added!"}';
         }
         else
         {
             //user does not exisist
-            return '{"status":"error","results":"No person was Added."}';
+            return '{"status":"error","results":"No study was Added."}';
         }
     }  
 }

@@ -17,6 +17,7 @@ INSERT INTO type_class(id,typeClass) VALUES(NULL,"Study");
 INSERT INTO type_class(id,typeClass) VALUES(NUll,"Interviewer Response");
 INSERT INTO type_class(id,typeClass) VALUES(NULL,"Question");
 INSERT INTO type_class(id,typeClass) VALUES(NULL,"Users");
+INSERT INTO type_class(id,typeClass) VALUES(NULL,"Progress");
 
 /*
 type table insert rows
@@ -59,7 +60,7 @@ VALUES(
 INSERT INTO type(type,type_class_id) 
 VALUES(
     "In Progress",
-    (SELECT id FROM type_class WHERE typeClass = "Study")
+    (SELECT id FROM type_class WHERE typeClass = "Progress")
 );
 INSERT INTO type(type,type_class_id) 
 VALUES(

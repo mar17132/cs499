@@ -1,5 +1,22 @@
 <!-- The Modal -->
 
+<?php 
+
+    $studyTypeConnection = new apiconnection();
+    $studyTypeConnection->setPage("final_project/api/scripts/api.call.php");
+    $studyTypeConnection->setParameters(array(
+        'type'=>'study',
+        'return_results'=>'types'
+    ));
+
+    $studyTypeConnection->connect_api();
+
+    $jsonTophp->clearVars();
+    $jsonTophp->json_to_array($studyTypeConnection->getResults());    
+    $returnTypeArray = $jsonTophp->getjsonArray();  
+
+?>
+
 <!--################Add/Edit User#######################-->
 <div class="modal fade" id="study_Add_Edit">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -7,7 +24,7 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title addedit_pop_title">Edit Population</h4>
+                <h4 class="modal-title study_modal_title">Edit Study</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -20,90 +37,77 @@
                 <tr>
                 <td>              
                     <div class="form-group" >
-                        <input class="form-input" type="hidden" id="popid" name="popid" /> 
-                        <label for="fname">First Name </lable>
-                        <input type="text" class="form-control form-input" id="fname" 
-                            name="fname" placeholder="First Name" />
+                        <input type="hidden" id="studyid-edit" name="studyid-edit" /> 
+                        <label for="sname">Study Name</lable>
+                        <input type="text" class="form-control form-input" id="sname" 
+                            name="sname" placeholder="Study Name" />
                     </div>
                 </td>
                 <td>
                     <div class="form-group" >
-                        <label for="mname">Middle Name </lable>
-                        <input type="text" class="form-control form-input" id="mname" 
-                            name="mname" placeholder="Middle Name" />
+                        <label for="studyType">Type</lable>
+                        <select class="form-control form-input" id="studyType" 
+                            name="studyType">
+                            <option value='null'>Choose Type</option>
+                            <?php 
+                                foreach($returnTypeArray['rows'] as $typerow)
+                                {
+                                    echo "<option value='".$typerow['id']."'>";
+                                    echo $typerow['type'];
+                                    echo "</option>";
+                                }                         
+                            ?>
+                        </select>
                     </div>
                 </td>
                 <td>
-                    <div class="form-group" >
-                        <label for="lname">Last Name </lable>
-                        <input type="text" class="form-control form-input" id="lname" 
-                            name="lname" placeholder="Last Name" />
+                <div class="form-group" >
+                        <label for="orderQuest">Order Questions</lable>
+                        <select class="form-control form-input" id="orderQuest" 
+                            name="orderQuest">
+                            <option value='null'>Choose Order</option>
+                            <option value='1'>True</option>
+                            <option value='0'>False</option>
+                        </select>
                     </div>
                 </td>
                 </tr>
                 <tr>
                 <td>
                     <div class="form-group" >
-                        <label for="street">Street</lable>
-                        <input type="text" class="form-control form-input" id="street" 
-                            name="street" placeholder="Street" />
+                        <label for="tryammount">Contact Amount</lable>
+                        <input type="text" class="form-control form-input" id="tryamount" 
+                            name="tryamount" placeholder="Contact Amount" />
+                    </div>
+                </td>    
+                <td>
+                    <div class="form-group" >
+                        <label for="startdate">Start Date</lable>
+                        <input type="text" class="form-control form-input" id="startdate" 
+                            name="startdate" placeholder="YYYY-MM-DD" />
                     </div>
                 </td>
                 <td>
                     <div class="form-group" >
-                        <label for="apt">Appartment</lable>
-                        <input type="text" class="form-control form-input" id="apt" 
-                            name="apt" placeholder="Appartment" />
+                        <label for="enddate">End Date</lable>
+                        <input type="text" class="form-control form-input" id="enddate" 
+                            name="enddate" placeholder="YYYY-MM-DD" />
                     </div>
                 </td>
                 <td></td>
-                </tr>
-                <tr>
-                <td>
-                    <div class="form-group" >
-                        <label for="city">City</lable>
-                        <input type="text" class="form-control form-input" id="city" 
-                            name="city" placeholder="City" />
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group" >
-                        <label for="state">State</lable>
-                        <input type="text" class="form-control form-input" id="state" 
-                            name="state" placeholder="State" maxlength='2' />
-                    </div>
-                </td>
-                <td>    
-                    <div class="form-group" >
-                        <label for="zip">Zip</lable>
-                        <input type="text" class="form-control form-input" id="zip" 
-                            name="zip" placeholder="Zip" maxlength='5' />
-                    </div>
-                </td>
-                </tr>
-                <tr>
-                <td>
-                    <div class="form-group" >
-                        <label for="phone">Phone</lable>
-                        <input type="text" class="form-control form-input" id="phone" 
-                            name="phone" placeholder="Phone Number" maxlength='12' />
-                    </div>
-                </td>
-                <td></td>
-                <td></td>
-                </tr>           
+                </tr>        
                 </tbody>
                 </table>                
             </div>
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" id="popAddEdit_btn" 
+                <button type="button" id="studysaveAddEdit_btn" 
                 class="btn btn-success" >
                     Save
                 </button>                
                 <button type="button" class="btn btn-danger" 
-                id="userAddEdit_close_btn" data-dismiss="modal">
+                data-dismiss="modal">
                     Close
                 </button>
             </div>

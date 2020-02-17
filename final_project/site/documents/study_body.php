@@ -9,7 +9,7 @@
 <div class="study-table container">
 <nav class="navbar navbar-expand-sm bg-dark study-cmd-bar">
     <button type="button" class="btn btn-secondary btn-sm study-cmd-btn"
-            id="add-studt-btn" data-toggle='modal' data-target='' >
+            id="add-study-btn" data-toggle='modal' data-target='' >
         Add Study
     </button>
     <button type="button" class="btn btn-secondary btn-sm study-cmd-btn"
@@ -18,7 +18,7 @@
     </button>
     <button type="button" class="btn btn-secondary btn-sm study-cmd-btn"
             id="" data-toggle='modal' data-target='#'>
-        Add Groups
+       Connect Group
     </button>
 </nav>
      <?php require_once 'partial/study_table.php';  ?>

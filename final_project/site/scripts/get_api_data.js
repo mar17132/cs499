@@ -51,7 +51,7 @@ function threadReturn(obj)
 
             break;
             case 'study':
-
+                studyRefresh(obj.rows);
             break;
             case 'index':
 
@@ -96,7 +96,7 @@ function threadReturn(obj)
 
             break;
             case 'study':
-
+                
             break;
             case 'index':
 
@@ -142,7 +142,7 @@ function threadReturn(obj)
 
             break;
             case 'study':
-
+                displayInfo(obj);
             break;
             case 'index':
 
@@ -199,6 +199,14 @@ function studyGroupRefresh(allgroupsObj)
     allGroups = $(".study-group-table");
     allGroups.empty();
     $(allgroupsObj).appendTo(allGroups);
+}
+
+function studyRefresh(studyObj)
+{
+   // console.log(popObj)
+    allstudy = $(".study-table");
+    allstudy.children(".studyTable").remove();
+    $(studyObj).appendTo(allstudy);
 }
 
 function displayInfo(Obj)

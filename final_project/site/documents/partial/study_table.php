@@ -53,7 +53,7 @@ $returnStudyArray = $jsonTophp->getjsonArray();
                 echo "<td>
                         <input type='hidden' value='". $row['id'] . "'/>  
                         <button type='button' class='btn btn-secondary study-edit-btn'
-                        data-toggle='modal' data-target='#'>
+                        data-toggle='modal' data-target='#study_Add_Edit'>
                         Edit
                         </button>
                         <button type='button' class='btn btn-secondary study-pop-btn'
@@ -65,7 +65,7 @@ $returnStudyArray = $jsonTophp->getjsonArray();
                         Questions
                         </button>
                         <button type='button' class='btn btn-secondary study-delete-btn";              
-                echo "' data-toggle='modal' data-target='#'>";                    
+                echo "' data-toggle='modal' data-target='#studyDelete'>";                    
                 echo " 
                         Delete
                         </button>

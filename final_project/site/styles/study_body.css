@@ -24,4 +24,11 @@
     border: none !important;
 }
 
+.study-group-namebar{
+    background-color: transparent !important;
+}
+
+.study-group-namebar:not(:first-child){
+    border-top: thin solid #dee2e6;
+}
 

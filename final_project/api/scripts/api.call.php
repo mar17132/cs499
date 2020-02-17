@@ -128,6 +128,18 @@ function studytype()
         case 'studygroups':
             echo getAllStudyGroups($_POST['id']);
         break;
+        case 'types':
+            echo getStudyTypes();
+        break;
+        case 'add':
+            echo addStudy($_POST);
+        break;
+        case 'update':
+            echo updateStudy($_POST);
+        break;
+        case 'delete':
+            echo deleteStudy($_POST['id']);
+        break;
         default:
             echo '{"status":"good","results":"Bad return"}';
         break;     
