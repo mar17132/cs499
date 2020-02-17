@@ -112,6 +112,49 @@ function getAllStudyGroups($studyid)
         }    
 }
 
+function allstudyQuestions($studyid)
+{
+    //This will get all users names
+    //and type 
+
+        GLOBAL $dbObject;
+        GLOBAL $toJsonString; 
+
+        $dbObject->querySelect("select study.id as studyid,
+        question.id as questionid, question.question
+        from study
+        join study_to_question on study_to_question.study_id = study.id
+        join question on study_to_question.question_id = question.id
+        where study.id = '$studyid'
+        order by question.id ASC");
+
+        if($dbObject->isDberror())
+        {
+            return $dbObject->getDberror();
+        }
+        else
+        {
+            if(count($dbObject->getSQLResults()) > 0)
+            {
+                //user exisit
+                $toJsonString->jsonEncode($dbObject->getSQLResults());
+                
+                return '{"status":"good","results":"true",'. $toJsonString->getdbrowString() . '}';
+            }
+            else
+            {
+                //user does not exisist
+                return '{"status":"good","results":"false","query":"select study.id as studyid,
+                    question.id as questionid, question.question
+                    from study
+                    join study_to_question on study_to_question.study_id = study.id
+                    join question on study_to_question.question_id = question.id
+                    where study.id = '.$studyid.'
+                    order by question.id ASC"}';
+            }
+        }    
+}
+
 function deleteStudy($studyid)
 {
     //this will test if there is a user with pass

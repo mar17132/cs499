@@ -30,6 +30,8 @@
 
 <?php include_once 'partial/study_groups_modal.php'; ?>
 
+<?php include_once 'partial/study_questions_modal.php'; ?>
+
 <?php include_once 'partial/information_modal.php'; ?>
 
 <?php include_once 'partial/error_modal.php'; ?>

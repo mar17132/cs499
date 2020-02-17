@@ -10,6 +10,9 @@ let save_add_edit_study_btn;
 let print_form_error;
 let add_study_btn;
 let dele_study_btn;
+let dele_study_question_btn;
+let questionAddEdit_btn;
+let study_quest_edit_btn;
 
 
 function getStudyId(currentObj)
@@ -123,6 +126,16 @@ function refreshContentStudy()
         'url':'http://localhost/final_project/site/documents/partial/study_table.php',
         'database':'refresh',
         'page':'study'
+    });
+}
+
+function refreshQuesitonStudy(currentObj)
+{
+    secondThread({
+        'url':'http://localhost/final_project/site/documents/partial/study_questions_table.php',
+        'database':{'id':getStudyId(currentObj)},
+        'page':'studyquesiton',
+        'refresh_type':'refresh'
     });
 }
 
@@ -289,6 +302,9 @@ $(document).ready(function(){
     print_form_error = $(".form-error-msg");
     add_study_btn = $("#add-study-btn");
     dele_study_btn = $("#dele_study_btn");
+    dele_study_question_btn = $(".study-quest-del-btn");
+    questionAddEdit_btn = $("#questionAddEdit_btn");
+    study_quest_edit_btn = $(".study-quest-edit-btn");
 
     $(".study-table").on('click','.study-pop-btn',function(){
 
@@ -313,6 +329,12 @@ $(document).ready(function(){
             keyboard:false
         });
         displayStudyEdit($(this));
+    });
+
+    $(".study-table").on('click','.study-questions-btn',function(){
+        clearStudyInputs();
+        $(".studyname-groups").text(getStudyName($(this)));
+        refreshQuesitonStudy($(this));
     });
 
     $(".study-table").on('click','.study-delete-btn',function(){
@@ -406,6 +428,18 @@ $(document).ready(function(){
     
     dele_study_btn.on('click',function(){
         deleteStudy();
+    });
+
+    dele_study_question_btn.on('click',function(){
+
+    });
+
+    questionAddEdit_btn.on('click',function(){
+
+    });
+
+    study_quest_edit_btn.on('click',function(){
+
     });
 
 });

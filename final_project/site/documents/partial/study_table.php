@@ -61,7 +61,7 @@ $returnStudyArray = $jsonTophp->getjsonArray();
                         Groups
                         </button>
                         <button type='button' class='btn btn-secondary study-questions-btn'
-                        data-toggle='modal' data-target='#'>
+                        data-toggle='modal' data-target='#study_questions_modal'>
                         Questions
                         </button>
                         <button type='button' class='btn btn-secondary study-delete-btn";              

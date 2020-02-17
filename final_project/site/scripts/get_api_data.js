@@ -53,6 +53,9 @@ function threadReturn(obj)
             case 'study':
                 studyRefresh(obj.rows);
             break;
+            case 'studyquesiton':
+                studyquesitonRefresh(obj.rows);
+            break;
             case 'index':
 
             break;
@@ -206,6 +209,14 @@ function studyRefresh(studyObj)
    // console.log(popObj)
     allstudy = $(".study-table");
     allstudy.children(".studyTable").remove();
+    $(studyObj).appendTo(allstudy);
+}
+
+function studyquesitonRefresh(studyObj)
+{
+   // console.log(popObj)
+    allstudy = $(".study-quesiton-contain");
+    allstudy.empty();
     $(studyObj).appendTo(allstudy);
 }
 

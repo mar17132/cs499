@@ -140,6 +140,9 @@ function studytype()
         case 'delete':
             echo deleteStudy($_POST['id']);
         break;
+        case 'allquestions':
+            echo allstudyQuestions($_POST['id']);
+        break;
         default:
             echo '{"status":"good","results":"Bad return"}';
         break;     
