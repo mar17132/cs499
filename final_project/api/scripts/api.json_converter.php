@@ -31,7 +31,8 @@ class api_php_to_json
     {
         $jsonString = '';
 
-        $endKey = end(array_keys($arrayjson));
+        $jsonKeys = array_keys($arrayjson);
+        $endKey = end($jsonKeys);
 
         while(list($key,$val) = each($arrayjson))
         {

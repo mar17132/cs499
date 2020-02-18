@@ -61,7 +61,9 @@ if($allQuestionsArray && $allQuestionsArray['results']=='true')
                 <input type='hidden' 
                 class='questionid-study' value='".$row['questionid']."' />";
         echo "<button type='button' 
-        class='study-quest-edit-btn btn btn-warning'>Edit</button>
+        class='study-quest-edit-btn btn btn-warning'
+        data-toggle='modal' data-target='#question_add_edit_modal'
+        >Edit</button>
         <button type='button' 
         class='study-quest-del-btn btn btn-danger'>Delete</button>
         </div>";  

@@ -10,73 +10,141 @@ require_once file_exists("../../scripts/api_connect.php") ?
 
 <?php
 
-$allQuestionsArray = null;
+$studyArray = null;
+$typeArray = null;
 
 if($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-    $allQuestionsArray = allQuestions();
+
 }
 
-function allQuestions()
+function alltypes()
 {
     GLOBAL $jsonTophp;
 
-    $groupsPop = new apiconnection();
-    $groupsPop->setPage("final_project/api/scripts/api.call.php");
-    $groupsPop->setParameters(array(
+    $dbconnections = new apiconnection();
+    $dbconnections->setPage("final_project/api/scripts/api.call.php");
+    $dbconnections->setParameters(array(
         'type'=>'study',
-        'return_results'=>'allquestions',
-        'id'=>$_POST['id']
+        'return_results'=>'questiontype'
     ));
-    $groupsPop->connect_api();
+    $dbconnections->connect_api();
 
     $jsonTophp->clearVars();   
-    $jsonTophp->json_to_array($groupsPop->getResults());
+    $jsonTophp->json_to_array($dbconnections->getResults());
     return $jsonTophp->getjsonArray();
 }
 
+function allstudy()
+{
+    GLOBAL $jsonTophp;
+
+    $dbconnections = new apiconnection();
+    $dbconnections->setPage("final_project/api/scripts/api.call.php");
+    $dbconnections->setParameters(array(
+        'type'=>'study',
+        'return_results'=>'all'
+    ));
+    $dbconnections->connect_api();
+
+    $jsonTophp->clearVars();   
+    $jsonTophp->json_to_array($dbconnections->getResults());
+    return $jsonTophp->getjsonArray();
+}
+
+$typeArray = alltypes();
+$studyArray = allstudy();
+
 ?>
 
 
+<table class="table question_add_edit_table">
+    <tbody>
+    <tr>
+        <td>
+            <div class="form-group" >
+                <label for="studyid">Study</lable>
+                <select class="form-control form-input" id="studyid" 
+                name="studyid">
+                    <option value='null'>Choose Study</option>
+                    <?php 
+                        foreach($studyArray['rows'] as $row)
+                        {
+                        echo "<option value='".$row['id']."'>";
+                        echo $row['name'];
+                        echo "</option>";
+                        }                         
+                    ?>
+                </select>
+            </div>
+        </td>
+        <td>
+            <div class="form-group" >
+                <label for="qtype">Question Type</lable>
+                <select class="form-control form-input" id="qtype" 
+                name="qtype">
+                    <option value='null'>Choose Type</option>
+                    <?php 
+                        foreach($typeArray['rows'] as $row)
+                        {
+                        echo "<option value='".$row['id']."'>";
+                        echo $row['type'];
+                        echo "</option>";
+                        }                         
+                    ?>
+                </select>
+            </div>
+        </td>
+        <td>
+            <div class="form-group" >
+                <label for="questaorder">Order Anwsers</lable>
+                <select class="form-control form-input" id="questaorder" 
+                name="questaorder">
+                    <option value='0'>False</option>
+                    <option value='1'>True</option>
+                </select>
+            </div>
+        </td>
+        </tr>
+        <tr>
+        <td>              
+            <div class="form-group" >
+                <input class="form-input" type="hidden" id="quest_edit_id" 
+                name="quest_edit_id" /> 
+                <label for="question">Question</lable>
+                <input type="text" class="form-control form-input" id="question" 
+                    name="question" placeholder="Question" />
+            </div>
+        </td>
+        <td>              
+            <div class="form-group" > 
+                <label for="qorder">Order</lable>
+                <input type="text" class="form-control form-input" id="qorder" 
+                    name="qorder" placeholder="Question Order" />
+            </div>
+        </td>
+        <td></td>
+        </tr>
+    </tbody>
+</table>
+ 
 
-<?php
-if($allQuestionsArray && $allQuestionsArray['results']=='true')
-{
-    echo "<table class='table table-striped study_question_table'>
-        <thead>
-            <tr>
-                <th scope='col'>Question</th>
-                <th scope='col'>Action</th>
-            </tr>
-        </thead>  
-        <tbody>";
-    foreach($allQuestionsArray['rows'] as $row)
-    {
-        echo "<tr>";
-        echo "<td scope='row' class='question_name'>"
-                . $row['question']. "</td>";
-        echo "<td><div class='form-group' > 
-                <input type='hidden' 
-                class='question-studyid' value='".$row['studyid']."' /> 
-                <input type='hidden' 
-                class='questionid-study' value='".$row['questionid']."' />";
-        echo "<button type='button' 
-        class='study-quest-edit-btn btn btn-warning'>Edit</button>
-        <button type='button' 
-        class='study-quest-del-btn btn btn-danger'>Delete</button>
-        </div>";  
-        echo "</tr>";
-    }
+<nav class="navbar navbar-expand-sm study-group-namebar">
+    <h3 class="study-group-name">
+    Answers
+    </h3>
+    <span class="ml-auto" >
+        <button type="button" class="btn btn-warning" id="quest_anwser_add_btn">   
+        Add Answer
+        </button>
+    </span>            
+</nav>
 
-    echo "  </tbody></table>";
-
-}
-else
-{
-    echo '<h6 class="study-group-name">
-    No questions have been created for this study.
-    </h6>';
-}
-?>
-  
-
+<div class="container question-answer-contain" >
+    <table class="table answer_addedit_table">
+             
+        <tbody class="answer_addedit_tbody">
+            
+        </tbody>
+    </table>    
+</div>

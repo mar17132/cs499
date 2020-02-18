@@ -150,8 +150,11 @@ function threadReturn(obj)
             case 'index':
 
             break;
+            case 'questionEditrefresh':
+                setQuestionEdit(obj.rows);
+            break;
             default:
-                displayError(Obj);
+                displayError(obj);
         }
     }
 }
@@ -218,6 +221,11 @@ function studyquesitonRefresh(studyObj)
     allstudy = $(".study-quesiton-contain");
     allstudy.empty();
     $(studyObj).appendTo(allstudy);
+}
+
+function setQuestionEdit(qObj)
+{
+    dispalyEditQuestion(qObj);
 }
 
 function displayInfo(Obj)

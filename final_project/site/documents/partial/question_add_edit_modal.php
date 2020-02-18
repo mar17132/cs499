@@ -19,7 +19,7 @@
                 <p class="form-error-msg"></p>
             <div class="modal-body"> 
                 <div class="container question-add-edit-contain" >
-
+                    <?php include_once 'partial/question_add_edit_table.php'; ?>
                 </div>                
             </div>
 

@@ -13,7 +13,7 @@
         Add Study
     </button>
     <button type="button" class="btn btn-secondary btn-sm study-cmd-btn"
-            id="" data-toggle='modal' data-target=''>
+            id="add-question-btn" data-toggle='modal' data-target='#question_add_edit_modal'>
         Add Question
     </button>
     <button type="button" class="btn btn-secondary btn-sm study-cmd-btn"
@@ -31,6 +31,8 @@
 <?php include_once 'partial/study_groups_modal.php'; ?>
 
 <?php include_once 'partial/study_questions_modal.php'; ?>
+
+<?php include_once 'partial/question_add_edit_modal.php'; ?>
 
 <?php include_once 'partial/information_modal.php'; ?>
 

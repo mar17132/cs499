@@ -72,6 +72,36 @@ function getStudyTypes()
     }  
 }
 
+function getQuestionTypes()
+{
+    //this will test if there is a user with pass
+    GLOBAL $dbObject;
+    GLOBAL $toJsonString; 
+
+    $dbObject->querySelect("select type.id,type.type,type_class.typeClass from type  
+            inner join type_class on type.type_class_id = type_class.id
+            where type_class.typeClass = 'Question'");
+    if($dbObject->isDberror())
+    {
+        return $dbObject->getDberror();
+    }
+    else
+    {
+        if(count($dbObject->getSQLResults()) > 0)
+        {
+            //user exisit
+            $toJsonString->jsonEncode($dbObject->getSQLResults());
+            
+            return '{"status":"good","results":"true",'. $toJsonString->getdbrowString() . '}';
+        }
+        else
+        {
+            //user does not exisist
+            return '{"status":"good","results":"false"}';
+        }
+    }  
+}
+
 function getAllStudyGroups($studyid)
 {
     //This will get all users names
@@ -153,6 +183,75 @@ function allstudyQuestions($studyid)
                     order by question.id ASC"}';
             }
         }    
+}
+
+function getQuestion($studyid,$questionid)
+{
+    //This will get all users names
+    //and type 
+
+        GLOBAL $dbObject;
+        GLOBAL $toJsonString; 
+
+        $answerT = "";
+
+        $dbObject->querySelect("select type_id from question where id='$questionid'");
+
+        $typeid = $dbObject->getSQLResults();
+
+        if($typeid)
+        {
+
+            switch($typeid[0]['type_id'])
+            {
+                case '9':
+                    $answerT = "anwsers_checkbox";
+                break;
+                case '10':
+                    $answerT = "anwsers_fill_in_blank";
+                break;
+                case '11':
+                    $answerT = "anwsers_multi_choices";
+                break;
+            }
+
+            $dbObject->querySelect("
+                select study.id as studyid, 
+            question.id as questionid,
+            question.question, question.question_order as qorder,
+            question.order_Anwsers as isanwsers_order, question.type_id as qtype,
+            anwser.id as anwserid, anwser.qorder as aorder, anwser.anwser
+            from question
+            join study_to_question on study_to_question.question_id = question.id
+            join study on study_to_question.study_id = study.id
+            join $answerT anwser on anwser.question_id = question.id 
+            where study.id='$studyid' and question.id='$questionid'");
+
+            if($dbObject->isDberror())
+            {
+                return $dbObject->getDberror();
+            }
+            else
+            {
+                if(count($dbObject->getSQLResults()) > 0)
+                {
+                    //user exisit
+                    $toJsonString->jsonEncode($dbObject->getSQLResults());
+                    
+                    return '{"status":"good","results":"true",'. $toJsonString->getdbrowString() . '}';
+                }
+                else
+                {
+                    //user does not exisist
+                    return '{"status":"good","results":"false"}';
+                }
+            } 
+        }
+        else
+        {
+            //user does not exisist
+            return '{"status":"error","results":"No type id","error":'.$dbObject->isDberror().'}';
+        }   
 }
 
 function deleteStudy($studyid)

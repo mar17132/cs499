@@ -101,80 +101,80 @@ VALUES(
 /*
 anwsers_multi_choices setup rows
 */
-INSERT INTO anwsers_multi_choices(question_id,multi_choice_order,anwser)
+INSERT INTO anwsers_multi_choices(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 'Do you like Disney Star Wars?'),
     1,
     "Yes"
 );
-INSERT INTO anwsers_multi_choices(question_id,multi_choice_order,anwser)
+INSERT INTO anwsers_multi_choices(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 'Do you like Disney Star Wars?'),
     2,
     "No"
 );
-INSERT INTO anwsers_multi_choices(question_id,multi_choice_order,anwser)
+INSERT INTO anwsers_multi_choices(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 'Do you like Harry Potter?'),
     1,
     "Yes"
 );
-INSERT INTO anwsers_multi_choices(question_id,multi_choice_order,anwser)
+INSERT INTO anwsers_multi_choices(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 'Do you like Harry Potter?'),
     2,
     "No"
 );
-INSERT INTO anwsers_multi_choices(question_id,multi_choice_order,anwser)
+INSERT INTO anwsers_multi_choices(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 
     'Which of the following is your favorite Star Wars Movie?'),
     1,
     "Revenge of the Sith"
 );
-INSERT INTO anwsers_multi_choices(question_id,multi_choice_order,anwser)
+INSERT INTO anwsers_multi_choices(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 
     'Which of the following is your favorite Star Wars Movie?'),
     2,
     "The Empire Strikes Back"
 );
-INSERT INTO anwsers_multi_choices(question_id,multi_choice_order,anwser)
+INSERT INTO anwsers_multi_choices(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 
     'Which of the following is your favorite Star Wars Movie?'),
     3,
     "A New Hope"
 );
-INSERT INTO anwsers_multi_choices(question_id,multi_choice_order,anwser)
+INSERT INTO anwsers_multi_choices(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 
     'Which of the following is your favorite Star Wars Movie?'),
     4,
     "Return of the Jedi"
 );
-INSERT INTO anwsers_multi_choices(question_id,multi_choice_order,anwser)
+INSERT INTO anwsers_multi_choices(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 
     'Which of the following is your favorite Harry Potter Movie?'),
     1,
     "Harry Potter and the Sorcerer&#39s Stone"
 );
-INSERT INTO anwsers_multi_choices(question_id,multi_choice_order,anwser)
+INSERT INTO anwsers_multi_choices(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 
     'Which of the following is your favorite Harry Potter Movie?'),
     2,
     "Harry Potter and the Prisoner of Azkaban"
 );
-INSERT INTO anwsers_multi_choices(question_id,multi_choice_order,anwser)
+INSERT INTO anwsers_multi_choices(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 
     'Which of the following is your favorite Harry Potter Movie?'),
     3,
     "Harry Potter and the Order of the Phoenix"
 );
-INSERT INTO anwsers_multi_choices(question_id,multi_choice_order,anwser)
+INSERT INTO anwsers_multi_choices(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 
     'Which of the following is your favorite Harry Potter Movie?'),
@@ -192,84 +192,84 @@ VALUES();*/
 /*
 anwsers_checkbox setup rows
 */
-INSERT INTO anwsers_checkbox(question_id,checkbox_order,anwser)
+INSERT INTO anwsers_checkbox(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 
     'Out of the following Harry Potter charaters, which ones do you like?'),
     1,
     "Harry Potter"
 );
-INSERT INTO anwsers_checkbox(question_id,checkbox_order,anwser)
+INSERT INTO anwsers_checkbox(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 
     'Out of the following Harry Potter charaters, which ones do you like?'),
     2,
     "Hermione Granger"
 );
-INSERT INTO anwsers_checkbox(question_id,checkbox_order,anwser)
+INSERT INTO anwsers_checkbox(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 
     'Out of the following Harry Potter charaters, which ones do you like?'),
     3,
     "Rubeus Hagrid"
 );
-INSERT INTO anwsers_checkbox(question_id,checkbox_order,anwser)
+INSERT INTO anwsers_checkbox(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 
     'Out of the following Harry Potter charaters, which ones do you like?'),
     4,
     "Aberforth Dumbledore"
 );
-INSERT INTO anwsers_checkbox(question_id,checkbox_order,anwser)
+INSERT INTO anwsers_checkbox(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 
     'Out of the following Harry Potter charaters, which ones do you like?'),
     5,
     "Ron Weasley"
 );
-INSERT INTO anwsers_checkbox(question_id,checkbox_order,anwser)
+INSERT INTO anwsers_checkbox(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 
     'Out of the following Harry Potter charaters, which ones do you like?'),
     6,
     "Lord Voldemort"
 );
-INSERT INTO anwsers_checkbox(question_id,checkbox_order,anwser)
+INSERT INTO anwsers_checkbox(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 
     'Out of the following Star Wars charaters, which ones do you like?'),
     1,
     "Luke Skywalker"
 );
-INSERT INTO anwsers_checkbox(question_id,checkbox_order,anwser)
+INSERT INTO anwsers_checkbox(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 
     'Out of the following Star Wars charaters, which ones do you like?'),
     2,
     "Leia Organa"
 );
-INSERT INTO anwsers_checkbox(question_id,checkbox_order,anwser)
+INSERT INTO anwsers_checkbox(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 
     'Out of the following Star Wars charaters, which ones do you like?'),
     3,
     "Han Solo"
 );
-INSERT INTO anwsers_checkbox(question_id,checkbox_order,anwser)
+INSERT INTO anwsers_checkbox(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 
     'Out of the following Star Wars charaters, which ones do you like?'),
     4,
     "Chewbacca"
 );
-INSERT INTO anwsers_checkbox(question_id,checkbox_order,anwser)
+INSERT INTO anwsers_checkbox(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 
     'Out of the following Star Wars charaters, which ones do you like?'),
     5,
     "Darth Vader"
 );
-INSERT INTO anwsers_checkbox(question_id,checkbox_order,anwser)
+INSERT INTO anwsers_checkbox(question_id,qorder,anwser)
 VALUES(
     (SELECT id FROM question WHERE question = 
     'Out of the following Star Wars charaters, which ones do you like?'),

@@ -131,6 +131,9 @@ function studytype()
         case 'types':
             echo getStudyTypes();
         break;
+        case 'questiontype':
+            echo getQuestionTypes();
+        break;
         case 'add':
             echo addStudy($_POST);
         break;
@@ -142,6 +145,9 @@ function studytype()
         break;
         case 'allquestions':
             echo allstudyQuestions($_POST['id']);
+        break;
+        case 'getquestion':
+            echo getQuestion($_POST['studyid'],$_POST['questionid']);
         break;
         default:
             echo '{"status":"good","results":"Bad return"}';

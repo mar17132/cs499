@@ -10,10 +10,18 @@ let save_add_edit_study_btn;
 let print_form_error;
 let add_study_btn;
 let dele_study_btn;
-let dele_study_question_btn;
+//let dele_study_question_btn;
 let questionAddEdit_btn;
-let study_quest_edit_btn;
+//let study_quest_edit_btn;
+let add_question_btn;
 
+//question
+let quest_studid;
+let quest_typeid;
+let quest_question;
+let quest_order;
+let quest_add_anwser_btn;
+let quest_anwser_order_sele;
 
 function getStudyId(currentObj)
 {
@@ -253,6 +261,41 @@ function displayStudyEdit(currentObj)
     studyid_edit.val(getStudyId(currentObj));
 }
 
+function displayAddQuestion()
+{
+    quest_add_anwser_btn.attr('disabled','disabled');
+}
+
+function dispalyEditQuestion(obj)
+{
+    quest_studid.val(obj[0].studyid);
+    quest_typeid.val(obj[0].qtype);
+    quest_question.val(obj[0].question);
+    quest_order.val(obj[0].qorder); 
+    quest_anwser_order_sele.val(obj[0].isanwsers_order);
+
+    questionType = obj[0].qtype;
+    tbody = $(".answer_addedit_tbody");
+
+    //print table headers
+    if(questionType == '9' || questionType == '11')
+    {
+        tbody.before(createChk_Mul_head());
+    }
+
+    //loop the array
+    $.each(obj,function(key,row){
+        if(questionType == '9' || questionType == '11')
+        {
+            createChk_Mul_Ans().appendTo(tbody);
+            $(".answsers_txt_input").last().val(row.anwser);
+            $(".anwser_order_txt").last().val(row.aorder);
+            $(".anwserid_question_edit").last().val(row.anwserid);
+        }
+    });
+
+}
+
 function clearStudyInputs()
 {
     $(".required").removeClass("required");
@@ -264,6 +307,18 @@ function clearStudyInputs()
     enddate.val("");
     studyid_edit.val("");
     print_form_error.text("");
+
+    //add question
+    enableElem(quest_add_anwser_btn);
+    quest_studid.val("null");
+    quest_typeid.val('null');
+    enableElem(quest_typeid);
+    enableElem(quest_studid);
+    quest_question.val('');
+    quest_order.val(""); 
+    $(".answer_addedit_tbody").empty();
+    $(".answer_addedit_table thead").remove();
+    quest_anwser_order_sele.val('0');
 }
 
 function checkStudyInputs()
@@ -289,6 +344,41 @@ function checkStudyInputs()
     return returnVar;
 }
 
+function createChk_Mul_Ans()
+{
+    Ansinputs = "<tr><td><div class='form-group' ><input placeholder='Answer' "; 
+    Ansinputs += "class='form-control form-input ";
+    Ansinputs += "answsers_txt_input' type='text' /></div></td>";
+    Ansinputs += "<td><div class='form-group' ><input type='text' "; 
+    Ansinputs += "class='form-control ";
+    Ansinputs += "form-input anwser_order_txt' placeholder='Question Order' ";
+    Ansinputs += "/></div></td>";
+    Ansinputs += "<td><input type='hidden' class='anwserid_question_edit' />";
+    Ansinputs += "<button type='button' class='btn btn-danger remove_answer_btn'>";   
+    Ansinputs += "Remove </button></td></tr>";
+
+    return $(Ansinputs);
+}
+
+function createChk_Mul_head()
+{
+    Ansinputs = "<thead><tr><th scope='col'>Answer</th>";
+    Ansinputs += "<th scope='col'>Order</th>";
+    Ansinputs += "<th scope='col'>Action</th></tr></thead>";
+
+    return $(Ansinputs);
+}
+
+function disableElem(obj)
+{
+    obj.attr('disabled','disabled');
+}
+
+function enableElem(obj)
+{
+    obj.removeAttr('disabled');
+}
+
 $(document).ready(function(){    
 
     sname = $("#sname");
@@ -302,9 +392,18 @@ $(document).ready(function(){
     print_form_error = $(".form-error-msg");
     add_study_btn = $("#add-study-btn");
     dele_study_btn = $("#dele_study_btn");
-    dele_study_question_btn = $(".study-quest-del-btn");
+   // dele_study_question_btn = $(".study-quest-del-btn");
     questionAddEdit_btn = $("#questionAddEdit_btn");
-    study_quest_edit_btn = $(".study-quest-edit-btn");
+   // study_quest_edit_btn = $(".study-quest-edit-btn");
+    add_question_btn = $("#add-question-btn");
+
+    //question
+    quest_studid = $("#studyid");
+    quest_typeid = $("#qtype");
+    quest_question = $("#question");
+    quest_order = $("#qorder");
+    quest_add_anwser_btn = $("#quest_anwser_add_btn");
+    quest_anwser_order_sele = $("#questaorder");
 
     $(".study-table").on('click','.study-pop-btn',function(){
 
@@ -332,6 +431,7 @@ $(document).ready(function(){
     });
 
     $(".study-table").on('click','.study-questions-btn',function(){
+        //opent the view questions modal        
         clearStudyInputs();
         $(".studyname-groups").text(getStudyName($(this)));
         refreshQuesitonStudy($(this));
@@ -367,6 +467,24 @@ $(document).ready(function(){
     });
     
     $('.form-input').on('click',function(){
+        $(this).removeClass("required");   
+    });
+
+    $('.answer_addedit_tbody').on('blur','.form-input',function(){
+
+        if($(this).val() == null || $(this).val().trim() == "" 
+        || $(this).val() == "null")
+        {
+            $(this).addClass("required");
+        }        
+        
+    });
+    
+    $('.answer_addedit_tbody').on('change','.form-input',function(){    
+        $(this).removeClass("required");        
+    });
+    
+    $('.answer_addedit_tbody').on('click','.form-input',function(){
         $(this).removeClass("required");   
     });
 
@@ -430,15 +548,113 @@ $(document).ready(function(){
         deleteStudy();
     });
 
-    dele_study_question_btn.on('click',function(){
+    $(".study-quesiton-contain").on('click','.study-quest-del-btn',function(){
+        //delete the question from the databases and the study
 
     });
 
     questionAddEdit_btn.on('click',function(){
+        //to save the question
+    });
+
+    $(".study-quesiton-contain").on('click','.study-quest-edit-btn',function(){
+        //to open the Edit question modal
+        $("#question_add_edit_modal").modal({
+            backdrop:"static",
+            keyboard:false
+        });
+        clearStudyInputs();
+        disableElem(quest_typeid);
+        disableElem(quest_studid);
+        $(".quetion-add-edit-title").text("Edit");
+
+        secondThread({
+            database:{
+                'type':'study',
+                'return_results':'getquestion',
+                'studyid':$(this).siblings(".question-studyid").val(),
+                'questionid': $(this).siblings(".questionid-study").val()  
+            },
+            'page':'questionEditrefresh',
+            'refresh_type':'refresh'
+            }
+        );
 
     });
 
-    study_quest_edit_btn.on('click',function(){
+    add_question_btn.on('click',function(){
+        //to open the add question modal
+        clearStudyInputs();
+        $(".quetion-add-edit-title").text("Add");
+        displayAddQuestion();
+        $("#question_add_edit_modal").modal({
+            backdrop:"static",
+            keyboard:false
+        });
+    });
+
+    quest_add_anwser_btn.on('click',function(){
+        
+        if(quest_typeid.val() != 'null')
+        {
+            tbody = $(".answer_addedit_tbody");
+            disableElem(quest_typeid);
+
+            switch(quest_typeid.val())
+            {
+                case '10':
+
+                break;
+                case '11':
+                    if($('.answer_addedit_tbody tr').length == 0)
+                    {
+                        tbody.before(createChk_Mul_head());
+                    } 
+                    createChk_Mul_Ans().appendTo(tbody);
+                break;
+                case '9':
+                    if($('.answer_addedit_tbody tr').length == 0)
+                    {
+                        tbody.before(createChk_Mul_head());
+                    }
+                    createChk_Mul_Ans().appendTo(tbody);
+                break;
+                default:
+            }
+        }
+
+    });
+
+    quest_typeid.on("change",function(){
+        if($(this).val() != 'null')
+        {
+            enableElem(quest_add_anwser_btn);
+        }
+        else
+        {
+            disableElem(quest_add_anwser_btn);
+        }
+    });
+
+    $('.answer_addedit_tbody').on('click','.remove_answer_btn',function(){
+        //this will remove the answer when adding and delete when editing
+        //questions
+
+        if($(".quetion-add-edit-title").text() == "Add")
+        {
+            $(this).parent().parent().remove();
+
+            if($('.answer_addedit_tbody tr').length == 0)
+            {
+                $(".answer_addedit_table thead").remove();
+                enableElem(quest_typeid);
+            }
+            
+        }
+        else
+        {
+
+        }
 
     });
 

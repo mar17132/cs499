@@ -309,7 +309,7 @@ If the multi_choice_order is -1 then order is off and
 CREATE TABLE IF NOT EXISTS anwsers_multi_choices(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     question_id INT UNSIGNED NOT NULL,
-    multi_choice_order INT NULL DEFAULT -1,
+    qorder INT NULL DEFAULT 0,
     anwser VARCHAR(254) NOT NULL,
     PRIMARY KEY(id),
     /*question foreign key*/
@@ -327,7 +327,7 @@ a pretext that is in the textbox before writing has started.
 CREATE TABLE IF NOT EXISTS anwsers_fill_in_blank(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     question_id INT UNSIGNED NOT NULL,
-    preText VARCHAR(254) NULL,
+    anwser VARCHAR(254) NULL,
     PRIMARY KEY(id),
     /*question foreign key*/
     CONSTRAINT anwsers_fill_in_blank_to_question_fk_con
@@ -344,7 +344,7 @@ order of the anwser. If checkbox_order is -1 then order is off.
 CREATE TABLE IF NOT EXISTS anwsers_checkbox(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     question_id INT UNSIGNED NOT NULL,
-    checkbox_order INT NULL DEFAULT -1,
+    qorder INT NULL DEFAULT 0,
     anwser VARCHAR(254) NOT NULL,
     PRIMARY KEY(id),
     /*question foreign key*/
