@@ -17,7 +17,7 @@
         Add Question
     </button>
     <button type="button" class="btn btn-secondary btn-sm study-cmd-btn"
-            id="" data-toggle='modal' data-target='#'>
+            id="connect_group_study_btn" data-toggle='modal' data-target='#'>
        Connect Group
     </button>
 </nav>

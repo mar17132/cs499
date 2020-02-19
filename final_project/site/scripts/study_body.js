@@ -14,6 +14,7 @@ let dele_study_btn;
 let questionAddEdit_btn;
 //let study_quest_edit_btn;
 let add_question_btn;
+let connect_group_study_btn;
 
 //question
 let quest_studid;
@@ -146,6 +147,35 @@ function refreshQuesitonStudy(currentObj)
         'refresh_type':'refresh'
     });
 }
+
+function refreshQuestionEdit()
+{
+    secondThread({
+        'url':'http://localhost/final_project/site/documents/partial/question_add_edit_table.php',
+        'database':'refresh',
+        'page':'questionEdit',
+        'refresh_type':'refresh'
+    });
+}
+
+function refreshStudy_connect()
+{
+    secondThread({
+        'url':'http://localhost/final_project/site/documents/partial/study_connect_group_table.php',
+        'database':'refresh',
+        'page':'studyGroupConnect',
+        'refresh_type':'refresh'
+    });
+}
+
+
+function refreshAllAdd()
+{
+    refreshContentStudy();
+    refreshStudy_connect();
+    refreshQuestionEdit();
+}
+
 
 function compareDate()
 {
@@ -396,6 +426,7 @@ $(document).ready(function(){
     questionAddEdit_btn = $("#questionAddEdit_btn");
    // study_quest_edit_btn = $(".study-quest-edit-btn");
     add_question_btn = $("#add-question-btn");
+    connect_group_study_btn = $("#connect_group_study_btn");
 
     //question
     quest_studid = $("#studyid");

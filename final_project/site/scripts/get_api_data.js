@@ -56,6 +56,12 @@ function threadReturn(obj)
             case 'studyquesiton':
                 studyquesitonRefresh(obj.rows);
             break;
+            case 'studyGroupConnect':
+                studyGroupConnect(obj.rows);
+            break;
+            case 'questionEdit':
+                questionEdit(obj.rows);
+            break;
             case 'index':
 
             break;
@@ -219,6 +225,22 @@ function studyquesitonRefresh(studyObj)
 {
    // console.log(popObj)
     allstudy = $(".study-quesiton-contain");
+    allstudy.empty();
+    $(studyObj).appendTo(allstudy);
+}
+
+function studyGroupConnect(studyObj)
+{
+   // console.log(popObj)
+    allstudy = $(".study-quesiton-contain");
+    allstudy.empty();
+    $(studyObj).appendTo(allstudy);
+}
+
+function questionEdit(studyObj)
+{
+   // console.log(popObj)
+    allstudy = $(".question-add-edit-contain");
     allstudy.empty();
     $(studyObj).appendTo(allstudy);
 }
