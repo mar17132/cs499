@@ -232,7 +232,7 @@ function studyquesitonRefresh(studyObj)
 function studyGroupConnect(studyObj)
 {
    // console.log(popObj)
-    allstudy = $(".study-quesiton-contain");
+    allstudy = $(".connect-group-contain");
     allstudy.empty();
     $(studyObj).appendTo(allstudy);
 }

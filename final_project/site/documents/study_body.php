@@ -17,7 +17,7 @@
         Add Question
     </button>
     <button type="button" class="btn btn-secondary btn-sm study-cmd-btn"
-            id="connect_group_study_btn" data-toggle='modal' data-target='#'>
+            id="connect_group_study_btn" data-toggle='modal' data-target='#connect_group_modal'>
        Connect Group
     </button>
 </nav>
@@ -31,6 +31,8 @@
 <?php include_once 'partial/study_groups_modal.php'; ?>
 
 <?php include_once 'partial/study_questions_modal.php'; ?>
+
+<?php include_once 'partial/study_connect_group_modal.php'; ?>
 
 <?php include_once 'partial/question_add_edit_modal.php'; ?>
 

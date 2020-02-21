@@ -15,6 +15,7 @@ let questionAddEdit_btn;
 //let study_quest_edit_btn;
 let add_question_btn;
 let connect_group_study_btn;
+let connect_group_save_btn;
 
 //question
 let quest_studid;
@@ -93,7 +94,7 @@ function addStudy()
             'order_questions':orderQuest.val()       
         },
         'page':'study'
-        },refreshContentStudy
+        },refreshAllAdd
     );
 }
 
@@ -112,7 +113,7 @@ function editStudy()
             'order_questions':orderQuest.val()       
         },
         'page':'study'
-        },refreshContentStudy
+        },refreshAllAdd
     );
 }
 
@@ -125,7 +126,7 @@ function deleteStudy()
             'id':$("#delete_studyid").val()    
         },
         'page':'study'
-        },refreshContentStudy
+        },refreshAllAdd
     );
 }
 
@@ -349,19 +350,25 @@ function clearStudyInputs()
     $(".answer_addedit_tbody").empty();
     $(".answer_addedit_table thead").remove();
     quest_anwser_order_sele.val('0');
+
+    //connect group
+    $("#connectgroupid").val('null');
+    $("#connectStudyid").val('null');
+    
 }
 
-function checkStudyInputs()
+function checkStudyInputs(form)
 {
     returnVar = true;
 
     if($(".required").length > 0)
     {
         returnVar = false;
+        $(this).addClass("required");
     }
     else
     {
-        $(".form-input").each(function(){
+        form.each(function(){
             if($(this).val() == "null" || $(this).val() == null ||
             $(this).val().trim() == "")
             {
@@ -427,6 +434,7 @@ $(document).ready(function(){
    // study_quest_edit_btn = $(".study-quest-edit-btn");
     add_question_btn = $("#add-question-btn");
     connect_group_study_btn = $("#connect_group_study_btn");
+    connect_group_save_btn = $("#connect_group_save_btn");
 
     //question
     quest_studid = $("#studyid");
@@ -519,10 +527,46 @@ $(document).ready(function(){
         $(this).removeClass("required");   
     });
 
+    $('.connect-group-contain').on('blur','.form-input',function(){
+
+        if($(this).val() == null || $(this).val().trim() == "" 
+        || $(this).val() == "null")
+        {
+            $(this).addClass("required");
+        }        
+        
+    });
+    
+    $('.connect-group-contain').on('change','.form-input',function(){    
+        $(this).removeClass("required");        
+    });
+    
+    $('.connect-group-contain').on('click','.form-input',function(){
+        $(this).removeClass("required");   
+    });
+
+    $('.question-add-edit-contain').on('blur','.form-input',function(){
+
+        if($(this).val() == null || $(this).val().trim() == "" 
+        || $(this).val() == "null")
+        {
+            $(this).addClass("required");
+        }        
+        
+    });
+    
+    $('.question-add-edit-contain').on('change','.form-input',function(){    
+        $(this).removeClass("required");        
+    });
+    
+    $('.question-add-edit-contain').on('click','.form-input',function(){
+        $(this).removeClass("required");   
+    });
+
     save_add_edit_study_btn.on('click',function(){
         if($(".study_modal_title").text() == "Add Study")
         {
-            if(checkStudyInputs())
+            if(checkStudyInputs($(".study-addedit-form")))
             {
                 addStudy();
                 $("#study_Add_Edit").modal("hide");
@@ -536,7 +580,7 @@ $(document).ready(function(){
         else
         {
             //edit study
-            if(checkStudyInputs())
+            if(checkStudyInputs($(".study-addedit-form")))
             {
                 editStudy();
                 $("#study_Add_Edit").modal("hide");
@@ -687,6 +731,40 @@ $(document).ready(function(){
 
         }
 
+    });
+
+    $("#connect_group_modal").on('hidden.bs.modal',function(){
+        clearStudyInputs();
+    });
+
+    $(".study-group-table").on('click',".study-removegroup-btn",function(){
+       
+        $("#study_groups_modal").modal('hide');
+
+        secondThread({
+            database:{
+                'type':'study',
+                'return_results':'removegroup',
+                'groupid':$(this).siblings(".study-groupid-modal").val(),  
+                'studyid':$(this).siblings(".studyid-group-modal").val()
+            },
+            'page':'study'
+            }
+        );
+        
+    });
+    
+    connect_group_save_btn.on('click',function(){
+        secondThread({
+            database:{
+                'type':'study',
+                'return_results':'addgroup',
+                'groupid':$("#connectgroupid").val(),  
+                'studyid':$("#connectStudyid").val()
+            },
+            'page':'study'
+            }
+        );
     });
 
 });

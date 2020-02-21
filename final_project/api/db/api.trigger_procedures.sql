@@ -89,5 +89,33 @@ BEGIN
     CLOSE popCursor;
 END$$
 
+CREATE DEFINER = 'csfinaluser'@'localhost' PROCEDURE add_group_to_study 
+(IN studyid INT, IN groupid INT)
+BEGIN
+    DECLARE finished INTEGER DEFAULT 0;
+    DECLARE popid INTEGER;   
+    
+    DECLARE popCursor CURSOR FOR SELECT survey_population_id 
+    FROM surveyp_to_sampleg WHERE sample_group_id=studyid;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
+
+    OPEN popCursor;    
+
+    insert_loop: LOOP
+        FETCH popCursor INTO popid;
+        IF finished = 1 THEN
+            LEAVE insert_loop;
+        END IF;
+        INSERT INTO study_to_survey_pop
+        (survey_population_id,sample_group_id,study_id)
+        VALUES(
+            popid,
+            groupid,
+            studyid
+        );
+    END LOOP;
+    CLOSE popCursor;
+
+END$$
 
 DELIMITER ;

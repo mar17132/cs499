@@ -14,7 +14,7 @@ $studyArray = null;
 $groupArray = null;
 
 
-function alltypes()
+function allConnectStudy()
 {
     GLOBAL $jsonTophp;
 
@@ -22,7 +22,7 @@ function alltypes()
     $dbconnections->setPage("final_project/api/scripts/api.call.php");
     $dbconnections->setParameters(array(
         'type'=>'study',
-        'return_results'=>'questiontype'
+        'return_results'=>'all'
     ));
     $dbconnections->connect_api();
 
@@ -49,18 +49,18 @@ function allgroups()
 }
 
 $groupArray = allgroups();
-$studyArray = allstudy();
+$studyArray = allConnectStudy();
 
 ?>
 
 
-<table class="table question_add_edit_table">
+<table class="table connect_group_table">
     <tbody>
     <tr>
         <td>
             <div class="form-group" >
                 <label for="connectStudyid">Study</lable>
-                <select class="form-control form-input" id="connectStudyid" 
+                <select class="form-control form-input connenct-group-form" id="connectStudyid" 
                 name="connectStudyid">
                     <option value='null'>Choose Study</option>
                     <?php 
@@ -77,9 +77,9 @@ $studyArray = allstudy();
         <td>
             <div class="form-group" >
                 <label for="connectgroupid">Group</lable>
-                <select class="form-control form-input" id="connectgroupid" 
+                <select class="form-control form-input connenct-group-form" id="connectgroupid" 
                 name="connectgroupid">
-                    <option value='null'>Choose Type</option>
+                    <option value='null'>Choose Group</option>
                     <?php 
                         foreach($groupArray['rows'] as $row)
                         {

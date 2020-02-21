@@ -39,14 +39,14 @@
                     <div class="form-group" >
                         <input type="hidden" id="studyid-edit" name="studyid-edit" /> 
                         <label for="sname">Study Name</lable>
-                        <input type="text" class="form-control form-input" id="sname" 
+                        <input type="text" class="form-control form-input study-addedit-form" id="sname" 
                             name="sname" placeholder="Study Name" />
                     </div>
                 </td>
                 <td>
                     <div class="form-group" >
                         <label for="studyType">Type</lable>
-                        <select class="form-control form-input" id="studyType" 
+                        <select class="form-control form-input study-addedit-form" id="studyType" 
                             name="studyType">
                             <option value='null'>Choose Type</option>
                             <?php 
@@ -63,7 +63,7 @@
                 <td>
                 <div class="form-group" >
                         <label for="orderQuest">Order Questions</lable>
-                        <select class="form-control form-input" id="orderQuest" 
+                        <select class="form-control form-input study-addedit-form" id="orderQuest" 
                             name="orderQuest">
                             <option value='null'>Choose Order</option>
                             <option value='1'>True</option>
@@ -76,21 +76,21 @@
                 <td>
                     <div class="form-group" >
                         <label for="tryammount">Contact Amount</lable>
-                        <input type="text" class="form-control form-input" id="tryamount" 
+                        <input type="text" class="form-control form-input study-addedit-form" id="tryamount" 
                             name="tryamount" placeholder="Contact Amount" />
                     </div>
                 </td>    
                 <td>
                     <div class="form-group" >
                         <label for="startdate">Start Date</lable>
-                        <input type="text" class="form-control form-input" id="startdate" 
+                        <input type="text" class="form-control form-input study-addedit-form" id="startdate" 
                             name="startdate" placeholder="YYYY-MM-DD" />
                     </div>
                 </td>
                 <td>
                     <div class="form-group" >
                         <label for="enddate">End Date</lable>
-                        <input type="text" class="form-control form-input" id="enddate" 
+                        <input type="text" class="form-control form-input study-addedit-form" id="enddate" 
                             name="enddate" placeholder="YYYY-MM-DD" />
                     </div>
                 </td>

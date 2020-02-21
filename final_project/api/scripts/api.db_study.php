@@ -279,6 +279,60 @@ function deleteStudy($studyid)
     }  
 }
 
+function removegroup($groupid,$studyid)
+{
+    //this will test if there is a user with pass
+    GLOBAL $dbObject;
+    GLOBAL $toJsonString; 
+
+    $dbObject->queryDelete("delete from study_to_survey_pop where 
+    sample_group_id='$groupid' and study_id='$studyid'");
+
+    if($dbObject->isDberror())
+    {
+        return '{"status":"error","results":"'.$dbObject->getDberror().'"}';
+    }
+    else
+    {
+        if($dbObject->get_affected_rows() > 0)
+        {
+            return '{"status":"good","results":"The Group was removed!"}';
+        }
+        else
+        {
+            //user does not exisist
+            return '{"status":"error","results":"No records to remove."}';
+        }
+    }  
+}
+
+function addgroup($groupid,$studyid)
+{
+    //this will test if there is a user with pass
+    GLOBAL $dbObject;
+    GLOBAL $toJsonString; 
+
+    $dbObject->queryDelete("delete from study_to_survey_pop where 
+    sample_group_id='$groupid' and study_id='$studyid'");
+
+    if($dbObject->isDberror())
+    {
+        return '{"status":"error","results":"'.$dbObject->getDberror().'"}';
+    }
+    else
+    {
+        if($dbObject->get_affected_rows() > 0)
+        {
+            return '{"status":"good","results":"The Group was removed!"}';
+        }
+        else
+        {
+            //user does not exisist
+            return '{"status":"error","results":"No records to remove."}';
+        }
+    }  
+}
+
 function updateStudy($callArray)
 {
     //this will test if there is a user with pass

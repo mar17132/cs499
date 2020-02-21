@@ -64,7 +64,7 @@ $studyArray = allstudy();
         <td>
             <div class="form-group" >
                 <label for="studyid">Study</lable>
-                <select class="form-control form-input" id="studyid" 
+                <select class="form-control form-input question-addedit-form" id="studyid" 
                 name="studyid">
                     <option value='null'>Choose Study</option>
                     <?php 
@@ -81,7 +81,7 @@ $studyArray = allstudy();
         <td>
             <div class="form-group" >
                 <label for="qtype">Question Type</lable>
-                <select class="form-control form-input" id="qtype" 
+                <select class="form-control form-input question-addedit-form" id="qtype" 
                 name="qtype">
                     <option value='null'>Choose Type</option>
                     <?php 
@@ -98,7 +98,7 @@ $studyArray = allstudy();
         <td>
             <div class="form-group" >
                 <label for="questaorder">Order Anwsers</lable>
-                <select class="form-control form-input" id="questaorder" 
+                <select class="form-control form-input question-addedit-form" id="questaorder" 
                 name="questaorder">
                     <option value='0'>False</option>
                     <option value='1'>True</option>
@@ -109,17 +109,17 @@ $studyArray = allstudy();
         <tr>
         <td>              
             <div class="form-group" >
-                <input class="form-input" type="hidden" id="quest_edit_id" 
+                <input class="form-input question-addedit-form" type="hidden" id="quest_edit_id" 
                 name="quest_edit_id" /> 
                 <label for="question">Question</lable>
-                <input type="text" class="form-control form-input" id="question" 
+                <input type="text" class="form-control form-input question-addedit-form" id="question" 
                     name="question" placeholder="Question" />
             </div>
         </td>
         <td>              
             <div class="form-group" > 
                 <label for="qorder">Order</lable>
-                <input type="text" class="form-control form-input" id="qorder" 
+                <input type="text" class="form-control form-input question-addedit-form" id="qorder" 
                     name="qorder" placeholder="Question Order" />
             </div>
         </td>
