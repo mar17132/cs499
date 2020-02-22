@@ -153,7 +153,19 @@ function studytype()
             echo removegroup($_POST['groupid'],$_POST['studyid']); 
          break;
          case 'addgroup':
-            echo addgroup($_POST['groupid'],$_POST['studyid']); 
+            echo connectGroup($_POST['groupid'],$_POST['studyid']); 
+         break;
+         case 'deletequestion':
+            echo deleteQuestion($_POST['questionid']); 
+         break;
+         case 'removeanwser':
+            echo removeanwser($_POST['answerid'],$_POST['questiontype']); 
+         break;
+         case 'addquestion':
+            echo addquestion($_POST); 
+         break;
+         case 'updatequestion':
+            echo updatequestion($_POST); 
          break;
         default:
             echo '{"status":"good","results":"Bad return"}';

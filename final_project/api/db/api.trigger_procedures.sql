@@ -96,7 +96,7 @@ BEGIN
     DECLARE popid INTEGER;   
     
     DECLARE popCursor CURSOR FOR SELECT survey_population_id 
-    FROM surveyp_to_sampleg WHERE sample_group_id=studyid;
+    FROM surveyp_to_sampleg WHERE sample_group_id=groupid AND member='1';
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
 
     OPEN popCursor;    

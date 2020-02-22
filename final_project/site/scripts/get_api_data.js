@@ -137,6 +137,10 @@ function threadReturn(obj)
                 displayError(Obj);
         }
     }
+    else if(obj.results == 'nothing')
+    {
+        
+    }
     else
     {
         switch(obj.page)

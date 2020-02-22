@@ -173,6 +173,26 @@ class mydbconnect
 
     }
 
+    public function storedProcedures($sql)
+    {
+        $this->dberror = NULL;
+        if(!is_null($this->myConnect))
+        {
+            $result = $this->myConnect->query($sql);
+            
+            if(!$result)
+            {
+                $this->dberror = "Not able to select! " . $this->myConnect->error;
+            }
+        }
+        else
+        {
+            $this->dberror = "Database Connection is not set.";
+            exit();
+        }
+
+    }
+
     public function queryInsert($sql)
     {
         $this->dberror = NULL;

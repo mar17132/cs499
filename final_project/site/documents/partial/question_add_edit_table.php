@@ -109,7 +109,7 @@ $studyArray = allstudy();
         <tr>
         <td>              
             <div class="form-group" >
-                <input class="form-input question-addedit-form" type="hidden" id="quest_edit_id" 
+                <input class="form-input" type="hidden" id="quest_edit_id" 
                 name="quest_edit_id" /> 
                 <label for="question">Question</lable>
                 <input type="text" class="form-control form-input question-addedit-form" id="question" 

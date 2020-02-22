@@ -304,6 +304,7 @@ function dispalyEditQuestion(obj)
     quest_question.val(obj[0].question);
     quest_order.val(obj[0].qorder); 
     quest_anwser_order_sele.val(obj[0].isanwsers_order);
+    $("#quest_edit_id").val(obj[0].questionid);
 
     questionType = obj[0].qtype;
     tbody = $(".answer_addedit_tbody");
@@ -381,16 +382,36 @@ function checkStudyInputs(form)
     return returnVar;
 }
 
+function createfill_in_blank()
+{
+    Ansinputs = "<tr><td><div class='form-group' ><input placeholder='Placholder' "; 
+    Ansinputs += "class='form-control question-addedit-form addedit-answer ";
+    Ansinputs += "answsers_txt_input' type='text' /></div></td>";
+    Ansinputs += "<td><input type='hidden' class='anwserid_question_edit ' />";
+    Ansinputs += "<button type='button' class='btn btn-danger remove_answer_btn'>";   
+    Ansinputs += "Remove </button></td></tr>";
+
+    return $(Ansinputs);
+}
+
+function createfill_in_head()
+{
+    Ansinputs = "<thead><tr><th scope='col'>Placeholder</th>";
+    Ansinputs += "<th scope='col'>Action</th></tr></thead>";
+
+    return $(Ansinputs);
+}
+
 function createChk_Mul_Ans()
 {
     Ansinputs = "<tr><td><div class='form-group' ><input placeholder='Answer' "; 
-    Ansinputs += "class='form-control form-input ";
-    Ansinputs += "answsers_txt_input' type='text' /></div></td>";
+    Ansinputs += "class='form-control form-input question-addedit-form addedit-answer";
+    Ansinputs += " answsers_txt_input' type='text' /></div></td>";
     Ansinputs += "<td><div class='form-group' ><input type='text' "; 
-    Ansinputs += "class='form-control ";
+    Ansinputs += "class='form-control question-addedit-form addedit-answer ";
     Ansinputs += "form-input anwser_order_txt' placeholder='Question Order' ";
     Ansinputs += "/></div></td>";
-    Ansinputs += "<td><input type='hidden' class='anwserid_question_edit' />";
+    Ansinputs += "<td><input type='hidden' class='anwserid_question_edit ' />";
     Ansinputs += "<button type='button' class='btn btn-danger remove_answer_btn'>";   
     Ansinputs += "Remove </button></td></tr>";
 
@@ -625,11 +646,17 @@ $(document).ready(function(){
 
     $(".study-quesiton-contain").on('click','.study-quest-del-btn',function(){
         //delete the question from the databases and the study
+        secondThread({
+            database:{
+                'type':'study',
+                'return_results':'deletequestion',
+                'questionid':$(this).siblings(".questionid-study").val()
+            },
+            'page':'study'
+            }
+        );
+      $("#study_questions_modal").modal("hide");
 
-    });
-
-    questionAddEdit_btn.on('click',function(){
-        //to save the question
     });
 
     $(".study-quesiton-contain").on('click','.study-quest-edit-btn',function(){
@@ -678,7 +705,9 @@ $(document).ready(function(){
             switch(quest_typeid.val())
             {
                 case '10':
-
+                    tbody.before(createfill_in_head());
+                    createfill_in_blank().appendTo(tbody);
+                    disableElem($(this));
                 break;
                 case '11':
                     if($('.answer_addedit_tbody tr').length == 0)
@@ -715,20 +744,33 @@ $(document).ready(function(){
         //this will remove the answer when adding and delete when editing
         //questions
 
-        if($(".quetion-add-edit-title").text() == "Add")
+        if($(".quetion-add-edit-title").text() == "Edit")
         {
-            $(this).parent().parent().remove();
-
-            if($('.answer_addedit_tbody tr').length == 0)
+            answerid = $(this).siblings(".anwserid_question_edit").val();
+            if(answerid != null && answerid != "")
             {
-                $(".answer_addedit_table thead").remove();
-                enableElem(quest_typeid);
+                secondThread({
+                    database:{
+                        'type':'study',
+                        'return_results':'removeanwser',
+                        'answerid':answerid,  
+                        'questiontype':$("#qtype").val()
+                    },
+                    'page':'study',
+                    'refresh_type':'nothing'
+                    }
+                );
             }
             
         }
-        else
-        {
 
+        $(this).parent().parent().remove();
+
+        if($('.answer_addedit_tbody tr').length == 0)
+        {
+            $(".answer_addedit_table thead").remove();
+            enableElem(quest_typeid);
+            enableElem(quest_add_anwser_btn);
         }
 
     });
@@ -765,6 +807,107 @@ $(document).ready(function(){
             'page':'study'
             }
         );
+    });
+
+    questionAddEdit_btn.on('click',function(){
+        //to save the question
+        if(checkStudyInputs($(".question-addedit-form")) && 
+        $(".addedit-answer").length > 0)
+        {
+            if($(".quetion-add-edit-title").text() == 'Add')
+            {
+                answersArray = [];
+
+                $(".answsers_txt_input").each(function(){
+                    if($("#qtype").val() == '9' || $("#qtype").val() == '11')
+                    {
+                        answersArray.push({
+                            'answer':$(this).val(),
+                            'order':$(this).parent().parent().next().children().
+                            children().val()
+                        });
+                    }
+                    else if($("#qtype").val() == '10')
+                    {
+                        answersArray.push({'answer':$(this).val()});
+                    }
+                });
+
+                secondThread({
+                    database:{
+                        'type':'study',
+                        'return_results':'addquestion',
+                        'typeid':$("#qtype").val(),  
+                        'studyid':$("#studyid").val(),
+                        'qaorder':$("#questaorder").val(),
+                        'question':$("#question").val(),
+                        'qorder':$("#qorder").val(),
+                        'values':answersArray    
+                    },
+                    'page':'study'
+                    }
+                );
+
+                $("#question_add_edit_modal").modal("hide");
+                $("#study_questions_modal").modal("hide");
+            }
+            else
+            {
+                //edit a question
+              
+                answersArray = [];
+
+                $(".answsers_txt_input").each(function(){
+                    
+                    if($("#qtype").val() == '9' || $("#qtype").val() == '11')
+                    {
+                       
+                        orderInput = $(this).parent().parent().next().children().
+                            children();
+                         id = orderInput.parent().parent().next().
+                            children(".anwserid_question_edit").val();   
+
+                        answersArray.push({
+                            'answer':$(this).val(),
+                            'order':orderInput.val(),
+                            'id':(id != "") ? id : 'null'
+                        });
+                    }
+                    else if($("#qtype").val() == '10')
+                    {
+                        id = $(this).parent().parent().next().
+                        children(".anwserid_question_edit").val();
+
+                        answersArray.push({
+                            'answer':$(this).val(),
+                            'id':(id != "") ? id : 'null'
+                        });
+                    }
+                });
+                
+                secondThread({
+                    database:{
+                        'type':'study',
+                        'return_results':'updatequestion',
+                        'questionid':$("#quest_edit_id").val(),
+                        'typeid':$("#qtype").val(),  
+                        'studyid':$("#studyid").val(),
+                        'qaorder':$("#questaorder").val(),
+                        'question':$("#question").val(),
+                        'qorder':$("#qorder").val(),
+                        'values':answersArray   
+                    },
+                    'page':'study'
+                    }
+                );
+            }
+            $("#question_add_edit_modal").modal("hide");
+            $("#study_questions_modal").modal("hide");
+        }
+        else
+        {
+            print_form_error.text("Error: Please have all fields filled out");
+        }
     });
 
 });
