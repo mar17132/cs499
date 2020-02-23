@@ -89,7 +89,7 @@ BEGIN
     CLOSE popCursor;
 END$$
 
-CREATE DEFINER = 'csfinaluser'@'localhost' PROCEDURE add_group_to_study 
+CREATE DEFINER = 'csfinaluser'@'localhost' PROCEDURE add_pop_to_que
 (IN studyid INT, IN groupid INT)
 BEGIN
     DECLARE finished INTEGER DEFAULT 0;
@@ -115,6 +115,19 @@ BEGIN
         );
     END LOOP;
     CLOSE popCursor;
+
+END$$
+
+CREATE DEFINER = 'csfinaluser'@'localhost' TRIGGER add_pop_to_que
+AFTER INSERT ON study_to_survey_pop FOR EACH ROW 
+BEGIN
+
+    DECLARE pop_survey_id INT;
+
+    SET pop_survey_id = (SELECT id FROM study_to_survey_pop ORDER BY id DESC LIMIT 1);
+
+    INSERT INTO survey_queue(study_to_survey_pop_id)
+    VALUES(pop_survey_id);
 
 END$$
 
