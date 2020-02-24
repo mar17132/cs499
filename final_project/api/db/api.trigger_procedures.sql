@@ -89,7 +89,7 @@ BEGIN
     CLOSE popCursor;
 END$$
 
-CREATE DEFINER = 'csfinaluser'@'localhost' PROCEDURE add_pop_to_que
+CREATE DEFINER = 'csfinaluser'@'localhost' PROCEDURE add_group_to_study
 (IN studyid INT, IN groupid INT)
 BEGIN
     DECLARE finished INTEGER DEFAULT 0;
