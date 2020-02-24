@@ -121,8 +121,8 @@ VALUES(
     ),
     (SELECT id FROM survey_users WHERE uname = 'harry'),
     '2020-01-01 15:25:00',
-    NULL,
-    (SELECT id FROM type WHERE type = 'In Progress')
+    '2020-01-01 15:45:00',
+    (SELECT id FROM type WHERE type = 'Completed')
 );
 INSERT INTO survey_interview
 (study_to_survey_pop_id,survey_users_id,interview_start,interview_end,type_id)

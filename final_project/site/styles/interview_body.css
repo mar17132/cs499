@@ -1,0 +1,28 @@
+
+.interview-table-con{
+    margin-top: 30px;
+}
+
+.interview-table-con table tbody tr:last-child{
+    border-bottom: thin solid #dee2e6;
+}
+
+.int-cmd-btn:not(:first-child){
+    margin-left: 10px;
+}
+
+.int-cmd-btn:hover{
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.int-cmd-btn:focus{   
+    box-shadow: none;    
+}
+
+.int-cmd-btn-active{
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+

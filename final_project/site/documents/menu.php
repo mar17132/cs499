@@ -32,7 +32,8 @@
         }
       ?>
       <li class="nav-item">
-        <a class="nav-link menu_a" href="#">
+        <a class="nav-link menu_a" href="
+        <?php echo "$myURL/documents/interview_body.php"?>">
           Interviews
         </a>
       </li>
