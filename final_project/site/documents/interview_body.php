@@ -23,12 +23,12 @@
         Completed
     </button>
 </nav>
-     <?php include_once 'partial/interview_que_table.php'; ?>
+     <?php //include_once 'partial/interview_que_table.php'; ?>
+     <?php include_once 'partial/interview_completed_table.php'; ?>
+    <?php //include_once 'partial/interview_progress_table.php'; ?>
 </div>
 
-<?php include_once 'partial/interview_completed_table.php'; ?>
 
-<?php include_once 'partial/interview_progress_table.php'; ?>
 
 <?php include_once 'partial/information_modal.php'; ?>
 

@@ -5,6 +5,7 @@ require_once 'api.json_converter.php';
 require_once 'api.db_users.php';
 require_once 'api.db_population.php';
 require_once 'api.db_study.php';
+require_once 'api.db_interview.php';
 
 
 if(!empty($_POST))
@@ -24,6 +25,9 @@ if(!empty($_POST))
             break;
             case 'study':
                 studytype();
+            break; 
+            case 'interview':
+                interviewtype();
             break; 
             default:
                 echo '{"status":"good","results":"Bad type"}';
@@ -173,7 +177,24 @@ function studytype()
     }
 }
 
-
+function interviewtype()
+{
+    switch($_POST['return_results'])
+    {
+        case 'allque':
+            echo getQueSurveys();
+        break;
+        case 'allprogress':
+            echo getInProgresSurveys();
+        break;
+        case 'allcompleted':
+            echo getCompleteSurveys();
+        break;
+        default:
+            echo '{"status":"good","results":"Bad return type"}';
+        break;     
+    }
+}
 
 ?>
 

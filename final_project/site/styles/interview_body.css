@@ -21,8 +21,24 @@
 }
 
 .int-cmd-btn-active{
-    background-color: #28a745;
-    border-color: #28a745;
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
 }
 
+.int-start-survey-btn:hover{
+    background-color: #007bff;
+    border-color: #007bff;
+}
 
+.int-start-survey-btn:focus{   
+    box-shadow: none;    
+}
+
+.int-show-anwsers-btn:hover{
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.int-show-anwsers-btn:focus{   
+    box-shadow: none;    
+}
