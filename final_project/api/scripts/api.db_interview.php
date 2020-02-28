@@ -144,22 +144,67 @@ function getQueSurveys()
 
 /*
 
+
+
+//This works !!!
 select 
-concat(spop.fname,' ',spop.lname) as popname, 
 sint.id as intid,
+concat(spop.fname,' ',spop.lname) as popname, 
+spop.id as popid,
 susers.uname,
-multia.anwser,
-question.question as multiquestion
+susers.id as uid,
+study.id as studyid,
+study.name as study,
+question.id as quid,
+question.question,
+type.id as typeid,
+type.type,
+anwsers_checkbox.anwser as checkbox_anwser,
+anwsers_multi_choices.anwser as multi_anwser,
+respons_to_fillinblank.respons as fill_anwser
 from survey_interview sint
-right join study_to_survey_pop sspop on sint.study_to_survey_pop_id = sspop.id 
+join study_to_survey_pop sspop on sint.study_to_survey_pop_id = sspop.id 
 join survey_population spop on sspop.survey_population_id = spop.id 
 join study on sspop.study_id = study.id 
 join survey_users susers on sint.survey_users_id = susers.id 
 join study_to_question on study_to_question.study_id = study.id
 join question on study_to_question.question_id = question.id
-join respons_to_multi_choice multi on multi.question_id = question.id
-join anwsers_multi_choices multia on multia.id = multi.anwsers_multi_choices_id
-order by sint.id;
+join type on question.type_id = type.id
+left join respons_to_checkbox on respons_to_checkbox.survey_interview_id=sint.id and respons_to_checkbox.question_id=question.id
+left join anwsers_checkbox on respons_to_checkbox.anwsers_checkbox_id=anwsers_checkbox.id
+left join respons_to_multi_choice  on respons_to_multi_choice.survey_interview_id=sint.id and respons_to_multi_choice.question_id=question.id
+left join anwsers_multi_choices on respons_to_multi_choice.anwsers_multi_choices_id=anwsers_multi_choices.id
+left join respons_to_fillinblank on respons_to_fillinblank.survey_interview_id=sint.id and respons_to_fillinblank.question_id=question.id
+where sint.id=1
+order by sint.id,question.id;
+
+
+
+//this works
+select 
+study.id as studyid,
+study.name as study,
+question.id as quid,
+question.question,
+type.id as typeid,
+type.type,
+anwsers_checkbox.id as checkbox_id,
+anwsers_checkbox.anwser as checkbox_anwser,
+anwsers_multi_choices.id as multi_id,
+anwsers_multi_choices.anwser as multi_anwser,
+anwsers_fill_in_blank.id as fill_id,
+anwsers_fill_in_blank.anwser as fill_anwser
+from study_to_question 
+join study on study_to_question.study_id = study.id
+join question on study_to_question.question_id = question.id
+join type on question.type_id = type.id
+left join anwsers_checkbox on anwsers_checkbox.question_id=question.id
+left join anwsers_multi_choices on anwsers_multi_choices.question_id=question.id
+left join anwsers_fill_in_blank  on anwsers_fill_in_blank .question_id=question.id
+where study.id=1
+order by question.id, study.id;
+
+respons_to_fillinblank
 
 */
 
