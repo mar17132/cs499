@@ -140,6 +140,78 @@ function getQueSurveys()
         }    
 }
 
+function getInterviewRespons($varArray)
+{
+    //This will get all users names
+    //and type 
+
+        GLOBAL $dbObject;
+        GLOBAL $toJsonString; 
+    
+        $dbObject->querySelect("select 
+        sint.id as intid,concat(spop.fname,' ',spop.lname) as popname, 
+        spop.id as popid,sgroup.id as groupid,sgroup.sample_name as groupname,
+        susers.uname,susers.id as uid,study.id as studyid,
+        study.name as study,question.id as questid,question.question,
+        type.id as typeid,type.type,
+        if(anwsers_checkbox.anwser is NULL or 
+        anwsers_checkbox.anwser = '','null',anwsers_checkbox.anwser) 
+        as checkbox_anwser,
+        if(anwsers_multi_choices.anwser is NULL or 
+        anwsers_multi_choices.anwser = '','null',anwsers_multi_choices.anwser) 
+        as multi_anwser,
+        if(respons_to_fillinblank.respons is NULL or 
+        respons_to_fillinblank.respons = '','null',
+        respons_to_fillinblank.respons) as fill_anwser
+        from survey_interview sint
+        join study_to_survey_pop sspop on sint.study_to_survey_pop_id = sspop.id 
+        join survey_population spop on sspop.survey_population_id = spop.id 
+        join sample_group sgroup on sspop.sample_group_id = sgroup.id
+        join study on sspop.study_id = study.id 
+        join survey_users susers on sint.survey_users_id = susers.id 
+        join study_to_question on study_to_question.study_id = study.id
+        join question on study_to_question.question_id = question.id
+        join type on question.type_id = type.id
+        left join respons_to_checkbox on 
+        respons_to_checkbox.survey_interview_id=sint.id 
+        and respons_to_checkbox.question_id=question.id
+        left join anwsers_checkbox on 
+        respons_to_checkbox.anwsers_checkbox_id=anwsers_checkbox.id
+        left join respons_to_multi_choice on 
+        respons_to_multi_choice.survey_interview_id=sint.id 
+        and respons_to_multi_choice.question_id=question.id
+        left join anwsers_multi_choices on 
+        respons_to_multi_choice.anwsers_multi_choices_id=anwsers_multi_choices.id
+        left join respons_to_fillinblank on 
+        respons_to_fillinblank.survey_interview_id=sint.id 
+        and respons_to_fillinblank.question_id=question.id
+        where sint.id=".$varArray['intid']." and 
+        spop.id=".$varArray['popid']." and study.id=".$varArray['studyid']." 
+        and sgroup.id=".$varArray['groupid']." and susers.id=".$varArray['uid'].
+        " order by sint.id,question.id;");
+
+
+        if($dbObject->isDberror())
+        {
+            return $dbObject->getDberror();
+        }
+        else
+        {
+            if(count($dbObject->getSQLResults()) > 0)
+            {
+                //user exisit
+                $toJsonString->jsonEncode($dbObject->getSQLResults());
+                
+                return '{"status":"good","results":"true",'. $toJsonString->getdbrowString() . '}';
+            }
+            else
+            {
+                //user does not exisist
+                return '{"status":"good","results":"false"}';
+            }
+        }    
+}
+
 
 
 /*
@@ -151,20 +223,23 @@ select
 sint.id as intid,
 concat(spop.fname,' ',spop.lname) as popname, 
 spop.id as popid,
+sgroup.id as groupid,
+sgroup.sample_name as groupname,
 susers.uname,
 susers.id as uid,
 study.id as studyid,
 study.name as study,
-question.id as quid,
+question.id as questid,
 question.question,
 type.id as typeid,
 type.type,
-anwsers_checkbox.anwser as checkbox_anwser,
-anwsers_multi_choices.anwser as multi_anwser,
-respons_to_fillinblank.respons as fill_anwser
+if(anwsers_checkbox.anwser is NULL or anwsers_checkbox.anwser = '','null',anwsers_checkbox.anwser) as checkbox_anwser,
+if(anwsers_multi_choices.anwser is NULL or anwsers_multi_choices.anwser = '','null',anwsers_multi_choices.anwser) as multi_anwser,
+if(respons_to_fillinblank.respons is NULL or respons_to_fillinblank.respons = '','null',respons_to_fillinblank.respons) as fill_anwser
 from survey_interview sint
 join study_to_survey_pop sspop on sint.study_to_survey_pop_id = sspop.id 
 join survey_population spop on sspop.survey_population_id = spop.id 
+join sample_group sgroup on sspop.sample_group_id = sgroup.id
 join study on sspop.study_id = study.id 
 join survey_users susers on sint.survey_users_id = susers.id 
 join study_to_question on study_to_question.study_id = study.id
@@ -175,7 +250,8 @@ left join anwsers_checkbox on respons_to_checkbox.anwsers_checkbox_id=anwsers_ch
 left join respons_to_multi_choice  on respons_to_multi_choice.survey_interview_id=sint.id and respons_to_multi_choice.question_id=question.id
 left join anwsers_multi_choices on respons_to_multi_choice.anwsers_multi_choices_id=anwsers_multi_choices.id
 left join respons_to_fillinblank on respons_to_fillinblank.survey_interview_id=sint.id and respons_to_fillinblank.question_id=question.id
-where sint.id=1
+where sint.id=3 and spop.id=3 and study.id=3
+and sgroup.id=1 and susers.id=4
 order by sint.id,question.id;
 
 
@@ -184,7 +260,7 @@ order by sint.id,question.id;
 select 
 study.id as studyid,
 study.name as study,
-question.id as quid,
+question.id as questid,
 question.question,
 type.id as typeid,
 type.type,
@@ -204,7 +280,7 @@ left join anwsers_fill_in_blank  on anwsers_fill_in_blank .question_id=question.
 where study.id=1
 order by question.id, study.id;
 
-respons_to_fillinblank
+
 
 */
 

@@ -190,6 +190,9 @@ function interviewtype()
         case 'allcompleted':
             echo getCompleteSurveys();
         break;
+        case 'getrespons':
+            echo getInterviewRespons($_POST);
+        break;
         default:
             echo '{"status":"good","results":"Bad return type"}';
         break;     

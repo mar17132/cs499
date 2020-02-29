@@ -342,6 +342,56 @@ INSERT INTO respons_to_checkbox
 (question_id,survey_interview_id,anwsers_checkbox_id)
 VALUES(
     (SELECT id FROM question WHERE question = 
+    'Out of the following Harry Potter charaters, which ones do you like?'),
+    (
+        SELECT survey_interview.id FROM survey_interview 
+        INNER JOIN study_to_survey_pop 
+        ON survey_interview.study_to_survey_pop_id = study_to_survey_pop.id 
+        INNER JOIN survey_population 
+        ON study_to_survey_pop.survey_population_id = survey_population.id
+        INNER JOIN sample_group 
+        ON study_to_survey_pop.sample_group_id = sample_group.id
+        INNER JOIN study ON study_to_survey_pop.study_id = study.id
+        WHERE survey_population.fname = 'Bart' AND survey_population.lname = 'Simpsons'
+        AND sample_group.sample_name = 'Group1' AND study.name = 'Harry Potter Favorite Movie' 
+    ),
+    (
+        SELECT anwsers_checkbox.id FROM anwsers_checkbox 
+        INNER JOIN question ON anwsers_checkbox.question_id = question.id
+        WHERE question.question = 
+        'Out of the following Harry Potter charaters, which ones do you like?'
+        AND anwsers_checkbox.anwser = 'Lord Voldemort'    
+    )
+);
+INSERT INTO respons_to_checkbox
+(question_id,survey_interview_id,anwsers_checkbox_id)
+VALUES(
+    (SELECT id FROM question WHERE question = 
+    'Out of the following Harry Potter charaters, which ones do you like?'),
+    (
+        SELECT survey_interview.id FROM survey_interview 
+        INNER JOIN study_to_survey_pop 
+        ON survey_interview.study_to_survey_pop_id = study_to_survey_pop.id 
+        INNER JOIN survey_population 
+        ON study_to_survey_pop.survey_population_id = survey_population.id
+        INNER JOIN sample_group 
+        ON study_to_survey_pop.sample_group_id = sample_group.id
+        INNER JOIN study ON study_to_survey_pop.study_id = study.id
+        WHERE survey_population.fname = 'Bart' AND survey_population.lname = 'Simpsons'
+        AND sample_group.sample_name = 'Group1' AND study.name = 'Harry Potter Favorite Movie' 
+    ),
+    (
+        SELECT anwsers_checkbox.id FROM anwsers_checkbox 
+        INNER JOIN question ON anwsers_checkbox.question_id = question.id
+        WHERE question.question = 
+        'Out of the following Harry Potter charaters, which ones do you like?'
+        AND anwsers_checkbox.anwser = 'Rubeus Hagrid'    
+    )
+);
+INSERT INTO respons_to_checkbox
+(question_id,survey_interview_id,anwsers_checkbox_id)
+VALUES(
+    (SELECT id FROM question WHERE question = 
     'Out of the following Star Wars charaters, which ones do you like?'),
     (
         SELECT survey_interview.id FROM survey_interview 
@@ -464,7 +514,7 @@ VALUES(
         INNER JOIN question ON anwsers_multi_choices.question_id = question.id
         WHERE question.question = 
         'Do you like Disney Star Wars?'
-        AND anwsers_multi_choices.anwser = 'Yes'    
+        AND anwsers_multi_choices.anwser = 'No'    
     )
 );
 INSERT INTO respons_to_multi_choice
@@ -514,7 +564,7 @@ VALUES(
         INNER JOIN question ON anwsers_multi_choices.question_id = question.id
         WHERE question.question = 
         'Do you like Disney Star Wars?'
-        AND anwsers_multi_choices.anwser = 'Yes'    
+        AND anwsers_multi_choices.anwser = 'No'    
     )
 );
 INSERT INTO respons_to_multi_choice
@@ -567,8 +617,56 @@ VALUES(
         AND anwsers_multi_choices.anwser = 'Yes'    
     )
 );
-
-
+INSERT INTO respons_to_multi_choice
+(question_id,survey_interview_id,anwsers_multi_choices_id)
+VALUES(
+        (SELECT id FROM question WHERE question = 
+    'Which of the following is your favorite Harry Potter Movie?'),
+    (
+        SELECT survey_interview.id FROM survey_interview 
+        INNER JOIN study_to_survey_pop 
+        ON survey_interview.study_to_survey_pop_id = study_to_survey_pop.id 
+        INNER JOIN survey_population 
+        ON study_to_survey_pop.survey_population_id = survey_population.id
+        INNER JOIN sample_group 
+        ON study_to_survey_pop.sample_group_id = sample_group.id
+        INNER JOIN study ON study_to_survey_pop.study_id = study.id
+        WHERE survey_population.fname = 'Bart' AND survey_population.lname = 'Simpsons'
+        AND sample_group.sample_name = 'Group1' AND study.name = 'Harry Potter Favorite Movie' 
+    ),
+    (
+        SELECT anwsers_multi_choices.id FROM anwsers_multi_choices 
+        INNER JOIN question ON anwsers_multi_choices.question_id = question.id
+        WHERE question.question = 
+        'Which of the following is your favorite Harry Potter Movie?'
+        AND anwsers_multi_choices.anwser = 'Harry Potter and the Deathly Hallows Part 1'    
+    )
+);
+INSERT INTO respons_to_multi_choice
+(question_id,survey_interview_id,anwsers_multi_choices_id)
+VALUES(
+        (SELECT id FROM question WHERE question = 
+    'Do you like Harry Potter?'),
+    (
+        SELECT survey_interview.id FROM survey_interview 
+        INNER JOIN study_to_survey_pop 
+        ON survey_interview.study_to_survey_pop_id = study_to_survey_pop.id 
+        INNER JOIN survey_population 
+        ON study_to_survey_pop.survey_population_id = survey_population.id
+        INNER JOIN sample_group 
+        ON study_to_survey_pop.sample_group_id = sample_group.id
+        INNER JOIN study ON study_to_survey_pop.study_id = study.id
+        WHERE survey_population.fname = 'Bart' AND survey_population.lname = 'Simpsons'
+        AND sample_group.sample_name = 'Group1' AND study.name = 'Harry Potter Favorite Movie' 
+    ),
+    (
+        SELECT anwsers_multi_choices.id FROM anwsers_multi_choices 
+        INNER JOIN question ON anwsers_multi_choices.question_id = question.id
+        WHERE question.question = 
+        'Do you like Harry Potter?'
+        AND anwsers_multi_choices.anwser = 'Yes'    
+    )
+);
 
 
 

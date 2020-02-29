@@ -36,7 +36,7 @@ $queArray = allQue();
 ?>
 
 
-<table class="table table-striped int-que-table">
+<table class="table table-striped int-completed-table int-table-view">
     <thead>
         <tr>
             <th scope="col">Person</th>
@@ -67,20 +67,21 @@ $queArray = allQue();
             echo $row['endint_date']."</td><td class='int-endtime'>";
             echo $row['endint_time']."</td><td class='int-uname'>";
             echo $row['uname']."</td><td class='int-action'>";
-            echo "<input type='hidden' id='int-quid' value='";
+            echo "<input type='hidden' class='int-queid' value='";
             echo $row['quid']."'/>";
-            echo "<input type='hidden' id='int-popid' value='";
+            echo "<input type='hidden' class='int-popid' value='";
             echo $row['popid']."'/>";
-            echo "<input type='hidden' id='int-studyid' value='";
+            echo "<input type='hidden' class='int-studyid' value='";
             echo $row['studyid']."'/>";
-            echo "<input type='hidden' id='int-groupid' value='";
+            echo "<input type='hidden' class='int-groupid' value='";
             echo $row['groupid']."'/>";
-            echo "<input type='hidden' id='int-interviewid' value='";
+            echo "<input type='hidden' class='int-interviewid' value='";
             echo $row['interviewid']."'/>";
-            echo "<input type='hidden' id='int-uid' value='";
+            echo "<input type='hidden' class='int-uid' value='";
             echo $row['uid']."'/>";
             echo "<button type='button' class='btn btn-secondary 
-            int-show-anwsers-btn'>
+            int-show-anwsers-btn' data-toggle='modal' 
+            data-target='#int_respons_modal'>
             Responses
             </button>";
             echo "</td></tr>";

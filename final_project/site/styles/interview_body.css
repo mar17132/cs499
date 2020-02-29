@@ -42,3 +42,8 @@
 .int-show-anwsers-btn:focus{   
     box-shadow: none;    
 }
+
+.int-respons-modal{
+    max-width: 900px;
+}
+

@@ -48,7 +48,10 @@ function threadReturn(obj)
                 studyGroupRefresh(obj.rows);
             break;
             case 'interviews':
-
+                interviewPageChange(obj.rows);
+            break;
+            case 'interviewsRespons':
+                interviewRefreshRespons(obj.rows);
             break;
             case 'study':
                 studyRefresh(obj.rows);
@@ -252,6 +255,22 @@ function questionEdit(studyObj)
 function setQuestionEdit(qObj)
 {
     dispalyEditQuestion(qObj);
+}
+
+function interviewPageChange(Obj)
+{
+   // console.log(popObj)
+    intTable = $(".interview-table-con");
+    intTable.children(".int-table-view").remove();
+    $(Obj).appendTo(intTable);
+}
+
+function interviewRefreshRespons(Obj)
+{
+   // console.log(popObj)
+    intTable = $(".int-respons-contain");
+    intTable.empty();
+    $(Obj).appendTo(intTable);
 }
 
 function displayInfo(Obj)

@@ -36,7 +36,7 @@ $queArray = allQue();
 ?>
 
 
-<table class="table table-striped int-que-table">
+<table class="table table-striped int-que-table int-table-view">
     <thead>
         <tr>
             <th scope="col">Person</th>
