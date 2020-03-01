@@ -212,6 +212,62 @@ function getInterviewRespons($varArray)
         }    
 }
 
+function getSurveyQuestions($studyid)
+{
+    //This will get all users names
+    //and type 
+
+        GLOBAL $dbObject;
+        GLOBAL $toJsonString; 
+    
+        $dbObject->querySelect("select 
+        study.id as studyid,study.name as study,question.id as questid,
+        question.question,type.id as typeid,type.type,
+        if(anwsers_checkbox.id is NULL or 
+        anwsers_checkbox.id = '','null',anwsers_checkbox.id) 
+        as checkbox_id,
+        if(anwsers_checkbox.anwser is NULL or 
+        anwsers_checkbox.anwser = '','null',anwsers_checkbox.anwser) 
+        as checkbox_anwser,
+        if(anwsers_multi_choices.id is NULL or 
+        anwsers_multi_choices.id = '','null',anwsers_multi_choices.id) as multi_id,
+        if(anwsers_multi_choices.anwser is NULL or 
+        anwsers_multi_choices.anwser = '','null',anwsers_multi_choices.anwser) 
+        as multi_anwser,anwsers_fill_in_blank.id as fill_id,
+        if(anwsers_fill_in_blank.anwser is NULL or 
+        anwsers_fill_in_blank.anwser = '','null',anwsers_fill_in_blank.anwser)
+         as fill_anwser
+        from study_to_question 
+        join study on study_to_question.study_id = study.id
+        join question on study_to_question.question_id = question.id
+        join type on question.type_id = type.id
+        left join anwsers_checkbox on anwsers_checkbox.question_id=question.id
+        left join anwsers_multi_choices on anwsers_multi_choices.question_id=question.id
+        left join anwsers_fill_in_blank  on anwsers_fill_in_blank .question_id=question.id
+        where study.id=1
+        order by question.id, study.id;");
+
+
+        if($dbObject->isDberror())
+        {
+            return $dbObject->getDberror();
+        }
+        else
+        {
+            if(count($dbObject->getSQLResults()) > 0)
+            {
+                //user exisit
+                $toJsonString->jsonEncode($dbObject->getSQLResults());
+                
+                return '{"status":"good","results":"true",'. $toJsonString->getdbrowString() . '}';
+            }
+            else
+            {
+                //user does not exisist
+                return '{"status":"good","results":"false"}';
+            }
+        }    
+}
 
 
 /*
@@ -264,12 +320,11 @@ question.id as questid,
 question.question,
 type.id as typeid,
 type.type,
-anwsers_checkbox.id as checkbox_id,
-anwsers_checkbox.anwser as checkbox_anwser,
-anwsers_multi_choices.id as multi_id,
-anwsers_multi_choices.anwser as multi_anwser,
-anwsers_fill_in_blank.id as fill_id,
-anwsers_fill_in_blank.anwser as fill_anwser
+if(anwsers_checkbox.id is NULL or anwsers_checkbox.id = '','null',anwsers_checkbox.id) as checkbox_id,
+if(anwsers_checkbox.anwser is NULL or anwsers_checkbox.anwser = '','null',anwsers_checkbox.anwser) as checkbox_anwser,
+if(anwsers_multi_choices.id is NULL or anwsers_multi_choices.id = '','null',anwsers_multi_choices.id) as multi_id,
+if(anwsers_multi_choices.anwser is NULL or anwsers_multi_choices.anwser = '','null',anwsers_multi_choices.anwser) as multi_anwser,
+if(anwsers_fill_in_blank.anwser is NULL or anwsers_fill_in_blank.anwser = '','null',anwsers_fill_in_blank.anwser) as fill_anwser
 from study_to_question 
 join study on study_to_question.study_id = study.id
 join question on study_to_question.question_id = question.id

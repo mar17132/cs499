@@ -20,6 +20,15 @@
     box-shadow: none;    
 }
 
+#survey-back-btn:hover{
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+#survey-back-btn:focus{   
+    box-shadow: none;    
+}
+
 .int-cmd-btn-active{
     background-color: #28a745 !important;
     border-color: #28a745 !important;
@@ -45,5 +54,9 @@
 
 .int-respons-modal{
     max-width: 900px;
+}
+
+.int-hidden-btns{
+    display: none;
 }
 

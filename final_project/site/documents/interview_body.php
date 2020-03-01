@@ -22,6 +22,10 @@
             id="int-completed-btn" >
         Completed
     </button>
+    <button type="button" class="btn btn-secondary btn-sm int-hidden-btns"
+            id="survey-back-btn" >
+        Back
+    </button>
 </nav>
      <?php include_once 'partial/interview_que_table.php'; ?>    
 </div>

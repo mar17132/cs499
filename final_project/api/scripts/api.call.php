@@ -193,6 +193,9 @@ function interviewtype()
         case 'getrespons':
             echo getInterviewRespons($_POST);
         break;
+        case 'surveyquestions':
+            echo getSurveyQuestions($_POST['studyid']);
+        break;
         default:
             echo '{"status":"good","results":"Bad return type"}';
         break;     

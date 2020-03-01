@@ -13,6 +13,19 @@ function displayInterviewPage(loadURL)
     }
 }
 
+function displaySurvey(currentbutton)
+{
+    secondThread({
+        url:'http://localhost/final_project/site/documents/partial/interview_survey.php',
+        database:{
+            'studyid':currentbutton.siblings('.int-studyid').val()         
+        },
+        'refresh_type':'refresh', 
+        'page':'surveyquestions'
+        }
+    );
+}
+
 function displayInterviewRespons(currentbutton)
 {
     secondThread({
@@ -28,6 +41,14 @@ function displayInterviewRespons(currentbutton)
         'page':'interviewsRespons'
         }
     );
+}
+
+function returnFromSurvey()
+{
+    $(".page-name").text("Interviews");
+    $(".int-cmd-btn").removeClass("int-hidden-btns");
+    $("#survey-back-btn").addClass("int-hidden-btns");
+    $("#int-que-btn").trigger( "click" );
 }
 
 $(document).ready(function(){
@@ -60,7 +81,19 @@ $(document).ready(function(){
     });
 
     $(".interview-table-con").on('click','.int-show-anwsers-btn',function(){
+        $(".int-respon-title").text($(this).parent().siblings(".int-popname").text());
         displayInterviewRespons($(this));
+    });
+
+    $(".interview-table-con").on('click','.int-start-survey-btn',function(){
+        $(".page-name").text("Survey");
+        $(".int-cmd-btn").addClass("int-hidden-btns");
+        $("#survey-back-btn").removeClass("int-hidden-btns");
+        displaySurvey($(this));
+    });
+
+    $("#survey-back-btn").on('click',function(){
+        returnFromSurvey();
     });
 
 });

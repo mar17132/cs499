@@ -53,6 +53,9 @@ function threadReturn(obj)
             case 'interviewsRespons':
                 interviewRefreshRespons(obj.rows);
             break;
+            case 'surveyquestions':
+                displaySurveyQuestions(obj.rows);
+            break;
             case 'study':
                 studyRefresh(obj.rows);
             break;
@@ -198,7 +201,6 @@ function popRefresh(popObj)
 
 function popGroupRefresh(popObj)
 {
-   // console.log(popObj)
     popGroups = $(".pop-groups-table");
     popGroups.empty();
     $(popObj).appendTo(popGroups);
@@ -206,7 +208,6 @@ function popGroupRefresh(popObj)
 
 function allGroupRefresh(allgroupsObj)
 {
-   // console.log(popObj)
     allGroups = $(".pop-all-groups-table");
     allGroups.empty();
     $(allgroupsObj).appendTo(allGroups);
@@ -214,7 +215,6 @@ function allGroupRefresh(allgroupsObj)
 
 function studyGroupRefresh(allgroupsObj)
 {
-   // console.log(popObj)
     allGroups = $(".study-group-table");
     allGroups.empty();
     $(allgroupsObj).appendTo(allGroups);
@@ -222,7 +222,6 @@ function studyGroupRefresh(allgroupsObj)
 
 function studyRefresh(studyObj)
 {
-   // console.log(popObj)
     allstudy = $(".study-table");
     allstudy.children(".studyTable").remove();
     $(studyObj).appendTo(allstudy);
@@ -230,7 +229,6 @@ function studyRefresh(studyObj)
 
 function studyquesitonRefresh(studyObj)
 {
-   // console.log(popObj)
     allstudy = $(".study-quesiton-contain");
     allstudy.empty();
     $(studyObj).appendTo(allstudy);
@@ -238,7 +236,6 @@ function studyquesitonRefresh(studyObj)
 
 function studyGroupConnect(studyObj)
 {
-   // console.log(popObj)
     allstudy = $(".connect-group-contain");
     allstudy.empty();
     $(studyObj).appendTo(allstudy);
@@ -246,7 +243,6 @@ function studyGroupConnect(studyObj)
 
 function questionEdit(studyObj)
 {
-   // console.log(popObj)
     allstudy = $(".question-add-edit-contain");
     allstudy.empty();
     $(studyObj).appendTo(allstudy);
@@ -259,7 +255,6 @@ function setQuestionEdit(qObj)
 
 function interviewPageChange(Obj)
 {
-   // console.log(popObj)
     intTable = $(".interview-table-con");
     intTable.children(".int-table-view").remove();
     $(Obj).appendTo(intTable);
@@ -267,9 +262,15 @@ function interviewPageChange(Obj)
 
 function interviewRefreshRespons(Obj)
 {
-   // console.log(popObj)
     intTable = $(".int-respons-contain");
     intTable.empty();
+    $(Obj).appendTo(intTable);
+}
+
+function displaySurveyQuestions(Obj)
+{
+    intTable = $(".interview-table-con");
+    intTable.children(".int-table-view").remove();
     $(Obj).appendTo(intTable);
 }
 
@@ -286,9 +287,6 @@ function displayError(Obj)
     $(".errorMod-p").text(Obj.results);
     infoDiv.modal('show');
 }
-
-
-
 
 
 

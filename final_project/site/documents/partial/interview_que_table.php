@@ -57,13 +57,13 @@ $queArray = allQue();
             echo $row['popname']."</td><td class='int-groupname'>";
             echo $row['groupname']."</td><td class='int-studyname'>";
             echo $row['studyname']."</td><td class='int-action'>";
-            echo "<input type='hidden' id='int-quid' value='";
+            echo "<input type='hidden' class='int-quid' value='";
             echo $row['quid']."'/>";
-            echo "<input type='hidden' id='int-popid' value='";
+            echo "<input type='hidden' class='int-popid' value='";
             echo $row['popid']."'/>";
-            echo "<input type='hidden' id='int-studyid' value='";
+            echo "<input type='hidden' class='int-studyid' value='";
             echo $row['studyid']."'/>";
-            echo "<input type='hidden' id='int-groupid' value='";
+            echo "<input type='hidden' class='int-groupid' value='";
             echo $row['groupid']."'/>";
             echo "<button type='button' class='btn btn-secondary 
             int-start-survey-btn'>
