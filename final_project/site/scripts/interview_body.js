@@ -47,7 +47,7 @@ function returnFromSurvey()
 {
     $(".page-name").text("Interviews");
     $(".int-cmd-btn").removeClass("int-hidden-btns");
-    $("#survey-back-btn").addClass("int-hidden-btns");
+    $(".survey-cmd-btn").addClass("int-hidden-btns");
     $("#int-que-btn").trigger( "click" );
 }
 
@@ -88,7 +88,7 @@ $(document).ready(function(){
     $(".interview-table-con").on('click','.int-start-survey-btn',function(){
         $(".page-name").text("Survey");
         $(".int-cmd-btn").addClass("int-hidden-btns");
-        $("#survey-back-btn").removeClass("int-hidden-btns");
+        $(".survey-cmd-btn").removeClass("int-hidden-btns");
         displaySurvey($(this));
     });
 

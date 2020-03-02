@@ -20,12 +20,16 @@
     box-shadow: none;    
 }
 
-#survey-back-btn:hover{
+.survey-cmd-btn:not(:first-child){
+    margin-left: 10px;
+}
+
+.survey-cmd-btn:hover{
     background-color: #28a745;
     border-color: #28a745;
 }
 
-#survey-back-btn:focus{   
+.survey-cmd-btn:focus{   
     box-shadow: none;    
 }
 
@@ -60,3 +64,14 @@
     display: none;
 }
 
+.survey-ansers-display{
+
+}
+
+.survey-anwsers{
+
+}
+
+.survey-anwser-ul{
+    
+}

@@ -22,15 +22,25 @@
             id="int-completed-btn" >
         Completed
     </button>
-    <button type="button" class="btn btn-secondary btn-sm int-hidden-btns"
+    <button type="button" class="btn btn-secondary btn-sm survey-cmd-btn int-hidden-btns"
             id="survey-back-btn" >
         Back
+    </button>
+    <button type="button" class="btn btn-secondary btn-sm survey-cmd-btn int-hidden-btns"
+    id="survey-end-survey-btn" >
+    End Survey
+    </button>
+    <button type="button" class="btn btn-secondary btn-sm survey-cmd-btn int-hidden-btns"
+    id="survey-close-survey-btn" >
+    Close
     </button>
 </nav>
      <?php include_once 'partial/interview_que_table.php'; ?>    
 </div>
 
 <?php include_once 'partial/interview_respons_modal.php'; ?>
+
+<?php include_once 'partial/interview_end_survey_modal.php'; ?>
 
 <?php include_once 'partial/information_modal.php'; ?>
 
