@@ -18,7 +18,9 @@ function displaySurvey(currentbutton)
     secondThread({
         url:'http://localhost/final_project/site/documents/partial/interview_survey.php',
         database:{
-            'studyid':currentbutton.siblings('.int-studyid').val()         
+            'studyid':currentbutton.siblings('.int-studyid').val(),
+            'popid': currentbutton.siblings('.int-popid').val(),
+            'groupid': currentbutton.siblings('.int-groupid').val() 
         },
         'refresh_type':'refresh', 
         'page':'surveyquestions'

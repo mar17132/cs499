@@ -8,10 +8,14 @@ require_once "../../scripts/api_connect.php";
 <?php
 
 $responsArray = null;
+$popArray = null;
+$uid = null;
 
 if($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-    $responsArray = (array) getRespon();
+    $popArray = (array) getSurvPop()['rows'][0];
+    $responsArray = (array) getRespon();    
+    //$uid = $_SESSION['uid'];
 }
 
 function getRespon()
@@ -33,39 +37,86 @@ function getRespon()
 }
 
 
+function getSurvPop()
+{
+    GLOBAL $jsonTophp;
+    
+    $pop_table_Connection = new apiconnection();
+    $pop_table_Connection->setPage("final_project/api/scripts/api.call.php");
+    $pop_table_Connection->setParameters(array(
+        'type'=>'population',
+        'return_results'=>'allOfOne',
+        'popid'=> $_POST['popid'],
+        'studyid'=> $_POST['studyid'],
+        'groupid'=> $_POST['groupid']
+    ));
+    $pop_table_Connection->connect_api();
+
+    $jsonTophp->clearVars();   
+    $jsonTophp->json_to_array($pop_table_Connection->getResults());
+    return $jsonTophp->getjsonArray();
+}
+
+
+?>
+
+<?php 
+
+
+if($popArray)
+{
 
 ?>
 
 <div class='container int-survey-info int-table-view'>
-
-    <div class='row'>
+    <div class='row int-info-row'>
         <div class='col'>
-        Person: <span class='survey-popname int-survey-info-dis'>name</span>
-        <input type='hidden' id='survey-popid' value='' />
+            <h3 class="text-center">Interview Information</h3>
+        </div>
+    </div>
+    <div class='row int-info-row'>
+        <div class='col'>
+        Person: <span class='survey-popname int-survey-info-dis'>
+            <?php echo $popArray['name']; ?>
+            </span>
+        <input type='hidden' id='survey-popid' 
+        value='<?php echo $popArray['id']; ?>' />
         </div>
 
         <div class='col' >
-        Phone:<span class='survey-popphone int-survey-info-dis'>this phone</span>
+        Phone:<span class='survey-popphone int-survey-info-dis'>
+        <?php echo $popArray['phone']; ?></span>
         </div>
 
         <div class='col-6' >
-        Address:<span class='survey-popaddress int-survey-info-dis'>this address</span>
+        Address:<span class='survey-popaddress int-survey-info-dis'>
+        <?php echo $popArray['address']; ?></span>
         </div>
     </div>
 
-    <div class='row'>
+    <div class='row int-info-row'>
         <div class='col'>
-        Study: <span class='survey-popstudyname int-survey-info-dis'>Studyname</span>
-        <input type='hidden' id='survey-studyid' value='' />
+        Study: <span class='survey-popstudyname int-survey-info-dis'>
+        <?php echo $popArray['studyname']; ?></span>
+        <input type='hidden' id='survey-studyid' 
+        value='<?php echo $popArray['studyid']; ?>' />
         </div>
 
         <div class='col' >
-        Group:<span class='survey-popgroupname int-survey-info-dis'>this group</span>
-        <input type='hidden' id='survey-groupid' value='' />
+        Group:<span class='survey-popgroupname int-survey-info-dis'>
+        <?php echo $popArray['groupname']; ?></span>
+        <input type='hidden' id='survey-groupid' 
+        value='<?php echo $popArray['groupid']?>' />
         </div>
         <div class='col-6'></div>
     </div>
 </div>
+
+<?php 
+   
+} 
+?>
+
 
 <table class="table table-striped int-respons-table int-table-view">
 

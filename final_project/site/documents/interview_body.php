@@ -27,11 +27,11 @@
         Back
     </button>
     <button type="button" class="btn btn-secondary btn-sm survey-cmd-btn int-hidden-btns"
-    id="survey-end-survey-btn" >
+    id="survey-end-survey-btn" data-toggle='modal' data-target='#end_survey_modal'>
     End Survey
     </button>
     <button type="button" class="btn btn-secondary btn-sm survey-cmd-btn int-hidden-btns"
-    id="survey-close-survey-btn" >
+    id="survey-close-survey-btn" data-toggle='modal' data-target='#'>
     Close
     </button>
 </nav>

@@ -94,6 +94,9 @@ function populationtype()
         case 'all':
             echo getAllPop();
         break;
+        case 'allOfOne':
+            echo getAllOfOnePop($_POST['popid'],$_POST['studyid'],$_POST['groupid']);
+        break;
         case 'delete':
             echo deletePop($_POST['id']);
         break;
@@ -195,6 +198,9 @@ function interviewtype()
         break;
         case 'surveyquestions':
             echo getSurveyQuestions($_POST['studyid']);
+        break;
+        case 'completedtype':
+            echo getCompletedTypes();
         break;
         default:
             echo '{"status":"good","results":"Bad return type"}';

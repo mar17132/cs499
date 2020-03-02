@@ -244,7 +244,7 @@ function getSurveyQuestions($studyid)
         left join anwsers_checkbox on anwsers_checkbox.question_id=question.id
         left join anwsers_multi_choices on anwsers_multi_choices.question_id=question.id
         left join anwsers_fill_in_blank  on anwsers_fill_in_blank .question_id=question.id
-        where study.id=1
+        where study.id=$studyid
         order by question.id, study.id;");
 
 
@@ -269,6 +269,35 @@ function getSurveyQuestions($studyid)
         }    
 }
 
+function getCompletedTypes()
+{
+    //this will test if there is a user with pass
+    GLOBAL $dbObject;
+    GLOBAL $toJsonString; 
+
+    $dbObject->querySelect("select type.id,type.type,type_class.typeClass from type  
+            inner join type_class on type.type_class_id = type_class.id
+            where type_class.typeClass = 'Interviewer Response'");
+    if($dbObject->isDberror())
+    {
+        return $dbObject->getDberror();
+    }
+    else
+    {
+        if(count($dbObject->getSQLResults()) > 0)
+        {
+            //user exisit
+            $toJsonString->jsonEncode($dbObject->getSQLResults());
+            
+            return '{"status":"good","results":"true",'. $toJsonString->getdbrowString() . '}';
+        }
+        else
+        {
+            //user does not exisist
+            return '{"status":"good","results":"false"}';
+        }
+    }  
+}
 
 /*
 

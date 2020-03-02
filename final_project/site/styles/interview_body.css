@@ -65,13 +65,29 @@
 }
 
 .survey-ansers-display{
-
+/* This is for the text anwser*/
 }
 
 .survey-anwsers{
-
+/* This is for the input like radio or check*/
+    margin-right: 10px;
 }
 
 .survey-anwser-ul{
-    
+    list-style: none;
+    margin-top: 10px;
+}
+
+.int-info-row{
+    margin-top: 15px;
+}
+
+.int-info-row:not(:first-child){
+    margin-bottom: 17px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+.int-survey-info{
+    background-color: #a9a9a9;
 }

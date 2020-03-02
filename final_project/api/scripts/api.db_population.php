@@ -46,6 +46,50 @@ function getAllPop()
         }    
 }
 
+function getAllOfOnePop($popid,$studyid,$groupid)
+{
+    //This will get all users names
+    //and type 
+        GLOBAL $dbObject;
+        GLOBAL $toJsonString; 
+    
+        $dbObject->querySelect("select pop.id as popid,
+        concat(pop.fname,if(pop.mname,pop.mname,' '),pop.lname) as name, 
+        concat(pop.street,if(pop.apt,pop.apt,' '),pop.city,' ',pop.state,' ',pop.zip) as address, 
+        pop.phone,sgroup.id as groupid,sgroup.sample_name as groupname,
+        study.id as studyid, study.name as studyname
+        from survey_population pop 
+        join surveyp_to_sampleg on 
+        surveyp_to_sampleg.survey_population_id = pop.id
+        join sample_group sgroup on 
+        sgroup.id = surveyp_to_sampleg.sample_group_id
+        join study_to_survey_pop on study_to_survey_pop.survey_population_id = pop.id 
+        join study on study.id = study_to_survey_pop.study_id
+        where pop.id=$popid and surveyp_to_sampleg.member=1 
+        and sgroup.id=$groupid and study.id=$studyid;");
+
+
+        if($dbObject->isDberror())
+        {
+            return $dbObject->getDberror();
+        }
+        else
+        {
+            if(count($dbObject->getSQLResults()) > 0)
+            {
+                //user exisit
+                $toJsonString->jsonEncode($dbObject->getSQLResults());
+                
+                return '{"status":"good","results":"true",'. $toJsonString->getdbrowString() . '}';
+            }
+            else
+            {
+                //user does not exisist
+                return '{"status":"good","results":"false"}';
+            }
+        }    
+}
+
 function getAllGroups()
 {
     //This will get all users names
