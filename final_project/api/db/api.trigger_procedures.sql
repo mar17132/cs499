@@ -30,6 +30,34 @@ BEGIN
     CLOSE studycursor;
 END$$
 
+CREATE DEFINER = 'csfinaluser'@'localhost' TRIGGER add_study_permissions 
+AFTER INSERT ON study FOR EACH ROW 
+BEGIN
+    DECLARE study_id INT;
+    DECLARE finished INT DEFAULT 0;
+    DECLARE userid INT;   
+    
+    DECLARE usercursor CURSOR FOR SELECT id FROM csfinal.survey_users;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
+
+    SET study_id = (SELECT id FROM study ORDER BY id DESC LIMIT 1);
+
+    OPEN usercursor;    
+
+    insert_loop: LOOP
+        FETCH usercursor INTO userid;
+        IF finished = 1 THEN
+            LEAVE insert_loop;
+        END IF;
+        INSERT INTO interviewer_permissions
+        (study_id,survey_users_id)
+        VALUES(
+            study_id,
+            userid
+        );
+    END LOOP;
+    CLOSE usercursor;
+END$$
 
 CREATE DEFINER = 'csfinaluser'@'localhost' TRIGGER add_population_person_groups
 AFTER INSERT ON survey_population FOR EACH ROW 
@@ -129,6 +157,43 @@ BEGIN
     INSERT INTO survey_queue(study_to_survey_pop_id)
     VALUES(pop_survey_id);
 
+END$$
+
+CREATE DEFINER = 'csfinaluser'@'localhost' TRIGGER add_popgroup_study
+AFTER UPDATE ON surveyp_to_sampleg FOR EACH ROW 
+BEGIN
+
+    DECLARE studyid INT;
+    DECLARE finished INTEGER DEFAULT 0; 
+    
+    DECLARE studyCursor CURSOR FOR SELECT DISTINCT(study_id) FROM study_to_survey_pop
+    WHERE study_to_survey_pop.sample_group_id = NEW.sample_group_id;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
+    
+    IF NEW.member = 1 AND OLD.member = 0 THEN
+        OPEN studyCursor;    
+
+        insert_loop: LOOP
+            FETCH studyCursor INTO studyid;
+            IF finished = 1 THEN
+                LEAVE insert_loop;
+            END IF;
+        
+                INSERT INTO study_to_survey_pop
+                (survey_population_id,sample_group_id,study_id)
+                VALUES(
+                    NEW.survey_population_id,
+                    NEW.sample_group_id,
+                    studyid
+                );
+
+        END LOOP;
+        CLOSE studyCursor;
+    ELSEIF NEW.member = 0 AND OLD.member = 1 THEN
+        DELETE FROM study_to_survey_pop WHERE 
+        study_to_survey_pop.survey_population_id = NEW.survey_population_id
+        AND study_to_survey_pop.sample_group_id = NEW.sample_group_id;
+    END IF;    
 END$$
 
 DELIMITER ;
