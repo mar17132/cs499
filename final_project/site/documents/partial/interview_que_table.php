@@ -11,6 +11,8 @@ require_once file_exists("../../scripts/api_connect.php") ?
 <?php
 
 $queArray = null;
+$permissionArray = null;
+
 
 function allQue()
 {
@@ -29,9 +31,32 @@ function allQue()
     return $jsonTophp->getjsonArray();
 }
 
+function userPermission()
+{
+    GLOBAL $jsonTophp;
+
+    $dbconnections = new apiconnection();
+    $dbconnections->setPage("final_project/api/scripts/api.call.php");
+    $dbconnections->setParameters(array(
+        'type'=>'user',
+        'return_results'=>'getStudyPermission',
+        'userid' => $_SESSION['uid']
+    ));
+    $dbconnections->connect_api();
+
+    $jsonTophp->clearVars();   
+    $jsonTophp->json_to_array($dbconnections->getResults());
+    return $jsonTophp->getjsonArray();
+}
+
 
 
 $queArray = allQue();
+
+if($_SESSION['type'] != 'Admin')
+{
+    $permissionArray = userPermission();
+}
 
 ?>
 
@@ -65,12 +90,47 @@ $queArray = allQue();
             echo $row['studyid']."'/>";
             echo "<input type='hidden' class='int-groupid' value='";
             echo $row['groupid']."'/>";
-            echo "<button type='button' class='btn btn-secondary 
-            int-start-survey-btn'>
-            Start Survey
-            </button>";
+            echo "<button type='button' class='btn btn-secondary int-start-survey-btn";
+
+            if(isAllowed($row['studyid']))
+            {
+                echo "' >";
+            }
+            else
+            {
+                echo " disbtn' disabled >";
+            }
+
+            echo "Start Survey</button>";
             echo "</td></tr>";
+        }        
+    }
+    
+    function isAllowed($studyID)
+    {
+        GLOBAL $permissionArray;
+        
+        $returnValue = false;
+
+        if($_SESSION['type'] == 'Admin')
+        {
+            $returnValue = true;
         }
+        else 
+        {
+            if($permissionArray)
+            {               
+                foreach($permissionArray['rows'] as $study)
+                {
+                    if($study['study_id'] == $studyID)
+                    {
+                        $returnValue = true;
+                    }
+                }
+            }
+        }
+
+        return $returnValue;
     }
 
     ?>

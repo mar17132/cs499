@@ -61,6 +61,9 @@ function usertype()
         case 'permissions':
             echo getUserPermission($_POST['userid']);
         break;
+        case 'getStudyPermission':
+            echo getStudyPermission($_POST['userid']);
+        break;
         case 'permissionsUpdate':
             echo updateUserPermission($_POST['values']);
         break;

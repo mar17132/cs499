@@ -268,6 +268,36 @@ function updateUserPermission($permisArray)
 
 }
 
+function getStudyPermission($userID)
+{
+    //this will get one users permissions
+    GLOBAL $dbObject;
+    GLOBAL $toJsonString; 
+
+    $dbObject->querySelect("SELECT study_id FROM interviewer_permissions
+    WHERE allowed_permission=1 and survey_users_id=$userID");
+
+    if($dbObject->isDberror())
+    {
+        return $dbObject->getDberror();
+    }
+    else
+    {
+        if(count($dbObject->getSQLResults()) > 0)
+        {
+            //user exisit
+            $toJsonString->jsonEncode($dbObject->getSQLResults());
+            
+            return '{"status":"good","results":"true",'. $toJsonString->getdbrowString() . '}';
+        }
+        else
+        {
+            //user does not exisist
+            return '{"status":"good","results":"false"}';
+        }
+    }  
+
+}
 
 
 ?>

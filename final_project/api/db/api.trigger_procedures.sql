@@ -196,4 +196,40 @@ BEGIN
     END IF;    
 END$$
 
+
+CREATE DEFINER = 'csfinaluser'@'localhost' PROCEDURE start_cancel_survey
+(IN queid INT, IN userid INT, IN start_cancel BOOLEAN)
+BEGIN
+    DECLARE sspopid INTEGER; 
+
+    SET sspopid = (SELECT study_to_survey_pop_id FROM survey_queue WHERE id=queid);
+
+
+    IF start_cancel = 1 THEN
+
+        UPDATE study_to_survey_pop SET locked=1 WHERE id=sspopid;
+
+        UPDATE survey_queue SET in_waiting_queue=0 WHERE id=queid;
+
+        INSERT INTO survey_interview
+        (study_to_survey_pop_id,survey_users_id,type_id)
+        VALUES(
+            sspopid,
+            userid,
+            8
+        );
+
+    ELSEIF start_cancel = 0 THEN
+
+        UPDATE study_to_survey_pop SET locked=0 WHERE id=sspopid;
+
+        UPDATE survey_queue SET in_waiting_queue=1 WHERE id=queid;
+
+        DELETE FROM survey_interview WHERE study_to_survey_pop_id=sspopid
+        AND (interview_end = '' OR interview_end IS NULL) AND type_id=8;
+
+    END IF;
+
+END$$
+
 DELIMITER ;
