@@ -20,7 +20,8 @@ function displaySurvey(currentbutton)
         database:{
             'studyid':currentbutton.siblings('.int-studyid').val(),
             'popid': currentbutton.siblings('.int-popid').val(),
-            'groupid': currentbutton.siblings('.int-groupid').val() 
+            'groupid': currentbutton.siblings('.int-groupid').val(),
+            'queid':  currentbutton.siblings('.int-quid').val()
         },
         'refresh_type':'refresh', 
         'page':'surveyquestions'
@@ -41,6 +42,22 @@ function displayInterviewRespons(currentbutton)
         },
         'refresh_type':'refresh', 
         'page':'interviewsRespons'
+        }
+    );
+}
+
+function start_cancel_survey(queid,uid,status)
+{
+    secondThread({
+        database:{
+            'type':'interview',
+            'return_results':'startcancelsurvey',
+            'queid': queid,
+            'uid': uid,
+            'status':status         
+        },
+        'refresh_type':'refresh',         
+        'page':'startcancelsurvey'
         }
     );
 }
@@ -92,9 +109,13 @@ $(document).ready(function(){
         $(".int-cmd-btn").addClass("int-hidden-btns");
         $(".survey-cmd-btn").removeClass("int-hidden-btns");
         displaySurvey($(this));
+        start_cancel_survey($(this).siblings(".int-quid").val(),
+        $("#interviewer_uid").val(),'1');
     });
 
-    $("#survey-back-btn").on('click',function(){
+    $("#yes-cancel-survey-btn").on('click',function(){        
+        start_cancel_survey($("#survey-queid").val(),
+        $("#interviewer_uid").val(),0);
         returnFromSurvey();
     });
 

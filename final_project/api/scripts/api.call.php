@@ -205,6 +205,9 @@ function interviewtype()
         case 'completedtype':
             echo getCompletedTypes();
         break;
+        case 'startcancelsurvey':
+            echo startCancelSurvey($_POST['queid'],$_POST['uid'],$_POST['status']);
+        break;
         default:
             echo '{"status":"good","results":"Bad return type"}';
         break;     

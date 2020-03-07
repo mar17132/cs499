@@ -32,3 +32,5 @@ require_once "../scripts/api_connect.php";
 
     <?php include_once 'menu.php'; ?>
 
+<input type='hidden' id='interviewer_uid' value='<?php echo $_SESSION['uid']?>' />
+

@@ -75,12 +75,13 @@ if($popArray)
         </div>
     </div>
     <div class='row int-info-row'>
+        <input type='hidden' id='survey-queid' value='<?php echo $_POST['queid']?>' />
         <div class='col'>
         Person: <span class='survey-popname int-survey-info-dis'>
             <?php echo $popArray['name']; ?>
             </span>
         <input type='hidden' id='survey-popid' 
-        value='<?php echo $popArray['id']; ?>' />
+        value='<?php echo $popArray['popid']; ?>' />
         </div>
 
         <div class='col' >

@@ -23,15 +23,15 @@
         Completed
     </button>
     <button type="button" class="btn btn-secondary btn-sm survey-cmd-btn int-hidden-btns"
-            id="survey-back-btn" >
-        Back
+            id="survey-back-btn" data-toggle='modal' data-target='#cancel_survey_modal'>
+        Back 
     </button>
     <button type="button" class="btn btn-secondary btn-sm survey-cmd-btn int-hidden-btns"
     id="survey-end-survey-btn" data-toggle='modal' data-target='#end_survey_modal'>
     End Survey
     </button>
     <button type="button" class="btn btn-secondary btn-sm survey-cmd-btn int-hidden-btns"
-    id="survey-close-survey-btn" data-toggle='modal' data-target='#'>
+    id="survey-close-survey-btn" data-toggle='modal' data-target='#cancel_survey_modal'>
     Close
     </button>
 </nav>
@@ -41,6 +41,8 @@
 <?php include_once 'partial/interview_respons_modal.php'; ?>
 
 <?php include_once 'partial/interview_end_survey_modal.php'; ?>
+
+<?php include_once 'partial/interview_cancel_survey_modal.php'; ?>
 
 <?php include_once 'partial/information_modal.php'; ?>
 

@@ -316,7 +316,7 @@ function startCancelSurvey($queid,$userid,$startCancel)
     {
         if($dbObject->get_affected_rows() > 0)
         {
-            return '{"status":"good","results":"Survey Started or Cancelled"}';
+            return '{"status":"good","results":"refresh","rows":"Survey Started or Cancelled"}';
         }
         else
         {

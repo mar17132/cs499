@@ -68,6 +68,9 @@ function threadReturn(obj)
             case 'questionEdit':
                 questionEdit(obj.rows);
             break;
+            case 'startcancelsurvey':
+                
+            break;
             case 'index':
 
             break;
