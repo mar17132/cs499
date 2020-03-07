@@ -299,7 +299,32 @@ function getCompletedTypes()
     }  
 }
 
+function startCancelSurvey($queid,$userid,$startCancel)
+{
+    //this will test if there is a user with pass
+    GLOBAL $dbObject;
+    GLOBAL $toJsonString; 
 
+    $dbObject->storedProcedures("
+    call start_cancel_survey($queid,$userid,$startCancel)");
+
+    if($dbObject->isDberror())
+    {
+        return '{"status":"error","results":"'.$dbObject->getDberror().'"}';
+    }
+    else
+    {
+        if($dbObject->get_affected_rows() > 0)
+        {
+            return '{"status":"good","results":"Survey Started or Cancelled"}';
+        }
+        else
+        {
+            //user does not exisist
+            return '{"status":"good","results":"Could not start Survey"}';
+        }
+    }  
+}
 
 ?>
 
