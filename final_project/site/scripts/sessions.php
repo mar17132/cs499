@@ -7,7 +7,7 @@ session_start();
 if(!getSession() && 
  strcmp($_SERVER['SCRIPT_NAME'],'/final_project/site/documents/login.php') != 0)
 {
-    header("location:".$myURL."documents/login.php");
+    header("location:".$myURL."/documents/login.php");
 }
 
 function getSession()
