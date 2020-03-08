@@ -17,7 +17,7 @@ function getUtypeVal(currentObj)
 function refreshContent()
 {
     secondThread({
-        'url':'http://localhost/final_project/site/documents/partial/user_table.php',
+        'url':myURL+'/documents/partial/user_table.php',
         'database':'refresh',
         'page':'users'
     });
@@ -26,7 +26,7 @@ function refreshContent()
 function displayUserPermis(uid)
 {
     secondThread({
-        'url':'http://localhost/final_project/site/documents/partial/user_permissions_table.php',
+        'url':myURL+'/documents/partial/user_permissions_table.php',
         'database':{'userid':uid},
         'page':'users',
         'refresh_type':'permissions'        

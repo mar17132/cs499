@@ -3,7 +3,7 @@
 function getFromApi(passData)
 {
     let postURL = passData.url != null ? 
-    passData.url : "http://localhost/final_project/api/scripts/api.call.php";
+    passData.url : myapiURL + "api.call.php";
     let postData = passData.database;
     let thisPage = passData.page;
     

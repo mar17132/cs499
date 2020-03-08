@@ -155,7 +155,7 @@ function updatePopGroups()
 function displayGroupPop(populationid)
 {
     secondThread({
-        url:'http://localhost/final_project/site/documents/partial/population_group_table.php',
+        url:myURL+'/documents/partial/population_group_table.php',
         database:{
             'id':populationid              
         },
@@ -168,7 +168,7 @@ function displayGroupPop(populationid)
 function displayAllGroupPop()
 {
     secondThread({
-        url:'http://localhost/final_project/site/documents/partial/population_all_groups_table.php',
+        url:myURL+'/documents/partial/population_all_groups_table.php',
         'database':'refresh', 
         'page':'groups'
         }
@@ -178,7 +178,7 @@ function displayAllGroupPop()
 function refreshContentPop()
 {
     secondThread({
-        'url':'http://localhost/final_project/site/documents/partial/population_table.php',
+        'url':myURL+'/documents/partial/population_table.php',
         'database':'refresh',
         'page':'population'
     });

@@ -16,7 +16,7 @@ function displayInterviewPage(loadURL)
 function displaySurvey(currentbutton)
 {
     secondThread({
-        url:'http://localhost/final_project/site/documents/partial/interview_survey.php',
+        url: myURL+'/documents/partial/interview_survey.php',
         database:{
             'studyid':currentbutton.siblings('.int-studyid').val(),
             'popid': currentbutton.siblings('.int-popid').val(),
@@ -32,7 +32,7 @@ function displaySurvey(currentbutton)
 function displayInterviewRespons(currentbutton)
 {
     secondThread({
-        url:'http://localhost/final_project/site/documents/partial/interview_respons_table.php',
+        url:myURL+'/documents/partial/interview_respons_table.php',
         database:{
             'intid':currentbutton.siblings('.int-interviewid').val(),
             'studyid':currentbutton.siblings('.int-studyid').val(),
@@ -84,15 +84,15 @@ $(document).ready(function(){
 
         if(buttonTxt == 'Que')
         {
-            loadURL = "http://localhost/final_project/site/documents/partial/interview_que_table.php";
+            loadURL = myURL+"/documents/partial/interview_que_table.php";
         }
         else if(buttonTxt == 'Progress')
         {
-            loadURL = "http://localhost/final_project/site/documents/partial/interview_progress_table.php";
+            loadURL = myURL+"/documents/partial/interview_progress_table.php";
         }
         else if(buttonTxt == 'Completed')
         {
-            loadURL = "http://localhost/final_project/site/documents/partial/interview_completed_table.php";
+            loadURL = myURL+"/documents/partial/interview_completed_table.php";
         }
 
         displayInterviewPage(loadURL);

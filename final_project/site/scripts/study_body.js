@@ -133,7 +133,7 @@ function deleteStudy()
 function refreshContentStudy()
 {
     secondThread({
-        'url':'http://localhost/final_project/site/documents/partial/study_table.php',
+        'url':myURL+'/documents/partial/study_table.php',
         'database':'refresh',
         'page':'study'
     });
@@ -142,7 +142,7 @@ function refreshContentStudy()
 function refreshQuesitonStudy(currentObj)
 {
     secondThread({
-        'url':'http://localhost/final_project/site/documents/partial/study_questions_table.php',
+        'url':myURL+'/documents/partial/study_questions_table.php',
         'database':{'id':getStudyId(currentObj)},
         'page':'studyquesiton',
         'refresh_type':'refresh'
@@ -152,7 +152,7 @@ function refreshQuesitonStudy(currentObj)
 function refreshQuestionEdit()
 {
     secondThread({
-        'url':'http://localhost/final_project/site/documents/partial/question_add_edit_table.php',
+        'url':myURL+'/documents/partial/question_add_edit_table.php',
         'database':'refresh',
         'page':'questionEdit',
         'refresh_type':'refresh'
@@ -162,7 +162,7 @@ function refreshQuestionEdit()
 function refreshStudy_connect()
 {
     secondThread({
-        'url':'http://localhost/final_project/site/documents/partial/study_connect_group_table.php',
+        'url':myURL+'/documents/partial/study_connect_group_table.php',
         'database':'refresh',
         'page':'studyGroupConnect',
         'refresh_type':'refresh'
@@ -469,7 +469,7 @@ $(document).ready(function(){
 
         $(".studyname-groups").text(getStudyName($(this)));
         secondThread({
-            'url':'http://localhost/final_project/site/documents/partial/study_groups_table.php',
+            'url':myURL+'/documents/partial/study_groups_table.php',
             database:{
                 'id':getStudyId($(this))               
             },
