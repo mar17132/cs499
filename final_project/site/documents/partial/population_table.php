@@ -11,7 +11,7 @@ require_once file_exists("../scripts/api_connect.php") ?
 <?php
 
 $pop_table_Connection = new apiconnection();
-$pop_table_Connection->setPage("final_project/api/scripts/api.call.php");
+$pop_table_Connection->setPage($myapiURL."api.call.php");
 $pop_table_Connection->setParameters(array(
     'type'=>'population',
     'return_results'=>'all'

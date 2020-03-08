@@ -13,7 +13,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 {
 
     $userPermission = new apiconnection();
-    $userPermission->setPage("final_project/api/scripts/api.call.php");
+    $userPermission->setPage($myapiURL."api.call.php");
     $userPermission->setParameters(array(
         'type'=>'user',
         'return_results'=>'permissions',

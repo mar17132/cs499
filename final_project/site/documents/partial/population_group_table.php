@@ -19,9 +19,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 function allGroups()
 {
     GLOBAL $jsonTophp;
+    GLOBAL $myapiURL;
 
     $groupsPop = new apiconnection();
-    $groupsPop->setPage("final_project/api/scripts/api.call.php");
+    $groupsPop->setPage($myapiURL."api.call.php");
     $groupsPop->setParameters(array(
         'type'=>'population',
         'return_results'=>'allgroups'
@@ -36,9 +37,10 @@ function allGroups()
 function personsGroups($popid)
 {
     GLOBAL $jsonTophp;
+    GLOBAL $myapiURL;
 
     $personGroups = new apiconnection();
-    $personGroups->setPage("final_project/api/scripts/api.call.php");
+    $personGroups->setPage($myapiURL."api.call.php");
     $personGroups->setParameters(array(
         'type'=>'population',
         'return_results'=>'groups',

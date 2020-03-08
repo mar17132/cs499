@@ -1,9 +1,17 @@
 <!-- The Modal -->
+<?php 
+require_once file_exists('../../scripts/global_config.php') ? 
+'../../scripts/global_config.php' : '../scripts/global_config.php';
+require_once file_exists('../../scripts/sessions.php') ?
+'../../scripts/sessions.php' : '../scripts/sessions.php';
+require_once file_exists("../../scripts/api_connect.php") ? 
+"../../scripts/api_connect.php" : "../scripts/api_connect.php"; 
+?>
 
 <?php 
 
     $studyTypeConnection = new apiconnection();
-    $studyTypeConnection->setPage("final_project/api/scripts/api.call.php");
+    $studyTypeConnection->setPage($myapiURL."api.call.php");
     $studyTypeConnection->setParameters(array(
         'type'=>'study',
         'return_results'=>'types'

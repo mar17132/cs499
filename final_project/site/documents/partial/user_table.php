@@ -11,7 +11,7 @@ require_once file_exists("../scripts/api_connect.php") ?
 <?php
 
 $userConnection = new apiconnection();
-$userConnection->setPage("final_project/api/scripts/api.call.php");
+$userConnection->setPage($myapiURL."api.call.php");
 $userConnection->setParameters(array(
     'type'=>'user',
     'return_results'=>'all'

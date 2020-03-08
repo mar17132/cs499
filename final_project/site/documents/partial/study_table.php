@@ -11,7 +11,7 @@ require_once file_exists("../scripts/api_connect.php") ?
 <?php
 
 $study_table_Connection = new apiconnection();
-$study_table_Connection->setPage("final_project/api/scripts/api.call.php");
+$study_table_Connection->setPage($myapiURL."api.call.php");
 $study_table_Connection->setParameters(array(
     'type'=>'study',
     'return_results'=>'all'

@@ -17,9 +17,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 function getRespon()
 {
     GLOBAL $jsonTophp;
+    GLOBAL $myapiURL;
 
     $groupsPop = new apiconnection();
-    $groupsPop->setPage("final_project/api/scripts/api.call.php");
+    $groupsPop->setPage($myapiURL."api.call.php");
     $groupsPop->setParameters(array(
         'type'=>'interview',
         'return_results'=>'getrespons',

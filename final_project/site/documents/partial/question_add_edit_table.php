@@ -21,9 +21,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 function alltypes()
 {
     GLOBAL $jsonTophp;
+    GLOBAL $myapiURL;
 
     $dbconnections = new apiconnection();
-    $dbconnections->setPage("final_project/api/scripts/api.call.php");
+    $dbconnections->setPage($myapiURL."api.call.php");
     $dbconnections->setParameters(array(
         'type'=>'study',
         'return_results'=>'questiontype'
@@ -38,9 +39,10 @@ function alltypes()
 function allstudy()
 {
     GLOBAL $jsonTophp;
+    GLOBAL $myapiURL;
 
     $dbconnections = new apiconnection();
-    $dbconnections->setPage("final_project/api/scripts/api.call.php");
+    $dbconnections->setPage($myapiURL."api.call.php");
     $dbconnections->setParameters(array(
         'type'=>'study',
         'return_results'=>'all'

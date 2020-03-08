@@ -2,7 +2,7 @@
 <?php 
 
     $userTypeConnection = new apiconnection();
-    $userTypeConnection->setPage("final_project/api/scripts/api.call.php");
+    $userTypeConnection->setPage($myapiURL."api.call.php");
     $userTypeConnection->setParameters(array(
         'type'=>'user',
         'return_results'=>'types'

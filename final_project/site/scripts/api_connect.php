@@ -5,7 +5,7 @@ require_once 'json.php';
 class apiconnection
 {
     private $myCurl = NULL;
-    private $baseURL = "http://localhost/";
+    //private $baseURL = "http://localhost/";
     private $page = NULL;
     private $myResults = NULL;
     private $parameters = array();
@@ -48,7 +48,7 @@ class apiconnection
     public function connect_api()
     {
         $curlOptions = array(
-            CURLOPT_URL => $this->baseURL . $this->page,
+            CURLOPT_URL => $this->page,
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => $this->parameters,
             CURLOPT_HEADER => false,
@@ -76,22 +76,7 @@ class apiconnection
     }
 
 }
-/*
-$test = new apiconnection();
-$test->setPage("final_project/api/scripts/api.call.php");
-$test->setParameters(array('type'=>'user','return_results'=>'types'));
-$test->connect_api();
 
-$theResults = $test->getResults();
-
-//echo $theResults;
-
-$jsonTophp->json_to_array($theResults);
-$test2 = $jsonTophp->getjsonArray();
-
-print_r($test2);
-
-*/
 
 
 ?>

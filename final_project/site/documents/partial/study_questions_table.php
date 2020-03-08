@@ -20,9 +20,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 function allQuestions()
 {
     GLOBAL $jsonTophp;
+    GLOBAL $myapiURL;
 
     $groupsPop = new apiconnection();
-    $groupsPop->setPage("final_project/api/scripts/api.call.php");
+    $groupsPop->setPage($myapiURL."api.call.php");
     $groupsPop->setParameters(array(
         'type'=>'study',
         'return_results'=>'allquestions',

@@ -15,9 +15,10 @@ $queArray = null;
 function allQue()
 {
     GLOBAL $jsonTophp;
+    GLOBAL $myapiURL;
 
     $dbconnections = new apiconnection();
-    $dbconnections->setPage("final_project/api/scripts/api.call.php");
+    $dbconnections->setPage($myapiURL."api.call.php");
     $dbconnections->setParameters(array(
         'type'=>'interview',
         'return_results'=>'allcompleted'

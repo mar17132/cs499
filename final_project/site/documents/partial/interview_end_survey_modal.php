@@ -8,9 +8,10 @@ $typeArray = null;
 function getCompletedType()
 {
     GLOBAL $jsonTophp;
+    GLOBAL $myapiURL;
 
     $pop_table_Connection = new apiconnection();
-    $pop_table_Connection->setPage("final_project/api/scripts/api.call.php");
+    $pop_table_Connection->setPage($myapiURL."api.call.php");
     $pop_table_Connection->setParameters(array(
         'type'=>'interview',
         'return_results'=>'completedtype'

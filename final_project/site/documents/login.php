@@ -1,6 +1,7 @@
 
 <?php 
 
+require_once '../scripts/global_config.php';
 include_once 'header_login.php'; 
 
 ?>
@@ -14,7 +15,8 @@ $login_error = "";
 if($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     $newConnection = new apiconnection();
-    $newConnection->setPage("final_project/api/scripts/api.call.php");
+   // $newConnection->setPage("final_project/api/scripts/api.call.php");
+    $newConnection->setPage($myapiURL."api.call.php");
     $newConnection->setParameters(array(
         'type'=>'user',
         'return_results'=>'login',

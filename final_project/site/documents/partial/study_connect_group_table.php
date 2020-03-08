@@ -17,9 +17,10 @@ $groupArray = null;
 function allConnectStudy()
 {
     GLOBAL $jsonTophp;
+    GLOBAL $myapiURL;
 
     $dbconnections = new apiconnection();
-    $dbconnections->setPage("final_project/api/scripts/api.call.php");
+    $dbconnections->setPage($myapiURL."api.call.php");
     $dbconnections->setParameters(array(
         'type'=>'study',
         'return_results'=>'all'
@@ -34,9 +35,10 @@ function allConnectStudy()
 function allgroups()
 {
     GLOBAL $jsonTophp;
+    GLOBAL $myapiURL;
 
     $dbconnections = new apiconnection();
-    $dbconnections->setPage("final_project/api/scripts/api.call.php");
+    $dbconnections->setPage($myapiURL."api.call.php");
     $dbconnections->setParameters(array(
         'type'=>'population',
         'return_results'=>'allgroups'

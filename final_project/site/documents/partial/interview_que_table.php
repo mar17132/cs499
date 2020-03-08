@@ -17,9 +17,10 @@ $permissionArray = null;
 function allQue()
 {
     GLOBAL $jsonTophp;
+    GLOBAL $myapiURL;
 
     $dbconnections = new apiconnection();
-    $dbconnections->setPage("final_project/api/scripts/api.call.php");
+    $dbconnections->setPage($myapiURL."api.call.php");
     $dbconnections->setParameters(array(
         'type'=>'interview',
         'return_results'=>'allque'
@@ -34,9 +35,10 @@ function allQue()
 function userPermission()
 {
     GLOBAL $jsonTophp;
+    GLOBAL $myapiURL;
 
     $dbconnections = new apiconnection();
-    $dbconnections->setPage("final_project/api/scripts/api.call.php");
+    $dbconnections->setPage($myapiURL."api.call.php");
     $dbconnections->setParameters(array(
         'type'=>'user',
         'return_results'=>'getStudyPermission',
