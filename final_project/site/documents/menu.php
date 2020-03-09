@@ -15,7 +15,7 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link active menu_a site-menu-link" href="#">
+        <a class="nav-link menu_a site-menu-link" href="#">
           Home 
         </a>
       </li>
