@@ -15,7 +15,7 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link active menu_a" href="#">
+        <a class="nav-link active menu_a site-menu-link" href="#">
           Home 
         </a>
       </li>
@@ -24,7 +24,7 @@
         {
           echo '
           <li class="nav-item">
-            <a class="nav-link menu_a" href="
+            <a class="nav-link menu_a site-menu-link" href="
             '.$myURL.'/documents/study_body.php">
               Studys
             </a>
@@ -32,7 +32,7 @@
         }
       ?>
       <li class="nav-item">
-        <a class="nav-link menu_a" href="
+        <a class="nav-link menu_a site-menu-link" href="
         <?php echo "$myURL/documents/interview_body.php"?>">
           Interviews
         </a>
@@ -42,13 +42,13 @@
         {
           echo '
           <li class="nav-item">
-            <a class="nav-link menu_a" href="
+            <a class="nav-link menu_a site-menu-link" href="
             '.$myURL.'/documents/population_body.php">
               Populations
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link menu_a" href="'.$myURL.'/documents/users_body.php">
+            <a class="nav-link menu_a site-menu-link" href="'.$myURL.'/documents/users_body.php">
               Users
             </a>
           </li>';
