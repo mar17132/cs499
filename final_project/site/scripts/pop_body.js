@@ -207,6 +207,8 @@ $(document).ready(function(){
     phone = $("#phone");
     popid = $("#popid");
 
+    changeMenuAct("Populations");
+
     $(".pop-table").on('click','.pop-edit-btn',function(){
         //user will have close modal with close button
         $("#pop_Add_Edit").modal({

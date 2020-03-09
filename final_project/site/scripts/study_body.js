@@ -465,6 +465,8 @@ $(document).ready(function(){
     quest_add_anwser_btn = $("#quest_anwser_add_btn");
     quest_anwser_order_sele = $("#questaorder");
 
+    changeMenuAct("Studys");
+
     $(".study-table").on('click','.study-pop-btn',function(){
 
         $(".studyname-groups").text(getStudyName($(this)));

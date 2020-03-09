@@ -2,6 +2,16 @@
 let myURL;
 let myapiURL;
 
+function changeMenuAct(pageName)
+{
+    $(".site-menu-link").removeClass("active");
+    $(".site-menu-link").each(function(){
+        if($.trim($(this).text()) == pageName)
+        {
+            $(this).addClass("active");
+        }
+    });
+}
 
 $(document).ready(function(){
 
@@ -10,11 +20,6 @@ $(document).ready(function(){
     //myURL = "https://csfinal.erawsoft.com";
     //myapiURL = "https://erawsoft.com/";
 
-
-    $(".site-menu-link").on('click',function(){
-        $(".site-menu-link").removeClass("active");
-        $(this).addClass("active");
-    });
 
 });
 

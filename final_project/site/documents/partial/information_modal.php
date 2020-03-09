@@ -24,7 +24,7 @@
 
             <!-- Modal footer -->
             <div class="modal-footer">              
-                <button type="button" id="delete_user_btn" 
+                <button type="button" 
                 class="btn btn-info" data-dismiss="modal">
                     OK
                 </button>

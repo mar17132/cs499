@@ -249,5 +249,7 @@ $("#save_userpermission_btn").on('click',function(){
 });
 
 
-
+$(document).ready(function(){
+    changeMenuAct("Users");
+});
 

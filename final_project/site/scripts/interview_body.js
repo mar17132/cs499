@@ -72,6 +72,8 @@ function returnFromSurvey()
 
 $(document).ready(function(){
 
+    changeMenuAct("Interviews");
+
     $(".int-cmd-btn").on('click',function(){
         $(".int-cmd-btn").each(function(){
             $(this).removeClass("int-cmd-btn-active");
