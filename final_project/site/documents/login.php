@@ -15,7 +15,6 @@ $login_error = "";
 if($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     $newConnection = new apiconnection();
-   // $newConnection->setPage("final_project/api/scripts/api.call.php");
     $newConnection->setPage($myapiURL."api.call.php");
     $newConnection->setParameters(array(
         'type'=>'user',
