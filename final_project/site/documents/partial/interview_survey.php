@@ -185,18 +185,23 @@ if($popArray)
                         echo $row['question']."</br>";
                         echo "<input type='hidden' class='survey-question' ";
                         echo "value='".$row['questid']."' />";
+                        echo "<input type='hidden' class='survey-quest-typeid' ";
+                        echo "value='".$row['typeid']."' />";
                         echo "<ul class='survey-anwser-ul'>";
                         
                        switch(trim($row['type']))
                         {
                             case 'Checkbox':
-                                echo bulidCheck($row['checkbox_id'],$row['checkbox_anwser'],$row['questid']);
+                                echo bulidCheck($row['checkbox_id'],
+                                $row['checkbox_anwser'],$row['questid']);
                             break;
                             case 'Fill in the blank':
-                               echo bulidFill($row['checkbox_id'],$row['checkbox_anwser']);
+                               echo bulidFill($row['checkbox_id'],
+                               $row['checkbox_anwser']);
                             break;
                             case 'Multiple Choice':
-                              echo bulidMulti($row['multi_id'],$row['multi_anwser'],$row['questid']);
+                              echo bulidMulti($row['multi_id'],
+                              $row['multi_anwser'],$row['questid']);
                             break;
                         }
                     }
@@ -205,13 +210,15 @@ if($popArray)
                         switch(trim($row['type']))
                         {
                             case 'Checkbox':
-                                echo bulidCheck($row['checkbox_id'],$row['checkbox_anwser'],$row['questid']);
+                                echo bulidCheck($row['checkbox_id'],
+                                $row['checkbox_anwser'],$row['questid']);
                             break;
                             case 'Fill in the blank':
                                 echo bulidFill($row['fill_anwser']);
                             break;
                             case 'Multiple Choice':
-                                echo bulidMulti($row['multi_id'],$row['multi_anwser'],$row['questid']);
+                                echo bulidMulti($row['multi_id'],
+                                $row['multi_anwser'],$row['questid']);
                             break;
                         }
                     }   
