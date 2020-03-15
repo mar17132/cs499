@@ -219,6 +219,8 @@ BEGIN
             8
         );
 
+        SELECT id AS surv_int_id FROM survey_interview ORDER BY id DESC LIMIT 1;
+
     ELSEIF start_cancel = 0 THEN
 
         UPDATE study_to_survey_pop SET locked=0 WHERE id=sspopid;
@@ -232,4 +234,76 @@ BEGIN
 
 END$$
 
+
+CREATE DEFINER = 'csfinaluser'@'localhost' PROCEDURE end_survey
+(IN interviewerid INT,IN queid INT,IN popid INT,IN studyid INT,IN groupid INT,IN typeid INT)
+BEGIN
+    DECLARE study_numoftry INTEGER; 
+    DECLARE pop_numoftry INTEGER;
+
+    SET study_numoftry = (SELECT try_amount FROM study WHERE id=studyid);
+    SET pop_numoftry = (SELECT number_of_tries FROM study_to_survey_pop WHERE
+    study_id=studyid AND sample_group_id=groupid 
+    AND survey_population_id=popid) + 1;
+
+    UPDATE survey_interview SET interview_end=current_timestamp(),type_id=typeid
+    WHERE study_to_survey_pop_id=(SELECT id FROM study_to_survey_pop WHERE
+    study_id=studyid AND sample_group_id=groupid 
+    AND survey_population_id=popid) AND survey_users_id=interviewerid; 
+
+
+    IF (typeid = 3 OR typeid = 2) OR pop_numoftry = study_numoftry THEN
+
+        UPDATE study_to_survey_pop SET locked=0,number_of_tries=pop_numoftry,
+        completed=1 WHERE study_id=studyid AND sample_group_id=groupid
+        AND survey_population_id=popid; 
+
+    ELSEIF (typeid = 4 OR typeid = 1) AND pop_numoftry < study_numoftry THEN
+
+        UPDATE study_to_survey_pop SET locked=0,number_of_tries=pop_numoftry
+        WHERE study_id=studyid AND sample_group_id=groupid
+        AND survey_population_id=popid;
+
+        UPDATE survey_queue SET in_waiting_queue=1 WHERE id=queid;
+
+    END IF;
+
+END$$
+
+CREATE DEFINER = 'csfinaluser'@'localhost' PROCEDURE record_anwsers
+(IN interviewerid INT,IN queid INT,IN popid INT,IN studyid INT,IN groupid INT,IN typeid INT)
+BEGIN
+    DECLARE study_numoftry INTEGER; 
+    DECLARE pop_numoftry INTEGER;
+
+    SET study_numoftry = (SELECT try_amount FROM study WHERE id=studyid);
+    SET pop_numoftry = (SELECT number_of_tries FROM study_to_survey_pop WHERE
+    study_id=studyid AND sample_group_id=groupid 
+    AND survey_population_id=popid) + 1;
+
+    UPDATE survey_interview SET interview_end=current_timestamp(),type_id=typeid
+    WHERE study_to_survey_pop_id=(SELECT id FROM study_to_survey_pop WHERE
+    study_id=studyid AND sample_group_id=groupid 
+    AND survey_population_id=popid) AND survey_users_id=interviewerid; 
+
+
+    IF (typeid = 3 OR typeid = 2) OR pop_numoftry = study_numoftry THEN
+
+        UPDATE study_to_survey_pop SET locked=0,number_of_tries=pop_numoftry,
+        completed=1 WHERE study_id=studyid AND sample_group_id=groupid
+        AND survey_population_id=popid; 
+
+    ELSEIF (typeid = 4 OR typeid = 1) AND pop_numoftry < study_numoftry THEN
+
+        UPDATE study_to_survey_pop SET locked=0,number_of_tries=pop_numoftry
+        WHERE study_id=studyid AND sample_group_id=groupid
+        AND survey_population_id=popid;
+
+        UPDATE survey_queue SET in_waiting_queue=1 WHERE id=queid;
+
+    END IF;
+
+END$$
+
 DELIMITER ;
+

@@ -69,7 +69,7 @@ function threadReturn(obj)
                 questionEdit(obj.rows);
             break;
             case 'startcancelsurvey':
-                
+                setsurvey_interview_id(obj.rows);
             break;
             case 'index':
 
@@ -291,8 +291,11 @@ function displayError(Obj)
     infoDiv.modal('show');
 }
 
-
-
-
-
+function setsurvey_interview_id(obj)
+{
+    if(obj!= "" && obj != null)
+    {
+        $("#survey_interview_id").val(obj[0].surv_int_id);
+    }
+}
 

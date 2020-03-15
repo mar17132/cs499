@@ -2,8 +2,14 @@
 
 function getFromApi(passData)
 {
+
+    const myURLThread = "http://localhost/final_project/site";
+    const myapiURLThread = "http://localhost/final_project/api/scripts/";
+    //const myURLThread = "https://csfinal.erawsoft.com";
+    //const myapiURLThread = "https://erawsoft.com/";
+
     let postURL = passData.url != null ? 
-    passData.url : myapiURL + "api.call.php";
+    passData.url : myapiURLThread + "api.call.php";
     let postData = passData.database;
     let thisPage = passData.page;
     

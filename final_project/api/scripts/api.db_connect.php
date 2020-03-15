@@ -179,8 +179,20 @@ class mydbconnect
         if(!is_null($this->myConnect))
         {
             $result = $this->myConnect->query($sql);
-            
-            if(!$result)
+
+            if(gettype($result) == "object")
+            {
+               
+                $mysqlArray = array();
+                while($row = $result->fetch_assoc())
+                {
+                    $mysqlArray[] = $row;
+                }                
+                
+                $this->selectResults = $mysqlArray;  
+                
+            }
+            else if(!$result)
             {
                 $this->dberror = "Not able to select! " . $this->myConnect->error;
             }

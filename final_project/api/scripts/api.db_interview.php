@@ -32,7 +32,7 @@ function getCompleteSurveys()
         join survey_population spop on sspop.survey_population_id = spop.id 
         join survey_users susers on sint.survey_users_id = susers.id 
         join type on sint.type_id = type.id
-        where type.type = 'Completed'");
+        where sspop.completed=1");
 
         if($dbObject->isDberror())
         {
@@ -149,7 +149,9 @@ function getInterviewRespons($varArray)
         GLOBAL $toJsonString; 
     
         $dbObject->querySelect("select 
-        sint.id as intid,concat(spop.fname,' ',spop.lname) as popname, 
+        sint.id as intid,
+        (select type from type where id=sint.type_id) as status_complete,
+        concat(spop.fname,' ',spop.lname) as popname, 
         spop.id as popid,sgroup.id as groupid,sgroup.sample_name as groupname,
         susers.uname,susers.id as uid,study.id as studyid,
         study.name as study,question.id as questid,question.question,
@@ -316,7 +318,17 @@ function startCancelSurvey($queid,$userid,$startCancel)
     {
         if($dbObject->get_affected_rows() > 0)
         {
-            return '{"status":"good","results":"refresh","rows":"Survey Started or Cancelled"}';
+            if($startCancel == 1)
+            {
+            $toJsonString->jsonEncode($dbObject->getSQLResults());
+
+            return '{"status":"good","results":"refresh",'. 
+                $toJsonString->getdbrowString() . ',"statusreturn":"Survey Started or Cancelled"}';
+            }
+            else
+            {
+                return '{"status":"good","results":"refresh","rows":"","statusreturn":"Survey Started or Cancelled"}';
+            }
         }
         else
         {

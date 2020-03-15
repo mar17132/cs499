@@ -41,6 +41,13 @@ function getRespon()
 
 ?>
 
+<?php 
+
+if($responsArray['rows'][0]['status_complete'] ==  'Completed')
+{
+
+?>
+
 <table class="table table-striped int-respons-table">
     <thead>
         <tr>
@@ -65,7 +72,7 @@ function getRespon()
   
                 foreach($responsArray['rows'] as $row)
                 {
-                    ;
+                    
                            
                     if($quesiontid != $row['questid'])
                     {
@@ -132,3 +139,12 @@ function getRespon()
     </tbody>
 </table>
 
+<?php 
+
+}
+else
+{
+    echo "<h7>No records recorded for this survey.</h7>";
+} 
+
+?>

@@ -78,6 +78,7 @@ if($popArray)
     </div>
     <div class='row int-info-row'>
         <input type='hidden' id='survey-queid' value='<?php echo $_POST['queid']?>' />
+        <input type='hidden' id='survey_interview_id' />
         <div class='col'>
         Person: <span class='survey-popname int-survey-info-dis'>
             <?php echo $popArray['name']; ?>

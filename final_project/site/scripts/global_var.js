@@ -1,6 +1,9 @@
 
-let myURL;
-let myapiURL;
+
+const myURL = "http://localhost/final_project/site";
+const myapiURL = "http://localhost/final_project/api/scripts/";
+//const myURL = "https://csfinal.erawsoft.com";
+//const myapiURL = "https://erawsoft.com/";
 
 function changeMenuAct(pageName)
 {
@@ -13,13 +16,4 @@ function changeMenuAct(pageName)
     });
 }
 
-$(document).ready(function(){
-
-    myURL = "http://localhost/final_project/site";
-    myapiURL = "http://localhost/final_project/api/scripts/";
-    //myURL = "https://csfinal.erawsoft.com";
-    //myapiURL = "https://erawsoft.com/";
-
-
-});
 
