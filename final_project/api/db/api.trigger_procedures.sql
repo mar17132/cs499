@@ -270,40 +270,48 @@ BEGIN
 
 END$$
 
-CREATE DEFINER = 'csfinaluser'@'localhost' PROCEDURE record_anwsers
-(IN interviewerid INT,IN queid INT,IN popid INT,IN studyid INT,IN groupid INT,IN typeid INT)
+CREATE DEFINER = 'csfinaluser'@'localhost' PROCEDURE record_anwsers_mult_check
+(IN survintervewid INT,IN questionid INT, IN anwserid INT,IN quest_typeid INT)
 BEGIN
-    DECLARE study_numoftry INTEGER; 
-    DECLARE pop_numoftry INTEGER;
 
-    SET study_numoftry = (SELECT try_amount FROM study WHERE id=studyid);
-    SET pop_numoftry = (SELECT number_of_tries FROM study_to_survey_pop WHERE
-    study_id=studyid AND sample_group_id=groupid 
-    AND survey_population_id=popid) + 1;
-
-    UPDATE survey_interview SET interview_end=current_timestamp(),type_id=typeid
-    WHERE study_to_survey_pop_id=(SELECT id FROM study_to_survey_pop WHERE
-    study_id=studyid AND sample_group_id=groupid 
-    AND survey_population_id=popid) AND survey_users_id=interviewerid; 
-
-
-    IF (typeid = 3 OR typeid = 2) OR pop_numoftry = study_numoftry THEN
-
-        UPDATE study_to_survey_pop SET locked=0,number_of_tries=pop_numoftry,
-        completed=1 WHERE study_id=studyid AND sample_group_id=groupid
-        AND survey_population_id=popid; 
-
-    ELSEIF (typeid = 4 OR typeid = 1) AND pop_numoftry < study_numoftry THEN
-
-        UPDATE study_to_survey_pop SET locked=0,number_of_tries=pop_numoftry
-        WHERE study_id=studyid AND sample_group_id=groupid
-        AND survey_population_id=popid;
-
-        UPDATE survey_queue SET in_waiting_queue=1 WHERE id=queid;
-
+    IF quest_typeid = 9 THEN
+        INSERT INTO respons_to_checkbox(question_id,survey_interview_id,
+        anwsers_checkbox_id)
+        VALUES(
+            questionid,
+            survintervewid,
+            anwserid
+        );
+    ELSEIF quest_typeid = 11 THEN
+        INSERT INTO respons_to_multi_choice(question_id,survey_interview_id,
+        anwsers_multi_choices_id)
+        VALUES(
+            questionid,
+            survintervewid,
+            anwserid
+        );
     END IF;
 
 END$$
 
-DELIMITER ;
+CREATE DEFINER = 'csfinaluser'@'localhost' PROCEDURE record_anwsers_fill
+(IN survintervewid INT,IN questionid INT, IN anwser VARCHAR(255))
+BEGIN
 
+    INSERT INTO respons_to_fillinblank(question_id,survey_interview_id,respons)
+    VALUES(
+        questionid,
+        survintervewid,
+        anwser
+    );
+
+END$$
+
+DELIMITER ;
+/*
+call record_anwsers_mult_check(8,4,4,11);
+
+call end_survey(1,1,1,3,1,3);
+
+
+*/
