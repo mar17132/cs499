@@ -236,7 +236,8 @@ END$$
 
 
 CREATE DEFINER = 'csfinaluser'@'localhost' PROCEDURE end_survey
-(IN interviewerid INT,IN queid INT,IN popid INT,IN studyid INT,IN groupid INT,IN typeid INT)
+(IN interviewerid INT,IN queid INT,IN popid INT,IN studyid INT,IN groupid INT,
+IN typeid INT,IN surveyintID INT)
 BEGIN
     DECLARE study_numoftry INTEGER; 
     DECLARE pop_numoftry INTEGER;
@@ -247,10 +248,7 @@ BEGIN
     AND survey_population_id=popid) + 1;
 
     UPDATE survey_interview SET interview_end=current_timestamp(),type_id=typeid
-    WHERE study_to_survey_pop_id=(SELECT id FROM study_to_survey_pop WHERE
-    study_id=studyid AND sample_group_id=groupid 
-    AND survey_population_id=popid) AND survey_users_id=interviewerid; 
-
+    WHERE id=surveyintID;
 
     IF (typeid = 3 OR typeid = 2) OR pop_numoftry = study_numoftry THEN
 

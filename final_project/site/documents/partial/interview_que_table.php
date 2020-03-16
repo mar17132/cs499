@@ -62,6 +62,14 @@ if($_SESSION['type'] != 'Admin')
 
 ?>
 
+<?php 
+
+
+if($queArray && isset($queArray['rows']))
+{  
+
+?>
+
 
 <table class="table table-striped int-que-table int-table-view">
     <thead>
@@ -76,8 +84,7 @@ if($_SESSION['type'] != 'Admin')
 
     <?php 
 
-    if($queArray)
-    {
+     
         foreach($queArray['rows'] as $row)
         {
             echo "<tr><td scope='row' class='int-popname'>";
@@ -106,8 +113,22 @@ if($_SESSION['type'] != 'Admin')
             echo "Start Survey</button>";
             echo "</td></tr>";
         }        
-    }
     
+?>
+    </tbody>
+</table>
+
+<?php 
+
+} 
+else
+{
+    echo "<h6 class='int-table-view'>No records found.</h6>";
+}
+
+?>
+
+<?php   
     function isAllowed($studyID)
     {
         GLOBAL $permissionArray;
@@ -136,7 +157,6 @@ if($_SESSION['type'] != 'Admin')
     }
 
     ?>
-    </tbody>
-</table>
+
  
 

@@ -71,6 +71,12 @@ function threadReturn(obj)
             case 'startcancelsurvey':
                 setsurvey_interview_id(obj.rows);
             break;
+            case 'endsurvey':
+                displayInfo(obj);
+            break;
+            case 'recordrespons':
+                
+            break;
             case 'index':
 
             break;
@@ -165,6 +171,12 @@ function threadReturn(obj)
             break;
             case 'study':
                 displayInfo(obj);
+            break;
+            case 'endsurvey':
+                displayInfo(obj);
+            break;
+            case 'recordrespons':
+                
             break;
             case 'index':
 

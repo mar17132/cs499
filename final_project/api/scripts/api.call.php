@@ -208,6 +208,14 @@ function interviewtype()
         case 'startcancelsurvey':
             echo startCancelSurvey($_POST['queid'],$_POST['uid'],$_POST['status']);
         break;
+        case 'recordrespons':
+            echo recordrespons($_POST['values']);
+        break;
+        case 'endsurvey':
+            echo endsurvey($_POST['uid'],$_POST['queid'],
+            $_POST['popid'],$_POST['studyid'],$_POST['groupid'],
+            $_POST['endtype'],$_POST['surveyinterview']);
+        break;
         default:
             echo '{"status":"good","results":"Bad return type"}';
         break;     

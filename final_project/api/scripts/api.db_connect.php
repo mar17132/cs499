@@ -205,6 +205,38 @@ class mydbconnect
 
     }
 
+    public function multistoredProcedures($sql)
+    {
+        $this->dberror = NULL;
+        if(!is_null($this->myConnect))
+        {
+            $result = $this->myConnect->multi_query($sql);
+
+            if(gettype($result) == "object")
+            {
+               
+                $mysqlArray = array();
+                while($row = $result->fetch_assoc())
+                {
+                    $mysqlArray[] = $row;
+                }                
+                
+                $this->selectResults = $mysqlArray;  
+                
+            }
+            else if(!$result)
+            {
+                $this->dberror = "Not able to select! " . $this->myConnect->error;
+            }
+        }
+        else
+        {
+            $this->dberror = "Database Connection is not set.";
+            exit();
+        }
+
+    }
+
     public function queryInsert($sql)
     {
         $this->dberror = NULL;

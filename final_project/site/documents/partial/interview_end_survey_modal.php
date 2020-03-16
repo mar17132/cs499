@@ -65,12 +65,11 @@ $typeArray = (array) getCompletedType();
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" id="userAddEdit_btn" 
+                <button type="button" id="survey-end-btn" 
                 class="btn btn-success" >
                     Save
                 </button>                
-                <button type="button" class="btn btn-danger" 
-                id="userAddEdit_close_btn" data-dismiss="modal">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
                     Close
                 </button>
             </div>

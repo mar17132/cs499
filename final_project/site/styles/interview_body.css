@@ -64,9 +64,9 @@
     display: none;
 }
 
-.survey-ansers-display{
-/* This is for the text anwser*/
-}
+/*.survey-ansers-display{
+ This is for the text anwser
+}*/
 
 .survey-anwsers{
 /* This is for the input like radio or check*/
@@ -90,4 +90,10 @@
 
 .int-survey-info{
     background-color: #a9a9a9;
+}
+
+.error-no-anwser{
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(220, 53, 69, .9);  
 }

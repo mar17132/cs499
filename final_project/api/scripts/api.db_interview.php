@@ -338,6 +338,106 @@ function startCancelSurvey($queid,$userid,$startCancel)
     }  
 }
 
+function recordrespons($anwserArray)
+{
+    //this will test if there is a user with pass
+    GLOBAL $dbObject;
+    GLOBAL $toJsonString; 
+
+    /*
+    record_anwsers_mult_check
+(IN survintervewid INT,IN questionid INT,IN anwserid INT,IN quest_typeid INT)
+
+record_anwsers_fill
+(IN survintervewid INT,IN questionid INT, IN anwser VARCHAR(255))
+
+            'questionid': $(this).parents(".container")
+            .children(".survey-question").val(),
+
+            'anwserid':$(this).val(),
+
+            'surveyinterview':$("#survey_interview_id").val(),
+
+            'typeid':$(this).parents(".container")            
+            .children(".survey-quest-typeid").val()  
+    */
+
+    $queryString = "";
+
+    foreach($anwserArray as $anwsers)
+    {
+        $stringArray = explode(",",$anwsers);
+
+        $questtype = $stringArray[count($stringArray) - 1];
+
+        if($questtype == '11' || $questtype == '9')
+        {
+            $queryString .= "call record_anwsers_mult_check(";
+            $queryString .= $stringArray[2].",".$stringArray[0].",";
+            $queryString .= $stringArray[1].",$questtype);";
+        }
+        else
+        {
+            $queryString .= "call record_anwsers_fill(";
+            $queryString .= $stringArray[2].",".$stringArray[0].",'";
+            $queryString .= $stringArray[1]."');";
+        }
+        
+    }
+
+    $dbObject->multistoredProcedures("$queryString");
+
+    if($dbObject->isDberror())
+    {
+        return '{"status":"error","results":"'.$dbObject->getDberror().'"}';
+    }
+    else
+    {
+        if($dbObject->get_affected_rows() > 0)
+        {
+
+            return '{"status":"good","results":"Anwsers Recorded","rows":"",
+                "statusreturn":"Anwsers Recorded"}';
+            
+        }
+        else
+        {
+            //user does not exisist
+            return '{"status":"good","results":"Could not record anwsers"}';
+        }
+    }  
+}
+
+function endsurvey($interviewerid,$queid,$popid,$studyid,$groupid,
+$typeid,$surveyintID)
+{
+    //this will test if there is a user with pass
+    GLOBAL $dbObject;
+    GLOBAL $toJsonString; 
+
+    $dbObject->storedProcedures("
+    call end_survey($interviewerid,$queid,$popid,$studyid,
+    $groupid,$typeid,$surveyintID)");
+
+    if($dbObject->isDberror())
+    {
+        return '{"status":"error","results":"'.$dbObject->getDberror().'"}';
+    }
+    else
+    {
+        if($dbObject->get_affected_rows() > 0)
+        {
+            return '{"status":"good","results":"Survey has been recorded.",
+            "rows":"Survey has been recorded.","statusreturn":"Survey Ended"}';            
+        }
+        else
+        {
+            //user does not exisist
+            return '{"status":"good","results":"Could not end Survey"}';
+        }
+    }  
+}
+
 ?>
 
 

@@ -43,10 +43,11 @@ $queArray = allQue();
             <th scope="col">Person</th>
             <th scope="col">Group</th>
             <th scope="col">Study</th>
-            <th scope='col'>Start Date</th>
+            <!--<th scope='col'>Start Date</th>
             <th scope='col'>Start Time</th>
             <th scope='col'>End Date</th>
-            <th scope='col'>End Time</th>
+            <th scope='col'>End Time</th>-->
+            <th scope='col'>Status</th>
             <th scope='col'>Interviewer</th>
             <th scope='col'>Action</th>
         </tr>
@@ -62,11 +63,14 @@ $queArray = allQue();
             echo "<tr><td scope='row' class='int-popname'>";
             echo $row['popname']."</td><td class='int-groupname'>";
             echo $row['groupname']."</td><td class='int-studyname'>";
-            echo $row['studyname']."</td><td class='int-startdate'>";
+            echo $row['studyname']."</td>";
+            /*echo "<td class='int-startdate'>";
             echo $row['startint_date']."</td><td class='int-starttime'>";
             echo $row['startint_time']."</td><td class='int-enddate'>";
             echo $row['endint_date']."</td><td class='int-endtime'>";
-            echo $row['endint_time']."</td><td class='int-uname'>";
+            echo $row['endint_time']."</td>*/
+            echo "<td class='survey-status'>".$row['type']."</td>";
+            echo "<td class='int-uname'>";
             echo $row['uname']."</td><td class='int-action'>";
             echo "<input type='hidden' class='int-queid' value='";
             echo $row['quid']."'/>";
