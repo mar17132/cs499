@@ -1,2 +1,5 @@
 php allow_url_include
 selinux httpd_can_network_connect
+
+update logout.php
+update session.php
