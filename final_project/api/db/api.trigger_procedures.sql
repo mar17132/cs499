@@ -305,11 +305,266 @@ BEGIN
 
 END$$
 
+CREATE DEFINER = 'csfinaluser'@'localhost' PROCEDURE system_count()
+BEGIN
+    
+    CREATE TEMPORARY TABLE count_table(
+        study_count INT,
+        pop_count INT,
+        user_count INT
+    );
+
+    INSERT INTO count_table(study_count,pop_count,user_count)
+    VALUES(
+        (SELECT COUNT(id) FROM study),
+        (SELECT COUNT(id) FROM survey_population),
+        (SELECT COUNT(id) FROM survey_users)
+    );
+
+    SELECT * FROM count_table;
+
+    DROP TEMPORARY TABLE count_table;
+
+END$$
+
+CREATE DEFINER = 'csfinaluser'@'localhost' PROCEDURE study_stats()
+BEGIN
+
+    DECLARE finished INTEGER DEFAULT 0;
+    DECLARE studyid INTEGER;   
+    DECLARE studyname VARCHAR(255); 
+    
+    DECLARE studyCursor CURSOR FOR SELECT id,name FROM study;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
+
+    CREATE TEMPORARY TABLE study_stats_table(
+        studyid INT,
+        studyname VARCHAR(255),
+        question_count INT,
+        study_pop_count INT,
+        completed_surveys_count INT
+    );
+
+    OPEN studyCursor;    
+
+    insert_loop: LOOP
+        FETCH studyCursor INTO studyid,studyname;
+        IF finished = 1 THEN
+            LEAVE insert_loop;
+        END IF;
+
+        INSERT INTO study_stats_table(studyid,studyname,
+        question_count,study_pop_count,completed_surveys_count)
+        VALUES(
+            studyid,
+            studyname,
+            (SELECT COUNT(id) FROM study_to_question WHERE study_id=studyid),
+            (SELECT COUNT(survey_population.id) FROM survey_population 
+             JOIN study_to_survey_pop 
+             ON study_to_survey_pop.survey_population_id = survey_population.id
+             WHERE study_to_survey_pop.study_id = studyid
+            ),
+            (SELECT COUNT(id) FROM study_to_survey_pop 
+             WHERE study_id=studyid AND completed=1
+            )
+        );
+
+    END LOOP;
+
+    CLOSE studyCursor;
+
+
+    SELECT * FROM study_stats_table;
+
+    DROP TEMPORARY TABLE study_stats_table;
+
+END$$
+
+CREATE DEFINER = 'csfinaluser'@'localhost' PROCEDURE checkbox_stats
+(IN studyid INT,IN questionid INT,IN completed_count INT)
+BEGIN
+
+    DECLARE finished INTEGER DEFAULT 0;
+    DECLARE anwserid INTEGER;
+    DECLARE anwsername VARCHAR(255);
+
+    DECLARE checkboxCursor CURSOR FOR SELECT  
+    anwsers_checkbox.id AS anwserid,anwsers_checkbox.anwser 
+    FROM anwsers_checkbox  
+    JOIN study_to_question ON 
+    anwsers_checkbox.question_id = study_to_question.question_id
+    WHERE study_to_question.question_id=questionid 
+    AND study_to_question.study_id=studyid;  
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
+
+
+    OPEN checkboxCursor;    
+
+    insert_loop: LOOP
+        FETCH checkboxCursor INTO anwserid,anwsername;
+        IF finished = 1 THEN
+            LEAVE insert_loop;
+        END IF;
+
+        INSERT INTO answer_stats_table
+        (anwserid,anwsername,anwser_count,total_surveys)
+        VALUES(
+            anwserid,
+            anwsername,
+            (SELECT COUNT(respons_to_checkbox.anwsers_checkbox_id) 
+            FROM respons_to_checkbox
+            JOIN study_to_question ON 
+            respons_to_checkbox.question_id = study_to_question.question_id
+            JOIN anwsers_checkbox ON
+            respons_to_checkbox.anwsers_checkbox_id = anwsers_checkbox.id
+            WHERE study_to_question.question_id=questionid 
+            AND study_to_question.study_id=studyid 
+            AND respons_to_checkbox.anwsers_checkbox_id=anwserid
+            ),
+            completed_count
+        );
+
+
+    END LOOP;
+
+    CLOSE checkboxCursor;
+
+END$$
+
+CREATE DEFINER = 'csfinaluser'@'localhost' PROCEDURE multi_stats
+(IN studyid INT,IN questionid INT,IN completed_count INT)
+BEGIN
+
+    DECLARE finished INTEGER DEFAULT 0;
+    DECLARE anwserid INTEGER;
+    DECLARE anwsername VARCHAR(255);
+
+    DECLARE multiCursor CURSOR FOR SELECT  
+    anwsers_multi_choices.id AS anwserid,anwsers_multi_choices.anwser 
+    FROM anwsers_multi_choices  
+    JOIN study_to_question ON 
+    anwsers_multi_choices.question_id = study_to_question.question_id
+    WHERE study_to_question.question_id=questionid 
+    AND study_to_question.study_id=studyid;
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
+
+
+    OPEN multiCursor;    
+
+    insert_loop: LOOP
+        FETCH multiCursor INTO anwserid,anwsername;
+        IF finished = 1 THEN
+            LEAVE insert_loop;
+        END IF;
+
+        INSERT INTO answer_stats_table
+        (anwserid,anwsername,anwser_count,total_surveys)
+        VALUES(
+            anwserid,
+            anwsername,
+            (SELECT COUNT(respons_to_multi_choice.anwsers_multi_choices_id) 
+            FROM respons_to_multi_choice
+            JOIN study_to_question ON 
+            respons_to_multi_choice.question_id = study_to_question.question_id
+            JOIN anwsers_multi_choices ON
+            respons_to_multi_choice.anwsers_multi_choices_id = 
+            anwsers_multi_choices.id
+            WHERE study_to_question.question_id=questionid 
+            AND study_to_question.study_id=studyid 
+            AND respons_to_multi_choice.anwsers_multi_choices_id=anwserid
+            ),
+            completed_count
+        );
+
+
+    END LOOP;
+
+    CLOSE multiCursor;
+
+END$$
+
+CREATE DEFINER = 'csfinaluser'@'localhost' PROCEDURE fill_stats
+(IN studyid INT,IN questionid INT,IN completed_count INT)
+BEGIN
+
+    DECLARE finished INTEGER DEFAULT 0;
+    DECLARE anwsername VARCHAR(255);
+
+    DECLARE fillinCursor CURSOR FOR 
+    SELECT DISTINCT respons_to_fillinblank.respons 
+    FROM respons_to_fillinblank
+    JOIN study_to_question ON 
+    respons_to_fillinblank.question_id = study_to_question.question_id
+    WHERE study_to_question.question_id=questionid 
+    AND study_to_question.study_id=studyid;
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
+
+    OPEN fillinCursor;    
+
+    insert_loop: LOOP
+        FETCH fillinCursor INTO anwsername;
+        IF finished = 1 THEN
+            LEAVE insert_loop;
+        END IF;
+
+        INSERT INTO answer_stats_table
+        (anwsername,anwser_count,total_surveys)
+        VALUES(
+            anwsername,
+            (SELECT COUNT(respons_to_fillinblank.respons) 
+            FROM respons_to_fillinblank
+            JOIN study_to_question ON 
+            respons_to_fillinblank.question_id=study_to_question.question_id
+            WHERE study_to_question.question_id=questionid 
+            AND study_to_question.study_id=studyid
+            AND respons_to_fillinblank.respons=anwsername
+            ),
+            completed_count
+        );
+    END LOOP;
+
+    CLOSE fillinCursor;
+
+END$$
+
+CREATE DEFINER = 'csfinaluser'@'localhost' PROCEDURE question_stats
+(IN studyid INT,IN questionid INT)
+BEGIN
+
+   DECLARE typeid INTEGER;
+   DECLARE num_of_serveys INTEGER; 
+
+   SET typeid = (SELECT type_id FROM question WHERE id=questionid);
+   SET num_of_serveys = (SELECT COUNT(id) FROM study_to_survey_pop 
+   WHERE completed=1 AND study_id=studyid);
+
+    CREATE TEMPORARY TABLE answer_stats_table(
+        anwserid INT,
+        anwsername VARCHAR(255),
+        anwser_count INT,
+        total_surveys INT
+    );
+
+    IF typeid = 9 THEN
+    /*checkbox*/
+    CALL checkbox_stats(studyid,questionid,num_of_serveys);
+    ELSEIF typeid = 11 THEN
+    /*Multiple Choice*/
+    CALL multi_stats(studyid,questionid,num_of_serveys);
+    ELSEIF typeid = 10 THEN
+    /*Fill in the blank*/
+    CALL fill_stats(studyid,questionid,num_of_serveys);
+    END IF;
+
+   SELECT * FROM answer_stats_table;
+
+   DROP TEMPORARY TABLE answer_stats_table;
+
+END$$
+
 DELIMITER ;
-/*
-call record_anwsers_mult_check(8,4,4,11);
-
-call end_survey(1,1,1,3,1,3);
 
 
-*/
