@@ -2,11 +2,12 @@
 function secondThread(sendMessage,callback)
 {
     let w;
+
     if(typeof(Worker) !== "undefined")
     {
         if(typeof(w) == "undefined")
         {
-            w = new Worker("../scripts/api_thread.js");
+            w = new Worker(myURL + "/scripts/api_thread.js");
             w.postMessage(sendMessage);
             w.onmessage = function(event){
                 w.terminate();
@@ -76,6 +77,18 @@ function threadReturn(obj)
             break;
             case 'recordrespons':
                 
+            break;
+            case 'systemcount':
+                dashboardSystemCount(obj.rows);
+            break;
+            case 'studystats':
+                dashboardStudyStats(obj.rows);
+            break;
+            case 'questionstat':
+                dashboardQuestionStats(obj.rows);
+            break;
+            case 'questionselect':
+                dashboardQuestionSelect(obj.rows);
             break;
             case 'index':
 
@@ -309,5 +322,33 @@ function setsurvey_interview_id(obj)
     {
         $("#survey_interview_id").val(obj[0].surv_int_id);
     }
+}
+
+function dashboardStudyStats(Obj)
+{
+    intTable = $(".study_stats_con");
+    intTable.children(".study-count-table").remove();
+    $(Obj).appendTo(intTable);
+}
+
+function dashboardSystemCount(Obj)
+{
+    intTable = $(".system_count_con");
+    intTable.children(".system-count-table").remove();
+    $(Obj).appendTo(intTable);
+}
+
+function dashboardQuestionStats(Obj)
+{
+    intTable = $(".question_stats_con");
+    intTable.children(".question-stat-table").remove();
+    $(Obj).appendTo(intTable);
+}
+
+function dashboardQuestionSelect(Obj)
+{
+    intTable = $("#questionid");
+    intTable.children(".question-options-tag").remove();
+    $(Obj).appendTo(intTable);
 }
 

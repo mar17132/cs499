@@ -1,0 +1,21 @@
+
+.dash-title{
+    margin-bottom: 30px;
+}
+
+.dashboard-select-input{
+    margin-left: 10px;
+}
+
+.dashboard-inline-select{
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.dashboard-col-select:first-child{
+    margin-right: 17px;
+}
+
+.dashboard-col-select:last-child{
+    margin-left: 17px;
+}

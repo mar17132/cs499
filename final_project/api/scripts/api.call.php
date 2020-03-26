@@ -6,6 +6,7 @@ require_once 'api.db_users.php';
 require_once 'api.db_population.php';
 require_once 'api.db_study.php';
 require_once 'api.db_interview.php';
+require_once 'api.db_dashboard.php';
 
 
 if(!empty($_POST))
@@ -28,6 +29,9 @@ if(!empty($_POST))
             break; 
             case 'interview':
                 interviewtype();
+            break; 
+            case 'dashboard':
+                dashboardtype();
             break; 
             default:
                 echo '{"status":"good","results":"Bad type"}';
@@ -215,6 +219,28 @@ function interviewtype()
             echo endsurvey($_POST['uid'],$_POST['queid'],
             $_POST['popid'],$_POST['studyid'],$_POST['groupid'],
             $_POST['endtype'],$_POST['surveyinterview']);
+        break;
+        default:
+            echo '{"status":"good","results":"Bad return type"}';
+        break;     
+    }
+}
+
+function dashboardtype()
+{
+    switch($_POST['return_results'])
+    {
+        case 'getsystemcount':
+            echo getsystemcount();
+        break;
+        case 'getstudystats':
+            echo getstudystats();
+        break;
+        case 'questionstats':
+            echo getquestionstats($_POST['studyid'],$_POST['questionid']);
+        break;
+        case 'questionselect':
+            echo getquestionselect($_POST['studyid']);
         break;
         default:
             echo '{"status":"good","results":"Bad return type"}';
