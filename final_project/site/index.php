@@ -40,26 +40,34 @@ $studyArray = allConnectStudy();
 
 
 <nav class="navbar navbar-expand-sm bg-light justify-content-center page-title dash-title">
-    <h3 class="justify-content-center page-name">Dashboads</h3>
+    <h3 class="justify-content-center page-name">Dashboad</h3>
 </nav>
 
-<div class="system_count_con container">
-    <nav class="navbar navbar-expand-sm bg-dark system-count-cmd-bar">
-
-    </nav>
-     <?php require_once 'documents/partial/system_count_table.php';  ?>
-</div>
-
-<div class="study_stats_con container">
-    <nav class="navbar navbar-expand-sm bg-dark study-stats-cmd-bar">
-
-    </nav>
-     <?php require_once 'documents/partial/study_stats_table.php';   ?>
+<div class="row justify-content-center dashboard-rows">
+    <div class="col-3">
+        <div class="system_count_con container">
+            <nav class="navbar navbar-expand-sm bg-dark 
+            system-count-cmd-bar dashboard-nav-cmd justify-content-center">
+                <span class="dashboard-stat-lable" >System Count</span>
+            </nav>
+            <?php require_once 'documents/partial/system_count_table.php';  ?>
+        </div>
+    </div>
+    <div class="col-8">
+        <div class="study_stats_con container">
+            <nav class="navbar navbar-expand-sm bg-dark
+            dashboard-nav-cmd justify-content-center study-stats-cmd-bar">
+                <span class="dashboard-stat-lable" >Study Stats</span>
+            </nav>
+            <?php require_once 'documents/partial/study_stats_table.php';   ?>
+        </div>
+    </div>
 </div>
 
 <div class="question_stats_con container">
-    <nav class="navbar navbar-expand-sm bg-dark question-stats-cmd-bar">
-
+    <nav class="navbar navbar-expand-sm bg-dark
+     dashboard-nav-cmd justify-content-center question-stats-cmd-bar">
+     <span class="dashboard-stat-lable" >Question Stats</span>
     </nav>
     <nav class="navbar navbar-expand-sm question-stats-cmd-bar">
         <div class="form-group form-inline dashboard-inline-select " >
@@ -89,7 +97,7 @@ $studyArray = allConnectStudy();
             </div>
         </div>
     </nav>
-     <?php //require_once 'documents/partial/question_stats_table.php';  ?>
+     
 </div>
 
 <script type="text/javascript" src="scripts/get_api_data.js" ></script> 

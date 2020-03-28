@@ -28,4 +28,6 @@
     margin-left: 25px;
 }
 
-
+.popGroupTable thead tr th{
+    border: none !important;
+}

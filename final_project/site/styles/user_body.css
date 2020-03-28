@@ -29,4 +29,7 @@
     margin-left: 25px;
 }
 
+.userPermissionTable thead tr th{
+    border: none !important;
+}
 

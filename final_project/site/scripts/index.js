@@ -48,6 +48,16 @@ function display_study_count()
     );
 }
 
+function clearQuestionStats()
+{
+    $(".question_stats_con").children(".question-stat-table").remove();
+}
+
+function clearQuestionSelect()
+{
+    $("#questionid").children(".question-options-tag").remove();
+}
+
 $(document).ready(function(){
     changeMenuAct("Home");
 
@@ -57,12 +67,16 @@ $(document).ready(function(){
     $('#studyid').on('change',function(){
         if($(this).val() != 'null')
         {
+            clearQuestionSelect();
+            clearQuestionStats();
             display_question_select($(this).val());
             $("#questionid").removeAttr('disabled');
         }
         else
         {
             $("#questionid").attr('disabled','disabled');
+            clearQuestionSelect();
+            clearQuestionStats();
         }
     });
 
@@ -73,7 +87,7 @@ $(document).ready(function(){
         }
         else
         {
-
+            clearQuestionStats();
         }
     });
 

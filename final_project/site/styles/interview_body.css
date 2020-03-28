@@ -97,3 +97,7 @@
     border-width: 1px;
     border-color: rgba(220, 53, 69, .9);  
 }
+
+.int-respons-table thead tr th{
+    border: none !important;
+}

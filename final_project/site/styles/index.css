@@ -19,3 +19,31 @@
 .dashboard-col-select:last-child{
     margin-left: 17px;
 }
+
+.dashboard-stat-lable{
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.dashboard-nav-cmd{
+    padding: 0 !important;
+}
+
+.dashboard-rows{
+    margin: 0 !important;
+}
+
+.question_stats_con{
+    margin-top: 35px;
+    margin-bottom: 10px;
+    padding-bottom: 20px;
+}
+
+.question_stats_con table thead tr th{
+    border: none !important;
+}
+
+.question-stat-table tbody tr:last-child{
+    border-bottom: thin solid #dee2e6;
+}
