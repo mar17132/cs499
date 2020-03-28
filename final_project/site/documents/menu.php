@@ -6,7 +6,11 @@
 ?>
 
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">  
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark"> 
+  <a class="navbar-brand menu_a menu-brand" 
+  href="<?php echo "$myURL/index.php"?>">
+    Survey Center
+  </a> 
   <button class="navbar-toggler" type="button" data-toggle="collapse" 
   data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" 
   aria-expanded="false" aria-label="Toggle navigation">
@@ -15,7 +19,8 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link menu_a site-menu-link" href="../index.php">
+        <a class="nav-link menu_a site-menu-link" 
+        href="<?php echo "$myURL/index.php"?>" >
           Home 
         </a>
       </li>

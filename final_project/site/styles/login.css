@@ -38,3 +38,14 @@ html,body{
 .error{
     color: crimson;
 }
+
+.menu-brand{
+    color: #ffffff !important;   
+    font-size: 4.5rem; 
+    font-weight: 200;
+}
+
+.login-menubar{
+    background-color: black;
+    background: rgba(0, 0, 0, 0.1);
+}

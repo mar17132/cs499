@@ -26,3 +26,8 @@ require_once file_exists("scripts/api_connect.php") ?
     </head>
     <body>
 
+    <nav class="navbar navbar-expand-lg  login-menubar"> 
+        <span class="navbar-brand menu-brand" >
+            Survey Center
+        </span> 
+    </nav>
