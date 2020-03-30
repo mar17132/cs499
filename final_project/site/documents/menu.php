@@ -31,7 +31,7 @@
           <li class="nav-item">
             <a class="nav-link menu_a site-menu-link" href="
             '.$myURL.'/documents/study_body.php">
-              Studys
+              Studies
             </a>
           </li>';
         }

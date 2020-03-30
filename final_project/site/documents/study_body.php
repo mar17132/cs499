@@ -3,7 +3,7 @@
 
 
 <nav class="navbar navbar-expand-sm bg-light justify-content-center page-title">
-    <h3 class="justify-content-center page-name">Studys</h3>
+    <h3 class="justify-content-center page-name">Studies</h3>
 </nav>
 
 <div class="study-table container">

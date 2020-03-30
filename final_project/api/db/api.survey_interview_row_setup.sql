@@ -15,21 +15,21 @@ CALL add_group_to_study(
 UPDATE study_to_survey_pop SET completed=1,number_of_tries=1
 WHERE 
 survey_population_id=
-(SELECT id FROM survey_population WHERE fname = 'Abraham' AND lname = 'Simpsons')
+(SELECT id FROM survey_population WHERE fname = 'Abraham' AND lname = 'Simpson')
 AND sample_group_id=(SELECT id FROM sample_group WHERE sample_name = "Group1")
 AND study_id=(SELECT id FROM study WHERE name = "Harry Potter Favorite Movie");
 
 UPDATE study_to_survey_pop SET locked=1
 WHERE 
 survey_population_id=
-(SELECT id FROM survey_population WHERE fname = 'Maggie' AND lname = 'Simpsons')
+(SELECT id FROM survey_population WHERE fname = 'Maggie' AND lname = 'Simpson')
 AND sample_group_id=(SELECT id FROM sample_group WHERE sample_name = "Group1")
 AND study_id=(SELECT id FROM study WHERE name = "Harry Potter Favorite Movie");
 
 UPDATE study_to_survey_pop SET completed=1,number_of_tries=1
 WHERE 
 survey_population_id=
-(SELECT id FROM survey_population WHERE fname = 'Bart' AND lname = 'Simpsons')
+(SELECT id FROM survey_population WHERE fname = 'Bart' AND lname = 'Simpson')
 AND sample_group_id=(SELECT id FROM sample_group WHERE sample_name = "Group1")
 AND study_id=(SELECT id FROM study WHERE name = "Harry Potter Favorite Movie");
 
@@ -82,7 +82,7 @@ VALUES(
      INNER JOIN sample_group 
      ON study_to_survey_pop.sample_group_id = sample_group.id
      INNER JOIN study ON study_to_survey_pop.study_id = study.id
-     WHERE survey_population.fname = 'Abraham' AND survey_population.lname = 'Simpsons'
+     WHERE survey_population.fname = 'Abraham' AND survey_population.lname = 'Simpson'
      AND sample_group.sample_name = 'Group1' AND study.name = 'Harry Potter Favorite Movie'    
     ),
     (SELECT id FROM survey_users WHERE uname = 'dav'),
@@ -99,7 +99,7 @@ VALUES(
      INNER JOIN sample_group 
      ON study_to_survey_pop.sample_group_id = sample_group.id
      INNER JOIN study ON study_to_survey_pop.study_id = study.id
-     WHERE survey_population.fname = 'Maggie' AND survey_population.lname = 'Simpsons'
+     WHERE survey_population.fname = 'Maggie' AND survey_population.lname = 'Simpson'
      AND sample_group.sample_name = 'Group1' AND study.name = 'Harry Potter Favorite Movie'    
     ),
     (SELECT id FROM survey_users WHERE uname = 'dav'),
@@ -116,7 +116,7 @@ VALUES(
      INNER JOIN sample_group 
      ON study_to_survey_pop.sample_group_id = sample_group.id
      INNER JOIN study ON study_to_survey_pop.study_id = study.id
-     WHERE survey_population.fname = 'Bart' AND survey_population.lname = 'Simpsons'
+     WHERE survey_population.fname = 'Bart' AND survey_population.lname = 'Simpson'
      AND sample_group.sample_name = 'Group1' AND study.name = 'Harry Potter Favorite Movie'    
     ),
     (SELECT id FROM survey_users WHERE uname = 'harry'),
@@ -207,7 +207,7 @@ study_to_survey_pop_id=
     INNER JOIN survey_population ON 
     study_to_survey_pop.survey_population_id = survey_population.id
     WHERE survey_population.fname = 'Abraham' AND 
-    survey_population.lname = 'Simpsons'
+    survey_population.lname = 'Simpson'
     AND sample_group.sample_name = 'Group1' AND 
     study.name = 'Harry Potter Favorite Movie' 
 );
@@ -222,7 +222,7 @@ study_to_survey_pop_id=
     INNER JOIN survey_population ON 
     study_to_survey_pop.survey_population_id = survey_population.id
     WHERE survey_population.fname = 'Maggie' AND 
-    survey_population.lname = 'Simpsons'
+    survey_population.lname = 'Simpson'
     AND sample_group.sample_name = 'Group1' AND 
     study.name = 'Harry Potter Favorite Movie' 
 );
@@ -237,7 +237,7 @@ study_to_survey_pop_id=
     INNER JOIN survey_population ON 
     study_to_survey_pop.survey_population_id = survey_population.id
     WHERE survey_population.fname = 'Bart' AND 
-    survey_population.lname = 'Simpsons'
+    survey_population.lname = 'Simpson'
     AND sample_group.sample_name = 'Group1' AND 
     study.name = 'Harry Potter Favorite Movie' 
 );
