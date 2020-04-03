@@ -7,22 +7,62 @@ require_once 'json.php';
 
 <?php
 
-function javascript_to_apiQuery($postArray)
+function javascript_to_apiQuery($postParams)
 {
     GLOBAL $jsonTophp;
     GLOBAL $myapiURL;
 
     $dbconnections = new apiconnection();
     $dbconnections->setPage($myapiURL."api.call.php");
-    $dbconnections->setParameters($postArray);
+    $dbconnections->setParameters($postParams);
     $dbconnections->connect_api();
 
     return $dbconnections->getResults();
 }
 
+function paramString($key,$value)
+{
+    if(gettype($value) != "array")
+    {
+        return trim($key)."=". trim($value);
+    }
+    else
+    {
+        $newString = "";
+        $lastValueKey = array_key_last($value);
+
+        foreach($value as $valueKey => $valueValue)
+        {
+            $newString .= trim($key) . "[" . trim($valueKey) . "]=";
+            $newString .= trim($valueValue);
+
+            if($valueKey != $lastValueKey)
+            {
+                $newString .= "&";
+            }
+        }
+
+        return $newString;
+    }
+}
+
 if($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-    echo javascript_to_apiQuery($_POST);
+    $sendstring = "";
+    $lastKey = array_key_last($_POST);
+
+    foreach($_POST as $key => $value)
+    {
+        $sendstring .= paramString($key,$value);
+
+        if($key != $lastKey)
+        {
+            $sendstring .= "&";
+        }
+    }
+
+  
+    echo javascript_to_apiQuery($sendstring);
 }
 
 

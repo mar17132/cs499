@@ -8,7 +8,8 @@ class apiconnection
     //private $baseURL = "http://localhost/";
     private $page = NULL;
     private $myResults = NULL;
-    private $parameters = array();
+    private $parameters;
+   // private $parameters = array();
 
     public function __construct()
     {
