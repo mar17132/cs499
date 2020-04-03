@@ -99,7 +99,7 @@ function editUser()
 function addUser()
 {
     secondThread({
-        database:{
+        'database':{
             'type':'user',
             'return_results':'add',
             'uname':$("#uname").val(),
