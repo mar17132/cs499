@@ -275,6 +275,7 @@ function questionEdit(studyObj)
     allstudy.empty();
     $(studyObj).appendTo(allstudy);
     //createAnswerButton();
+    disableElem($("#quest_anwser_add_btn"));
 }
 
 function setQuestionEdit(qObj)
