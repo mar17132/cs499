@@ -734,11 +734,11 @@ $(document).ready(function(){
     quest_typeid.on("change",function(){
         if($(this).val() != 'null')
         {
-            enableElem(quest_add_anwser_btn);
+            enableElem($("#quest_anwser_add_btn"));
         }
         else
         {
-            disableElem(quest_add_anwser_btn);
+            disableElem($("#quest_anwser_add_btn"));
         }
     });
 
