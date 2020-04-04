@@ -320,7 +320,8 @@ function setsurvey_interview_id(obj)
 {
     if(obj!= "" && obj != null)
     {
-        $("#survey_interview_id").val(obj[0].surv_int_id);
+        let id = obj[0].surv_int_id;
+        $("#survey_interview_id").val(id);
     }
 }
 
