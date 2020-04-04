@@ -697,7 +697,7 @@ $(document).ready(function(){
         });
     });
 
-    quest_add_anwser_btn.on('click',function(){
+    $(".question-add-edit-contain").on('click',"#quest_anwser_add_btn",function(){
         
         if(quest_typeid.val() != 'null')
         {
