@@ -43,7 +43,7 @@ if($allGroupsArray && $allGroupsArray['results'] == 'true')
 
     foreach($allGroupsArray['rows'] as $row)
     {
-        if($currentGroup == "" && $currentGroup != $row['sample_name'])
+        if($currentGroup == "" || $currentGroup != $row['sample_name'])
         {
             if($currentGroup != "")
             {
@@ -82,6 +82,8 @@ if($allGroupsArray && $allGroupsArray['results'] == 'true')
         echo "<td scope='row' class='pop_personname'>"
                 . $row['name']. "</td>";
         echo "</tr>";
+
+        $currentGroup = $row['sample_name'];
     }
 }
 else

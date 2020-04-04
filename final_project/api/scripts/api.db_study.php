@@ -119,7 +119,8 @@ function getAllStudyGroups($studyid)
         join survey_population pop on 
         study_to_survey_pop.survey_population_id = pop.id
         join study on study_to_survey_pop.study_id = study.id
-        where study.id='$studyid'");
+        where study.id='$studyid'
+        ORDER BY study.id");
 
         if($dbObject->isDberror())
         {

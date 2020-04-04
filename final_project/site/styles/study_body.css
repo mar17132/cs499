@@ -29,7 +29,16 @@
 }
 
 .study-group-namebar:not(:first-child){
-    border-top: thin solid #dee2e6;
+    /*border-top: thin solid #dee2e6;*/
+    margin-top: 45px;
+}
+
+.studyGroupTable tbody tr:last-child{
+    border-bottom: thin solid #dee2e6;
+}
+
+.studyGroupTable:last-child{
+   margin-bottom: 45px;
 }
 
 .study-quest-edit-btn{
