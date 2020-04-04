@@ -731,7 +731,7 @@ $(document).ready(function(){
 
     });
 
-    quest_typeid.on("change",function(){
+    $(".question-add-edit-contain").on("change",'#qtype',function(){
         if($(this).val() != 'null')
         {
             enableElem($("#quest_anwser_add_btn"));
