@@ -541,8 +541,13 @@ BEGIN
    DECLARE num_of_serveys INTEGER; 
 
    SET typeid = (SELECT type_id FROM question WHERE id=questionid);
-   SET num_of_serveys = (SELECT COUNT(id) FROM study_to_survey_pop 
-   WHERE completed=1 AND study_id=studyid);
+   SET num_of_serveys = (SELECT COUNT(study_to_survey_pop.id) 
+   FROM study_to_survey_pop 
+   JOIN survey_interview 
+   ON survey_interview.study_to_survey_pop_id = study_to_survey_pop.id
+   WHERE study_to_survey_pop.completed=1 
+   AND study_to_survey_pop.study_id=studyid 
+   AND survey_interview.type_id=3);
 
     CREATE TEMPORARY TABLE answer_stats_table(
         anwserid INT,
