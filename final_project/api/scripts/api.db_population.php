@@ -239,7 +239,7 @@ function updatePop($callArray)
     GLOBAL $dbObject;
     GLOBAL $toJsonString; 
     $popid = $callArray['id'];
-    $endKey = array_key_last($callArray);
+    $endKey = get_api_array_key_last($callArray);
     $added = false;
     $queryString = "update survey_population set ";
 
@@ -288,7 +288,7 @@ function addPop($callArray)
     GLOBAL $toJsonString; 
 
    
-    $endKey = array_key_last($callArray);
+    $endKey = get_api_array_key_last($callArray);
     $added = false;
     $queryString = "";
     $keycol = "";

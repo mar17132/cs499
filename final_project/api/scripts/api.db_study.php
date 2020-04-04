@@ -625,7 +625,7 @@ function updateStudy($callArray)
     GLOBAL $dbObject;
     GLOBAL $toJsonString; 
     $studyid = $callArray['id'];
-    $endKey = array_key_last($callArray);
+    $endKey = get_api_array_key_last($callArray);
     $added = false;
     $queryString = "update study set ";
 
@@ -674,7 +674,7 @@ function addStudy($callArray)
     GLOBAL $toJsonString; 
 
    
-    $endKey = array_key_last($callArray);
+    $endKey = get_api_array_key_last($callArray);
     $added = false;
     $queryString = "";
     $keycol = "";

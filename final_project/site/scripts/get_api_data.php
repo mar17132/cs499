@@ -29,7 +29,7 @@ function paramString($key,$value)
     else
     {
         $newString = "";
-        $lastValueKey = array_key_last($value);
+        $lastValueKey = get_array_key_last($value);
 
         foreach($value as $valueKey => $valueValue)
         {
@@ -49,7 +49,7 @@ function paramString($key,$value)
 if($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     $sendstring = "";
-    $lastKey = array_key_last($_POST);
+    $lastKey = get_array_key_last($_POST);
 
     foreach($_POST as $key => $value)
     {

@@ -307,5 +307,14 @@ class mydbconnect
 $dbObject = new mydbconnect($username,$password,$server,$database);
 
 
+function get_api_array_key_last($arrayObj)
+{
+    $arraykeys = array_keys($arrayObj);
+    $arrayIndex = (count($arraykeys) - 1);
+
+    return $arraykeys[$arrayIndex];
+}
+
+
 ?>
 
