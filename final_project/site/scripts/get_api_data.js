@@ -260,6 +260,7 @@ function studyquesitonRefresh(studyObj)
     allstudy = $(".study-quesiton-contain");
     allstudy.empty();
     $(studyObj).appendTo(allstudy);
+    disableElem($("#quest_anwser_add_btn"));
 }
 
 function studyGroupConnect(studyObj)
