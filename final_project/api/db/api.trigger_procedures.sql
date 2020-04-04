@@ -144,6 +144,9 @@ BEGIN
     END LOOP;
     CLOSE popCursor;
 
+    SELECT * FROM study_to_survey_pop 
+    WHERE sample_group_id=groupid AND study_id=studyid;
+
 END$$
 
 CREATE DEFINER = 'csfinaluser'@'localhost' TRIGGER add_pop_to_que
