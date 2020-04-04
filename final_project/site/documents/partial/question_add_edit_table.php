@@ -135,8 +135,8 @@ $studyArray = allstudy();
     <h3 class="study-group-name">
     Answers
     </h3>
-    <span class="ml-auto" >
-        <button type="button" class="btn btn-warning" id="quest_anwser_add_btn">   
+    <span class="ml-auto add_question_anwser_span" >
+        <button type="button" class="btn btn-warning quest_anwser_add_btn" id="quest_anwser_add_btn">   
         Add Answer
         </button>
     </span>            

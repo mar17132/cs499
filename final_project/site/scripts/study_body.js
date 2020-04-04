@@ -437,6 +437,50 @@ function enableElem(obj)
     obj.removeAttr('disabled');
 }
 
+
+
+function createAnswerButton()
+{
+    allstudy = $(".add_question_anwser_span");
+    allstudy.empty();
+    newButton = $("<button type='button' id='quest_anwser_add_btn' >Add Answer</button>");
+    newButton.addClass('btn btn-warning quest_anwser_add_btn');
+    newButton.on('click',function(){
+        if($("#qtype").val() != 'null')
+        {
+            tbody = $(".answer_addedit_tbody");
+            disableElem($("#qtype"));
+
+            switch($("#qtype").val())
+            {
+                case '10':
+                    tbody.before(createfill_in_head());
+                    createfill_in_blank().appendTo(tbody);
+                    disableElem($(this));
+                break;
+                case '11':
+                    if($('.answer_addedit_tbody tr').length == 0)
+                    {
+                        tbody.before(createChk_Mul_head());
+                    } 
+                    createChk_Mul_Ans().appendTo(tbody);
+                break;
+                case '9':
+                    if($('.answer_addedit_tbody tr').length == 0)
+                    {
+                        tbody.before(createChk_Mul_head());
+                    }
+                    createChk_Mul_Ans().appendTo(tbody);
+                break;
+                default:
+            }
+        }
+    });
+    newButton.appendTo(allstudy);
+
+    //disableElem($("#quest_anwser_add_btn"));
+}
+
 $(document).ready(function(){    
 
     sname = $("#sname");
@@ -697,14 +741,14 @@ $(document).ready(function(){
         });
     });
 
-    $(".question-add-edit-contain").on('click',"#quest_anwser_add_btn",function(){
+    $(".question-add-edit-contain").on('click',".quest_anwser_add_btn",function(){
         
-        if(quest_typeid.val() != 'null')
+        if($("#qtype").val() != 'null')
         {
             tbody = $(".answer_addedit_tbody");
-            disableElem(quest_typeid);
+            disableElem($("#qtype"));
 
-            switch(quest_typeid.val())
+            switch($("#qtype").val())
             {
                 case '10':
                     tbody.before(createfill_in_head());
@@ -734,11 +778,11 @@ $(document).ready(function(){
     $(".question-add-edit-contain").on("change",'#qtype',function(){
         if($(this).val() != 'null')
         {
-            enableElem($("#quest_anwser_add_btn"));
+            enableElem($(".quest_anwser_add_btn"));
         }
         else
         {
-            disableElem($("#quest_anwser_add_btn"));
+            disableElem($(".quest_anwser_add_btn"));
         }
     });
 
